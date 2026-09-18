@@ -9,9 +9,9 @@ import numpy as np
 import pandas as pd
 
 
-def test_avaliar_dummy_serializado():
+def test_avaliar_dummy_serializado(tmp_path):
     est = carregar_modelo(pasta_modelo('dummy_prior'))
-    av = avaliar_modelos({'dummy_prior': est})
+    av = avaliar_modelos({'dummy_prior': est}, dest=tmp_path / 'metrics', n_bootstrap=8)
     assert av['limiares']['dummy_prior'] >= 0
     assert 'teste' in av['comparacao']['dummy_prior']
 

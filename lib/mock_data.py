@@ -17,7 +17,9 @@ from typing import Iterable
 
 from faker import Faker
 
-TODAY = date(2026, 5, 22)
+from lib.config import REFERENCE_DATE
+
+TODAY = REFERENCE_DATE
 
 TIPOS_VIOLENCIA = ['fisica', 'psicologica', 'sexual', 'patrimonial', 'moral']
 METODOS_CONTRACEPTIVOS = [

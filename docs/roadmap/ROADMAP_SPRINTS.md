@@ -10,14 +10,14 @@
 
 | Sprint | Plano | Itens | Tarefas | Status |
 |---|---|---|---|---|
-| 1 Descoberta | [PI-S01](../planos/PI-S01_DESCOBERTA.md) | BL-01…08 | T-01…07 | Documentos entregues; T-03 `[VAL]` |
+| 1 Descoberta | [PI-S01](../planos/PI-S01_DESCOBERTA.md) | BL-01…08 | T-01…07 | Encerrada; T-03 = 128 (Hub); pesos locais ausentes |
 | 2 Dados | [PI-S02](../planos/PI-S02_DADOS.md) | BL-09…16 | T-08…18 | **Fechada** (dataset + testes) |
 | 3 Modelos | [PI-S03](../planos/PI-S03_MODELOS.md) | BL-17…24 | T-19…29 | **Fechada** (4 modelos + métricas) |
 | 4 Explicabilidade | [PI-S04](../planos/PI-S04_EXPLICABILIDADE.md) | BL-25…28 | T-30…34 | **Fechada com ressalva** (fallback; SHAP opcional) |
 | 5 Integração | [PI-S05](../planos/PI-S05_INTEGRACAO.md) | BL-29…38 | T-35…49 | **Fechada** (risco_ml + auditoria) |
 | 6 Interface | [PI-S06](../planos/PI-S06_INTERFACE.md) | BL-39…43 | T-50…54 | **Fechada** (aba 6 + run_demo) |
 | 7 Testes e Docker | [PI-S07](../planos/PI-S07_TESTES_DOCKER.md) | BL-44…52 | T-55…64 | **Fechada** — pytest verde; Docker build+run com log em `EXECUCAO_DOCKER.md` |
-| 8 Documentação | [PI-S08](../planos/PI-S08_DOCUMENTACAO.md) | BL-53…58 | T-65…71 | **Fechada** com números reais e falha Docker declarada |
+| 8 Documentação | [PI-S08](../planos/PI-S08_DOCUMENTACAO.md) | BL-53…58 | T-65…71 | **Fechada** (números reais; Docker em `EXECUCAO_DOCKER.md`; T-71) |
 
 ---
 
@@ -31,7 +31,7 @@
 
 **Riscos da sprint.** Inventar arquivo que não existe; tratar SFT como dataset tabular.
 
-**Status.** Encerrada para documentação. T-03 (`max_seq_length`) permanece verificação na Sprint 5.
+**Status.** Encerrada. T-03: `max_seq_length=128` no config oficial; pesos do encoder não carregaram localmente.
 
 ---
 
@@ -127,7 +127,9 @@ S7 formaliza testes que já nascem em S2–S6. Não deixar a suíte inteira para
 
 ## Cortes se o prazo apertar (ordem)
 
-1. T-64 CI (`Could`)
+Nesta branch **não foram cortados** T-64 nem T-71. T-63 registrou o `pip-audit` sem bump de pins.
+
+1. T-64 CI (`Could`) — feito: `.github/workflows/ci.yml`
 2. T-71 higiene ampla (ficar no CHANGELOG)
 3. T-17 ponte `hospital.db` (Should)
 4. T-45/T-46 flag obstétrico e 10ª tool (Should) — o workflow novo já demonstra a integração

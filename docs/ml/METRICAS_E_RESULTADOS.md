@@ -19,6 +19,8 @@ O limiar da regra ficou 0,0: `predict_proba` é {0,1} e o maior limiar com recal
 
 FN LogReg no teste: 11. FP: 655 (custo do recall alto).
 
+O restante deste arquivo é o **modelo vazio original** da Sprint 1. Não interpolar células `—` / `_PENDENTE_`; a fonte de verdade é o bloco acima e `artifacts/metrics/`.
+
 # Métricas e Resultados
 
 

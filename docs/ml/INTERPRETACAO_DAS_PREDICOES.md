@@ -1,4 +1,9 @@
+> **Status (2026-09-18):** predições reais existem (`artifacts/demo/`, `exemplo_local_logreg.json`). Usar os números do JSON, não os exemplos fictícios da §8 sem o rótulo de formato.
+
+Frase obrigatória na UI: “As variáveis que mais contribuíram para esta classificação foram…”.
+
 # Interpretação e Comunicação das Predições
+
 
 **Agente responsável:** `ExplainabilityAgent`
 **Status:** Política definida — **nenhuma predição foi gerada; nenhum modelo foi treinado**

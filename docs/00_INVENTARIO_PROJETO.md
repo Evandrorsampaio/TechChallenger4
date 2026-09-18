@@ -230,9 +230,14 @@ problema, porque o trecho recuperado parece correto, mas a *escolha* daquele tre
 olhando apenas o começo dele.
 
 Este é provavelmente o fator isolado mais relevante para a qualidade do RAG no projeto e não estava
-documentado em lugar nenhum. Classificação: `[COD]` quanto ao descompasso; `[VAL]` quanto ao valor
-exato de `max_seq_length`, que deve ser confirmado por execução
-(`SentenceTransformer(EMB_MODEL).max_seq_length`) antes de qualquer correção.
+documentado em lugar nenhum. Classificação: `[COD]` quanto ao descompasso.
+
+**T-03 (2026-09-18):** `sentence_bert_config.json` oficial do Hub
+(`sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`) declara `"max_seq_length": 128`.
+Carga local `SentenceTransformer(..., local_files_only=True)` falhou com `OSError` (pesos
+`pytorch_model.bin` / `model.safetensors` ausentes neste ambiente). **Sem rechunking.** O valor
+operacional permanece 128 tokens; a divergência com a menção a 512 tokens em `ESTRATEGIA_RAG.md` §3.1
+é documentação da Fase 3, não medição.
 
 Dois efeitos colaterais relacionados, também `[COD]`:
 

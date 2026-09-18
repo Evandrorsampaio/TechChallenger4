@@ -32,7 +32,6 @@ from __future__ import annotations
 from typing import TypedDict
 
 from . import common
-from .. import tools as tools_mod
 
 
 SINAIS_EMERGENCIA = [

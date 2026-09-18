@@ -67,10 +67,10 @@ CA-29, CA-33, CA-34.
 
 ## Definição de pronto
 
-- [ ] 6 abas; as 5 antigas intactas (regressão)
-- [ ] 4 capturas ou JSON de `artifacts/demo/`
-- [ ] `python scripts/run_demo.py` código 0 no perfil `demo-cpu`
-- [ ] e2e sem GPU/rede
+- [x] 6 abas; as 5 antigas intactas (regressão)
+- [x] 4 capturas ou JSON de `artifacts/demo/`
+- [x] `python scripts/run_demo.py` código 0 no perfil `demo-cpu`
+- [x] e2e sem GPU/rede
 
 ## Próximo plano
 

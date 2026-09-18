@@ -1,3 +1,5 @@
+> **Status (2026-09-18):** BL-09…BL-58 implementados nesta branch, inclusive BL-52 (`.github/workflows/ci.yml`). Evidência em `artifacts/`, `tests/` e `docs/deploy/`. BL-01…BL-08 continuam `Concluído (documento)`. T-03: `max_seq_length=128` no `sentence_bert_config.json` do Hub; pesos do encoder não estavam em cache local.
+
 # Backlog Priorizado
 
 **Agente responsável:** `RequirementsAnalystAgent`
@@ -168,7 +170,7 @@ Objetivo: transformar "funciona" em evidência anexada.
 | BL-49 | **Execução real** do pipeline em ambiente local limpo, com log anexado | Must | Alto | M | BL-23 | RF-18, RNF-11 | `MLOpsAndDeploymentAgent` | Não iniciado |
 | BL-50 | Relatório de testes e cobertura persistidos como evidência | Must | Alto | P | BL-45 | RF-20, RNF-04 | `TestingAndValidationAgent` | Não iniciado |
 | BL-51 | `pip-audit` e varredura de credenciais no repositório | Should | Médio | P | BL-44 | RNF-05, RNF-13 | `SecurityAndComplianceAgent` | Não iniciado |
-| BL-52 | CI no GitHub Actions executando a suíte do perfil `ml-only` | Could | Médio | M | BL-44 | RNF-04 | `MLOpsAndDeploymentAgent` | Não iniciado |
+| BL-52 | CI no GitHub Actions executando a suíte do perfil `ml-only` | Could | Médio | M | BL-44 | RNF-04 | `MLOpsAndDeploymentAgent` | Concluído (`.github/workflows/ci.yml`) |
 
 **BL-48 e BL-49 são itens de backlog, não formalidades.** Existem como itens próprios justamente
 porque escrever o `Dockerfile` (BL-47) e executá-lo são coisas diferentes, e é a segunda que o

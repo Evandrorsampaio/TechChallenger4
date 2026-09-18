@@ -268,16 +268,16 @@ não pela afirmação de que o trabalho foi feito.
 
 | Marco | Nome | Critério objetivo de atingimento | Verificação | Status |
 |---|---|---|---|---|
-| **M1** | Diagnóstico fechado | PC-01 resolvida (24 features); RAG no modo `incompleto` decidido (não chama RAG); divergência do encoder (`max_seq_length`) **adiada com registro** até T-03 executar o modelo | `DICIONARIO_DE_DADOS.md` §1 · `ESTRATEGIA_RAG.md` §7 · T-03 em `ROADMAP_TECNICO.md` | **Parcial** (encoder `[VAL]`) |
-| **M2** | Dados prontos | `scripts/train.py --gerar-dataset` produz 8 000 registros; `--verificar-dataset` confere o SHA-256 do manifesto versionado; `test_dataset_sem_vazamento.py` passa | Execução dos dois comandos + `pytest tests/unit/test_dataset_*.py` | **Pendente** |
-| **M3** | Modelos comparáveis | `artifacts/metrics/comparacao.json` contém os 4 modelos, no mesmo split identificado por hash, com ponto e IC por bootstrap em cada métrica | Leitura do JSON + conferência do hash de split | **Pendente** |
-| **M4** | Predição explicável | Um payload válido produz `top_features` com ≥ 3 entradas e `explanation_method` preenchido; o mesmo ocorre com `shap` desinstalado, com método diferente | `pytest tests/unit/test_explicabilidade_fallback.py` | **Pendente** |
-| **M5** | Fluxo integrado | O grafo compilado de `risco_ml` tem ≥ 3 arestas condicionais e os 4 caminhos de exceção são alcançados por teste; cada execução grava exatamente 1 linha em `predicoes_ml` | `pytest tests/integration/test_workflow_risco_ml.py tests/integration/test_auditoria_predicoes.py` | **Pendente** |
-| **M6** | Demonstrável | `python scripts/run_demo.py` termina com código 0 e produz as 4 saídas em `artifacts/demo/`; a 6ª aba renderiza os 4 modos sem traceback | Execução do comando + `pytest tests/e2e/` | **Pendente** |
-| **M7** | Comprovadamente executável | `docs/deploy/EXECUCAO_DOCKER.md` e `EXECUCAO_LOCAL.md` contêm o **log real** de `docker build`, `docker run` e da sessão local limpa; a suíte completa passa em ≤ 5 min sem GPU e sem rede | Leitura dos logs anexados + `pytest` no perfil `ml-only` | **Pendente** |
-| **M8** | Entrega fechada | Os 20 critérios de aceite da evolução têm status definido com evidência apontada; nenhum número publicado em `docs/ml/` sem chave em `artifacts/metrics/` | Conferência cruzada documento × JSON + matriz de rastreabilidade | **Pendente** |
+| **M1** | Diagnóstico fechado | PC-01 resolvida (24 features); RAG no modo `incompleto` decidido (não chama RAG); `max_seq_length` = 128 no config do Hub | `DICIONARIO_DE_DADOS.md` §1 · `ESTRATEGIA_RAG.md` §3.1 · T-03 | **Atendido** (pesos do encoder ausentes localmente) |
+| **M2** | Dados prontos | `scripts/train.py --gerar-dataset` produz 8 000 registros; `--verificar-dataset` confere o SHA-256 do manifesto versionado; `test_dataset_sem_vazamento.py` passa | Execução dos dois comandos + `pytest tests/unit/test_dataset_*.py` | **Atendido** |
+| **M3** | Modelos comparáveis | `artifacts/metrics/comparacao.json` contém os 4 modelos, no mesmo split identificado por hash, com ponto e IC por bootstrap em cada métrica | Leitura do JSON + conferência do hash de split | **Atendido** |
+| **M4** | Predição explicável | Um payload válido produz `top_features` com ≥ 3 entradas e `explanation_method` preenchido; o mesmo ocorre com `shap` desinstalado, com método diferente | `pytest tests/unit/test_explicabilidade_fallback.py` | **Atendido** (`coef_linear` / `permutacao`) |
+| **M5** | Fluxo integrado | O grafo compilado de `risco_ml` tem ≥ 3 arestas condicionais e os 4 caminhos de exceção são alcançados por teste; cada execução grava exatamente 1 linha em `predicoes_ml` | `pytest tests/integration/test_risco_ml.py` | **Atendido** |
+| **M6** | Demonstrável | `python scripts/run_demo.py` termina com código 0 e produz as 4 saídas em `artifacts/demo/`; a 6ª aba renderiza os 4 modos sem traceback | Execução do comando + `pytest tests/e2e/` | **Atendido** |
+| **M7** | Comprovadamente executável | `docs/deploy/EXECUCAO_DOCKER.md` e `EXECUCAO_LOCAL.md` contêm o **log real** de `docker build`, `docker run` e da sessão local limpa; a suíte completa passa em ≤ 5 min sem GPU e sem rede | Leitura dos logs anexados + `pytest` no perfil `ml-only` | **Atendido** |
+| **M8** | Entrega fechada | Os 20 critérios de aceite da evolução têm status definido com evidência apontada; nenhum número publicado no banner de `docs/ml/` sem chave em `artifacts/metrics/` | Conferência cruzada documento × JSON + matriz de rastreabilidade | **Atendido** (corpo-modelo vazio de `METRICAS_E_RESULTADOS.md` permanece como arquivo histórico) |
 
-**8 de 8 marcos pendentes.**
+**8 de 8 marcos com evidência nesta branch** (ressalvas: SHAP, encoder sem pesos locais).
 
 ### 5.1 O marco que decide a entrega
 

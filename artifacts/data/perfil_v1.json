@@ -1,0 +1,37 @@
+{
+  "n": 8000,
+  "n_features": 24,
+  "prevalencia_alto_risco": 0.20575,
+  "splits": {
+    "treino": 5600,
+    "validacao": 1200,
+    "teste": 1200
+  },
+  "nulos_por_feature": {
+    "idade": 0,
+    "imc_pre_gestacional": 0,
+    "ig_semanas": 0,
+    "gestacoes": 0,
+    "partos": 0,
+    "abortos": 0,
+    "pas_mmhg": 0,
+    "pad_mmhg": 0,
+    "has_cronica": 0,
+    "diabetes_previo": 0,
+    "gemelaridade": 0,
+    "escolaridade_anos": 1643,
+    "cesareas_previas": 0,
+    "natimorto_previo": 0,
+    "pre_eclampsia_previa": 0,
+    "intervalo_interpartal_meses": 4010,
+    "hemoglobina_g_dl": 924,
+    "glicemia_jejum_mg_dl": 1188,
+    "proteinuria_fita": 1347,
+    "cardiopatia": 0,
+    "nefropatia": 0,
+    "tev_previo": 0,
+    "tabagismo": 0,
+    "infeccao_sexual_ativa": 0
+  },
+  "natureza": "SINTETICO"
+}

@@ -61,11 +61,11 @@ Perfil `ml-only`: rede desabilitada, ≤ 5 minutos, 100 % passando, cobertura de
 
 ## Definição de pronto
 
-- [ ] `pytest` verde documentado em `RELATORIO_DE_TESTES.md`
-- [ ] Cobertura anexada (saída de `--cov`, não número chutado)
-- [ ] `docs/deploy/EXECUCAO_DOCKER.md` contém log **literal** de `docker build` e `docker run` (data, tamanho da imagem, tempo)
-- [ ] `docs/deploy/EXECUCAO_LOCAL.md` contém sessão de clone + venv + treino + predict, ≤ 15 min, zero edição de fonte
-- [ ] RF-19 só então pode ser marcado atendido
+- [x] `pytest` verde documentado em `RELATORIO_DE_TESTES.md`
+- [x] Cobertura anexada (saída de `--cov`, não número chutado)
+- [x] `docs/deploy/EXECUCAO_DOCKER.md` contém log **literal** de `docker build` e `docker run` (data, tamanho da imagem, tempo)
+- [x] `docs/deploy/EXECUCAO_LOCAL.md` contém sessão de clone + venv + treino + predict, ≤ 15 min, zero edição de fonte
+- [x] RF-19 só então pode ser marcado atendido
 
 ## Se o build falhar
 

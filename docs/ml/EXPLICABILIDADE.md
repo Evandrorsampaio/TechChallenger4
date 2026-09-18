@@ -1,4 +1,19 @@
+> **Status (2026-09-18):** `lib/ml/explain.py` implementado. SHAP **não** está instalado neste ambiente (`SHAP_DISPONIVEL=False`). Exemplo local (LogReg, `coef_linear`) = `artifacts/explainability/shap_exemplo.json`. Importância global (RF, permutação, n=200 validação, 2 repeats) = `artifacts/explainability/importancia_global.json`.
+
+As variáveis que mais contribuíram para esta classificação (cópia literal do JSON, caso D1-like, LogReg):
+
+| feature | value | contribution | direction |
+|---|---|---|---|
+| pas_mmhg | 118 | 0.21195115104495132 | aumenta |
+| imc_pre_gestacional | 24.0 | -0.1352754033297112 | reduz |
+| glicemia_jejum_mg_dl | 82.0 | -0.086775660296531 | reduz |
+| escolaridade_anos | 12 | -0.06115479792729405 | reduz |
+| cesareas_previas | 0 | -0.03094286079170258 | reduz |
+
+Linguagem permitida: “As variáveis que mais contribuíram para esta classificação foram…”. Proibido: causalidade (“causou o risco”).
+
 # Estratégia de Explicabilidade
+
 
 **Agente responsável:** `ExplainabilityAgent`
 **Status:** Estratégia definida — **nada implementado, nenhuma explicação gerada**
@@ -188,18 +203,22 @@ declarada** no payload como `metodo='logreg_proxy'`, com aviso textual ao usuár
 | `artifacts/explainability/logreg_coeficientes.json` | Coeficientes padronizados, em unidade original, e razões de chance | `modelo.coef_` |
 | `artifacts/explainability/<modelo>_dependencia_<feature>.png` | Gráficos de dependência para as 5 principais | `shap.dependence_plot` |
 
-**Estado:** nenhum arquivo existe.
+**Estado (2026-09-18):** `artifacts/explainability/importancia_global.json` gerado por `permutation_importance` no Random Forest, amostra de validação (200 linhas, 2 repeats, `scoring=average_precision`). SHAP beeswarm **não** gerado (`shap` ausente). Contribuição negativa na permutação significa que embaralhar a feature **aumentou** AP nesta amostra — ruído, não efeito causal.
 
-### 3.2 Tabela de importância global — modelo vazio
+### 3.2 Tabela de importância global — Random Forest (permutação)
 
-| Posição | Feature | Importância | Direção predominante | β do gerador | Sinal concorda? |
+Cópia dos `top_features` de `importancia_global.json` (arredondamento só na coluna Importância; o JSON permanece a fonte).
+
+| Posição | Feature | Importância | Direção (API) | β do gerador (especificação) | Sinal concorda? |
 |---|---|---|---|---|---|
-| 1 | — | — | — | — | — |
-| 2 | — | — | — | — | — |
-| 3 | — | — | — | — | — |
-| ... | — | — | — | — | — |
-
-_PENDENTE — `artifacts/explainability/<modelo>_importancia_global.json`_
+| 1 | pad_mmhg | 0,0436 | aumenta | `(pad−75)/10` +0,32 | sim (magnitude da permutação, não do β) |
+| 2 | pas_mmhg | 0,0430 | aumenta | `(pas−120)/10` +0,38 | sim |
+| 3 | has_cronica | 0,0429 | aumenta | +1,60 | sim |
+| 4 | imc_pre_gestacional | 0,0415 | aumenta | `(imc−24)/5` +0,34 | sim |
+| 5 | glicemia_jejum_mg_dl | −0,0359 | reduz | `glicemia≥92` +0,55 | **não nesta amostra** (importância média negativa) |
+| 6 | diabetes_previo | −0,0293 | reduz | +1,45 | **não nesta amostra** |
+| 7 | cardiopatia | 0,0137 | aumenta | +1,90 | sim |
+| 8 | pre_eclampsia_previa | 0,0104 | aumenta | +1,70 | sim |
 
 A coluna "β do gerador" permite a verificação de sanidade descrita em §6.3. Ela é preenchida a
 partir de `ESTRATEGIA_DE_ROTULAGEM.md` §2, que é especificação e não resultado; a comparação com a

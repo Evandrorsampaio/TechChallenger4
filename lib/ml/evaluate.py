@@ -152,11 +152,28 @@ def analisar_erros(X: pd.DataFrame, y_true, y_prob, limiar: float) -> dict:
     }
 
 
-def avaliar_modelos(modelos: dict, df: pd.DataFrame | None = None) -> dict:
+def _merge_json(path: Path, novo: dict) -> dict:
+    if path.exists():
+        try:
+            antigo = json.loads(path.read_text(encoding='utf-8'))
+        except (OSError, json.JSONDecodeError):
+            antigo = {}
+        if isinstance(antigo, dict):
+            antigo.update(novo)
+            return antigo
+    return novo
+
+
+def avaliar_modelos(
+    modelos: dict,
+    df: pd.DataFrame | None = None,
+    dest: Path | None = None,
+    n_bootstrap: int = 1000,
+) -> dict:
     if df is None:
         df = pd.read_parquet(caminho_parquet())
     X, y, full = carregar_xy(df)
-    dest = artifacts_dir() / 'metrics'
+    dest = dest or (artifacts_dir() / 'metrics')
     dest.mkdir(parents=True, exist_ok=True)
     comparacao = {}
     limiares = {}
@@ -182,22 +199,25 @@ def avaliar_modelos(modelos: dict, df: pd.DataFrame | None = None) -> dict:
                 json.dumps(met, indent=2, ensure_ascii=False) + '\n', encoding='utf-8'
             )
         y_te, p_te = probs['teste']
-        bloco['bootstrap_teste'] = bootstrap_ic(y_te, p_te, limiares[nome])
+        bloco['bootstrap_teste'] = bootstrap_ic(y_te, p_te, limiares[nome], n=n_bootstrap)
         mask_te = full['split'] == 'teste'
         bloco['analise_erros_teste'] = analisar_erros(
             X.loc[mask_te].reset_index(drop=True), y_te, p_te, limiares[nome]
         )
         comparacao[nome] = bloco
+    limiares_out = _merge_json(dest / 'limiar.json', limiares)
+    comparacao_out = _merge_json(dest / 'comparacao.json', comparacao)
+    erros_novos = {k: v['analise_erros_teste'] for k, v in comparacao.items()}
+    erros_out = _merge_json(dest / 'analise_erros.json', erros_novos)
     (dest / 'limiar.json').write_text(
-        json.dumps(limiares, indent=2) + '\n', encoding='utf-8'
+        json.dumps(limiares_out, indent=2) + '\n', encoding='utf-8'
     )
     (dest / 'comparacao.json').write_text(
-        json.dumps(comparacao, indent=2, default=str, ensure_ascii=False) + '\n',
+        json.dumps(comparacao_out, indent=2, default=str, ensure_ascii=False) + '\n',
         encoding='utf-8',
     )
     (dest / 'analise_erros.json').write_text(
-        json.dumps({k: v['analise_erros_teste'] for k, v in comparacao.items()}, indent=2, ensure_ascii=False)
-        + '\n',
+        json.dumps(erros_out, indent=2, ensure_ascii=False) + '\n',
         encoding='utf-8',
     )
-    return {'comparacao': comparacao, 'limiares': limiares}
+    return {'comparacao': comparacao_out, 'limiares': limiares_out}

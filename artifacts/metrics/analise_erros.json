@@ -39,5 +39,138 @@
         "recall": 1.0
       }
     }
+  },
+  "baseline_regra": {
+    "falsos_negativos": {
+      "n": 0
+    },
+    "falsos_positivos": {
+      "n": 953,
+      "has_cronica_taxa": 0.01049317943336831,
+      "diabetes_previo_taxa": 0.012591815320041973,
+      "gemelaridade_taxa": 0.017838405036726127,
+      "idade_media": 26.876180482686255,
+      "imc_pre_gestacional_media": 25.96149003147954
+    },
+    "subgrupo_idade": {
+      "<=19": {
+        "n": 118,
+        "recall": 1.0
+      },
+      "20-34": {
+        "n": 972,
+        "recall": 1.0
+      },
+      ">=35": {
+        "n": 110,
+        "recall": 1.0
+      }
+    },
+    "subgrupo_ig": {
+      "T1": {
+        "n": 345,
+        "recall": 1.0
+      },
+      "T2": {
+        "n": 492,
+        "recall": 1.0
+      },
+      "T3": {
+        "n": 363,
+        "recall": 1.0
+      }
+    }
+  },
+  "logistic_regression": {
+    "falsos_negativos": {
+      "n": 11,
+      "has_cronica_taxa": 0.0,
+      "diabetes_previo_taxa": 0.0,
+      "gemelaridade_taxa": 0.0,
+      "idade_media": 26.545454545454547,
+      "imc_pre_gestacional_media": 24.527272727272727
+    },
+    "falsos_positivos": {
+      "n": 655,
+      "has_cronica_taxa": 0.015267175572519083,
+      "diabetes_previo_taxa": 0.0183206106870229,
+      "gemelaridade_taxa": 0.024427480916030534,
+      "idade_media": 27.218320610687023,
+      "imc_pre_gestacional_media": 26.68030534351145
+    },
+    "subgrupo_idade": {
+      "<=19": {
+        "n": 118,
+        "recall": 0.9
+      },
+      "20-34": {
+        "n": 972,
+        "recall": 0.9601990049751243
+      },
+      ">=35": {
+        "n": 110,
+        "recall": 0.9615384615384616
+      }
+    },
+    "subgrupo_ig": {
+      "T1": {
+        "n": 345,
+        "recall": 0.9863013698630136
+      },
+      "T2": {
+        "n": 492,
+        "recall": 0.9696969696969697
+      },
+      "T3": {
+        "n": 363,
+        "recall": 0.9066666666666666
+      }
+    }
+  },
+  "random_forest": {
+    "falsos_negativos": {
+      "n": 13,
+      "has_cronica_taxa": 0.0,
+      "diabetes_previo_taxa": 0.0,
+      "gemelaridade_taxa": 0.0,
+      "idade_media": 27.153846153846153,
+      "imc_pre_gestacional_media": 26.71538461538461
+    },
+    "falsos_positivos": {
+      "n": 719,
+      "has_cronica_taxa": 0.013908205841446454,
+      "diabetes_previo_taxa": 0.016689847009735744,
+      "gemelaridade_taxa": 0.01808066759388039,
+      "idade_media": 26.819193324061196,
+      "imc_pre_gestacional_media": 26.314464534075107
+    },
+    "subgrupo_idade": {
+      "<=19": {
+        "n": 118,
+        "recall": 0.95
+      },
+      "20-34": {
+        "n": 972,
+        "recall": 0.9502487562189055
+      },
+      ">=35": {
+        "n": 110,
+        "recall": 0.9230769230769231
+      }
+    },
+    "subgrupo_ig": {
+      "T1": {
+        "n": 345,
+        "recall": 0.9452054794520548
+      },
+      "T2": {
+        "n": 492,
+        "recall": 0.9696969696969697
+      },
+      "T3": {
+        "n": 363,
+        "recall": 0.92
+      }
+    }
   }
 }

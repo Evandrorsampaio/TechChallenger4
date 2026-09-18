@@ -93,11 +93,11 @@ CA-08 regra antes do ML · CA-09 bypass · CA-20/21 RAG · CA-22…24 caminhos d
 
 ## Definição de pronto
 
-- [ ] `pytest tests/integration/` verde com `FakeChatModel`, sem GPU
-- [ ] Caso cefaleia + escotomas + epigastralgia → `bypass_regra` apesar de P=0,05
-- [ ] 4 modos gravam 1 linha cada
-- [ ] Flag desligada: obstétrico inalterado (teste de regressão, mesmo que T-45 seja Should)
-- [ ] T-48: 6 medidas visíveis se o item for incluído
+- [x] `pytest tests/integration/` verde com `FakeChatModel`, sem GPU
+- [x] Caso cefaleia + escotomas + epigastralgia → `bypass_regra` apesar de P=0,05
+- [x] 4 modos gravam 1 linha cada
+- [x] Flag desligada: obstétrico inalterado (teste de regressão, mesmo que T-45 seja Should)
+- [x] T-48: 6 medidas visíveis se o item for incluído
 
 ## Rollback
 

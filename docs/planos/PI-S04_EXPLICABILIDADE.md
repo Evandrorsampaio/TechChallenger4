@@ -73,10 +73,10 @@ RIS-07 (`shap` no Python 3.13): T-34 simula ausência. Se a instalação falhar 
 
 ## Definição de pronto
 
-- [ ] Import de `lib.ml.explain` não quebra sem `shap`
-- [ ] Payload traz `explanation_method` e `explanation_scope`
-- [ ] Teste com monkeypatch de import passa
-- [ ] Exemplos nos docs são cópia literal dos JSON gerados
+- [x] Import de `lib.ml.explain` não quebra sem `shap`
+- [x] Payload traz `explanation_method` e `explanation_scope`
+- [x] Teste com monkeypatch de import passa
+- [x] Exemplos nos docs são cópia literal dos JSON gerados
 
 ## Próximo plano
 

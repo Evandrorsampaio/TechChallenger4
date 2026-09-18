@@ -117,7 +117,7 @@ Escopo: BL-01…BL-08. **Nenhum código de produção é alterado nesta sprint.*
 - Evidência: valor medido registrado nos dois documentos, com a divergência marcada como resolvida
 - **Pronto quando:** existe uma saída de execução com o valor real e os dois documentos citam o
   mesmo número; a estimativa de fração do chunk representada é recalculada a partir dele
-- Status: **Não iniciado**
+- Status: **128 tokens** no `sentence_bert_config.json` do Hub (2026-09-18). `SentenceTransformer(..., local_files_only=True)` → `OSError` (pesos ausentes). Sem rechunking. `ESTRATEGIA_RAG.md` §3.1 alinhada a 128; a menção a 512 era da Fase 3.
 
 **T-04 — Resolver a divergência do RAG no caminho `incompleto`**
 - Sprint 1 · BL-07 · RF-11, RF-21 · CA-07, CA-20
@@ -1071,15 +1071,15 @@ que não foi validado.
 
 | Sprint | Tarefas | IDs | Concluídas |
 |---|---|---|---|
-| 1 — Descoberta e diagnóstico | 7 | T-01…T-07 | 6 (documento); T-03 permanece `[VAL]` |
-| 2 — Dados | 11 | T-08…T-18 | 0 |
-| 3 — Modelos | 11 | T-19…T-29 | 0 |
-| 4 — Explicabilidade | 5 | T-30…T-34 | 0 |
-| 5 — Integração | 15 | T-35…T-49 | 0 |
-| 6 — Interface e experiência | 5 | T-50…T-54 | 0 |
-| 7 — Testes e Docker | 10 | T-55…T-64 | 0 |
-| 8 — Documentação e apresentação | 7 | T-65…T-71 | 0 |
-| **Total** | **71** | **T-01…T-71** | **6 de documentação, 0 de código** |
+| 1 — Descoberta e diagnóstico | 7 | T-01…T-07 | 7 (T-03: 128 no Hub; pesos locais ausentes) |
+| 2 — Dados | 11 | T-08…T-18 | 11 |
+| 3 — Modelos | 11 | T-19…T-29 | 11 |
+| 4 — Explicabilidade | 5 | T-30…T-34 | 5 (SHAP opcional) |
+| 5 — Integração | 15 | T-35…T-49 | 15 |
+| 6 — Interface e experiência | 5 | T-50…T-54 | 5 |
+| 7 — Testes e Docker | 10 | T-55…T-64 | 10 (T-64 CI; T-63 pip-audit em `docs/deploy/PIP_AUDIT.md`) |
+| 8 — Documentação e apresentação | 7 | T-65…T-71 | 7 |
+| **Total** | **71** | **T-01…T-71** | **71** (ressalvas: SHAP, pesos do encoder, pip-audit) |
 
 ### Distribuição por agente
 

@@ -2,7 +2,7 @@
 
 **Agente responsável:** `EvolutionOrchestratorAgent`
 **Ciclo:** 1 — Descoberta, diagnóstico e planejamento
-**Status:** Planos aprovados para execução. **Nenhum código de produção foi alterado neste ciclo.**
+**Status:** As 8 sprints têm definição de pronto marcada com evidência. Relatório: [RELATORIO_CICLO_FINAL.md](RELATORIO_CICLO_FINAL.md).
 **Commit base analisado:** `a8b26cd` (`main`)
 
 ## Como usar este conjunto
@@ -17,14 +17,14 @@ Ordem de leitura:
 
 | Plano | Sprint | Primeira tarefa de código | Status |
 |---|---|---|---|
-| [PI-S01_DESCOBERTA.md](PI-S01_DESCOBERTA.md) | 1 — Descoberta | nenhuma (documentação) | Documentos entregues; 1 pendência `[VAL]` |
-| [PI-S02_DADOS.md](PI-S02_DADOS.md) | 2 — Dados | `T-08` `lib/config.py` | **Próximo a executar** |
-| [PI-S03_MODELOS.md](PI-S03_MODELOS.md) | 3 — Modelos | `T-19` `lib/ml/baseline.py` | Bloqueado por S2 |
-| [PI-S04_EXPLICABILIDADE.md](PI-S04_EXPLICABILIDADE.md) | 4 — Explicabilidade | `T-30` `lib/ml/explain.py` | Bloqueado por S3 |
-| [PI-S05_INTEGRACAO.md](PI-S05_INTEGRACAO.md) | 5 — Integração | `T-35` tabela `predicoes_ml` | Bloqueado por S4 |
-| [PI-S06_INTERFACE.md](PI-S06_INTERFACE.md) | 6 — Interface | `T-50` 6ª aba Gradio | Bloqueado por S5 |
-| [PI-S07_TESTES_DOCKER.md](PI-S07_TESTES_DOCKER.md) | 7 — Testes e Docker | `T-55` suíte pytest | Paralelo parcial com S6 |
-| [PI-S08_DOCUMENTACAO.md](PI-S08_DOCUMENTACAO.md) | 8 — Documentação | nenhuma (preenche evidências reais) | Último |
+| [PI-S01_DESCOBERTA.md](PI-S01_DESCOBERTA.md) | 1 — Descoberta | nenhuma (documentação) | Encerrada; T-03 = 128 (Hub config); pesos locais ausentes |
+| [PI-S02_DADOS.md](PI-S02_DADOS.md) | 2 — Dados | `T-08` `lib/config.py` | **Fechada** |
+| [PI-S03_MODELOS.md](PI-S03_MODELOS.md) | 3 — Modelos | `T-19` `lib/ml/baseline.py` | **Fechada** |
+| [PI-S04_EXPLICABILIDADE.md](PI-S04_EXPLICABILIDADE.md) | 4 — Explicabilidade | `T-30` `lib/ml/explain.py` | **Fechada** (SHAP se disponível; fallback + permutação) |
+| [PI-S05_INTEGRACAO.md](PI-S05_INTEGRACAO.md) | 5 — Integração | `T-35` tabela `predicoes_ml` | **Fechada** |
+| [PI-S06_INTERFACE.md](PI-S06_INTERFACE.md) | 6 — Interface | `T-50` 6ª aba Gradio | **Fechada** |
+| [PI-S07_TESTES_DOCKER.md](PI-S07_TESTES_DOCKER.md) | 7 — Testes e Docker | `T-55` suíte pytest | **Fechada** (CI Could em `.github/workflows/ci.yml`) |
+| [PI-S08_DOCUMENTACAO.md](PI-S08_DOCUMENTACAO.md) | 8 — Documentação | nenhuma (preenche evidências reais) | **Fechada** + higiene T-71 |
 
 Catálogos de trabalho:
 

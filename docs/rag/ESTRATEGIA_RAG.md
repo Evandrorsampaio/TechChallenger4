@@ -113,10 +113,15 @@ Boa salvaguarda, herdada de `02_gerar_dataset_sft.ipynb`.
 Vetores normalizados + Chroma com distância padrão implicam que a ordenação é equivalente a
 similaridade de cosseno — o que importa para qualquer interpretação de score na avaliação.
 
-### 3.1 Limitação: janela de 512 tokens contra chunk de 6000 caracteres
+### 3.1 Limitação: janela do encoder contra chunk de 6000 caracteres
 
-`paraphrase-multilingual-MiniLM-L12-v2` tem comprimento máximo de sequência de **512 tokens**. Um
-chunk de 6000 caracteres em português tem ~1200–1500 tokens.
+`paraphrase-multilingual-MiniLM-L12-v2` foi descrito no notebook 06 / nesta seção com janela de
+**512 tokens**. **T-03 (2026-09-18):** o `sentence_bert_config.json` do Hub declara
+`max_seq_length: 128`. A carga `SentenceTransformer` com pesos locais falhou neste ambiente
+(`OSError`, arquivos de peso ausentes). Sem reindexação.
+
+Com 128 tokens, um chunk de 6000 caracteres em português é truncado ainda mais cedo do que a hipótese
+de 512: o embedding representa sobretudo o **início** do chunk.
 
 **Consequência:** o `sentence-transformers` trunca a entrada. O embedding de cada chunk representa
 aproximadamente o **primeiro terço** do seu texto. Os outros dois terços estão armazenados e serão

@@ -18,12 +18,17 @@ def main() -> int:
     p.add_argument('--gerar-dataset', action='store_true')
     p.add_argument('--verificar-dataset', action='store_true')
     p.add_argument('--avaliar', action='store_true', help='avalia após treinar')
+    p.add_argument('--perfilar', action='store_true')
     args = p.parse_args()
-    from lib.ml.dataset import gerar_e_salvar, verificar_dataset
+    from lib.ml.dataset import gerar_e_salvar, gravar_perfil, verificar_dataset
 
     if args.gerar_dataset:
         man = gerar_e_salvar()
         print(json.dumps(man, indent=2, ensure_ascii=False))
+        return 0
+    if args.perfilar:
+        path = gravar_perfil()
+        print(path)
         return 0
     if args.verificar_dataset:
         print(json.dumps(verificar_dataset(), indent=2))

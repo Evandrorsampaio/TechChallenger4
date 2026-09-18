@@ -13,7 +13,6 @@ from typing import Any
 from pydantic import BaseModel, Field
 
 from . import alertas as alertas_mod
-from . import db as db_mod
 
 
 # Identificador do profissional logado (em produção viria de OAuth/SSO).
@@ -232,24 +231,11 @@ def buscar_protocolo(query: str, retriever, k: int = 4,
     """Busca chunks dos protocolos via retriever Chroma já indexado.
 
     `retriever` deve ser um objeto com .invoke(query) -> List[Document].
-    Filtragem por categoria é feita em pós-processamento porque o retriever
-    em si não suporta filtro dinâmico em todas as versões do langchain.
+    Delega a `lib.workflows.common.rag_search` (filtro nativo com fallback).
     """
-    docs = retriever.invoke(query)
-    resultados = []
-    for d in docs[:k * 2]:  # pega mais e filtra
-        meta = d.metadata or {}
-        if categoria and meta.get('category') != categoria:
-            continue
-        resultados.append({
-            'trecho': d.page_content,
-            'doc_id': meta.get('doc_id'),
-            'category': meta.get('category'),
-            'chunk_id': meta.get('chunk_id'),
-        })
-        if len(resultados) >= k:
-            break
-    return resultados
+    from lib.workflows.common import rag_search
+
+    return rag_search(retriever, query, categoria=categoria, k=k)
 
 
 def predizer_risco_gestacional(

@@ -23,15 +23,16 @@ o LLM só gera linguagem para orientações e lembretes.
 """
 from __future__ import annotations
 
-from datetime import date, timedelta
+from datetime import timedelta
 from typing import TypedDict
+
+from lib.config import REFERENCE_DATE
 
 from . import common
 from .. import tools as tools_mod
 from .. import alertas as alertas_mod
 
-
-TODAY = date(2026, 5, 23)
+TODAY = REFERENCE_DATE
 
 
 class PrevencaoState(TypedDict, total=False):

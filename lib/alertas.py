@@ -13,7 +13,9 @@ from dataclasses import dataclass, field
 from datetime import date, timedelta
 from typing import Literal
 
-TODAY = date(2026, 5, 22)
+from lib.config import REFERENCE_DATE
+
+TODAY = REFERENCE_DATE
 
 DIAS_ANO = 365
 

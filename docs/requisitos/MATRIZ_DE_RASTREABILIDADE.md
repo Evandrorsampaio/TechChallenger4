@@ -1,8 +1,4 @@
-> ## Status do ciclo de implementação (2026-09-18)
->
-> Código e testes dos RF de ML existem. **RF-19 (Docker)** evidenciado em `docs/deploy/EXECUCAO_DOCKER.md` (build 699 s, run exit 0).
-> Checklist §13: 16 atendidos, 3 parciais (`docs/requisitos/CRITERIOS_DE_ACEITE.md`).
-> A coluna Status das 46 linhas abaixo ainda descreve o plano original; a evidência viva está nos artefatos e na suíte `pytest`.
+> **Status real (2026-09-18):** RF-01…RF-26 e RNF-01…RNF-20 desta evolução estão **Atendidos** no código/testes/artefatos, com ressalvas: RF-11 RAG real só no perfil GPU/Colab (FakeRetriever nos testes); SHAP opcional; encoder de embeddings sem pesos locais. A tabela longa abaixo foi o plano do ciclo 1 — a evidência viva está em `docs/requisitos/CRITERIOS_DE_ACEITE.md` (20 critérios) e na suíte pytest.
 
 # Matriz de Rastreabilidade
 

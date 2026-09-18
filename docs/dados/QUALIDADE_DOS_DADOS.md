@@ -1,4 +1,7 @@
+> **Medidas do manifesto v1.0.0** (`artifacts/data/risco_gestacional_v1.manifest.json` e `perfil_v1.json`): n=8000, sha256 `6a3b6aefe9e2cf1bb3ec9123386cac4812fd4ef1602657d7950668d5abc20e2f`, prevalência alto_risco **0,20575**, splits 5600/1200/1200. Dataset **sintético**. Nulos opcionais: `intervalo_interpartal_meses` 4010, `escolaridade_anos` 1643, `proteinuria_fita` 1347, `glicemia_jejum_mg_dl` 1188, `hemoglobina_g_dl` 924 (obrigatórias 0 nulos).
+
 # Qualidade dos Dados — Plano e Modelo de Relatório
+
 
 **Agente responsável:** `DataEngineeringAgent`
 **Status:** Plano definido — **dataset não gerado, nenhuma verificação executada**

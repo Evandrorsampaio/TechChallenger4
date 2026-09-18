@@ -63,16 +63,32 @@ def build_agent(chat_model, tools_list, system_prompt: str = SYSTEM_PROMPT,
     except ImportError as e:
         raise ImportError('langgraph não instalado. Rode: pip install langgraph') from e
 
-    return create_react_agent(
+    agent = create_react_agent(
         model=chat_model,
         tools=tools_list,
         prompt=system_prompt,
     )
+    try:
+        agent.max_iterations = max_iterations
+        return agent
+    except Exception:
+        class _AgentComTeto:
+            def __init__(self, inner, n):
+                self._inner = inner
+                self.max_iterations = n
+
+            def invoke(self, *args, **kwargs):
+                return self._inner.invoke(*args, **kwargs)
+
+            def __getattr__(self, name):
+                return getattr(self._inner, name)
+
+        return _AgentComTeto(agent, max_iterations)
 
 
 def run_consulta(agent, pergunta: str, paciente_id: int | None = None,
                  historico: list | None = None,
-                 recursion_limit: int = 12) -> dict[str, Any]:
+                 recursion_limit: int | None = None) -> dict[str, Any]:
     """Executa uma consulta no agente.
 
     Retorna:
@@ -89,6 +105,10 @@ def run_consulta(agent, pergunta: str, paciente_id: int | None = None,
 
     mensagens_in = list(historico) if historico else []
     mensagens_in.append(HumanMessage(content=pergunta))
+
+    if recursion_limit is None:
+        iters = int(getattr(agent, 'max_iterations', 6) or 6)
+        recursion_limit = max(12, iters * 2)
 
     estado = agent.invoke(
         {'messages': mensagens_in},

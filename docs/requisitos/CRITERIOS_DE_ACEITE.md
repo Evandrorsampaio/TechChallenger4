@@ -568,7 +568,7 @@ vinculantes deste repositório. Cada um aponta os cenários e requisitos que o c
 | 6 | Os modelos foram comparados na mesma métrica e no mesmo split, com intervalo de confiança | CA-13, CA-15; RF-08 | `artifacts/metrics/comparacao.json` | **Atendido** |
 | 7 | A métrica primária é adequada ao problema e a acurácia não é critério isolado | CA-15; RF-09 | `docs/ml/METRICAS_E_RESULTADOS.md` | **Atendido** |
 | 8 | O limiar de decisão é justificado, versionado e escolhido fora do conjunto de teste | CA-14; RF-06 | Campo `threshold` no `model_card.json` | **Atendido** (validação; LogReg t=0,278) |
-| 9 | Há explicabilidade por variável, com o método utilizado declarado | CA-18, CA-19; RF-10 | `artifacts/explainability/` + `docs/ml/EXPLICABILIDADE.md` | **Parcial** (código + fallback; SHAP opcional) |
+| 9 | Há explicabilidade por variável, com o método utilizado declarado | CA-18, CA-19; RF-10 | `artifacts/explainability/` + `docs/ml/EXPLICABILIDADE.md` | **Atendido** (SHAP ausente; `coef_linear` + `permutacao`; JSON literal) |
 | 10 | Regras determinísticas de segurança precedem e podem anular a inferência | CA-08, CA-09; RF-04, ADR-006 | `tests/integration/test_risco_ml.py` | **Atendido** |
 | 11 | Dados incompletos são tratados sem imputação silenciosa, com acionamento humano | CA-05, CA-06, CA-07; RF-03, RF-21, RNF-18 | `tests/unit/test_dados_incompletos.py` | **Atendido** |
 | 12 | O modelo está integrado a um workflow LangGraph com ramificação e tratamento de erro | CA-22, CA-23, CA-24; RF-12, RNF-09 | `lib/workflows/risco_ml.py` + diagrama | **Atendido** (compile LangGraph + executor equivalente se o runtime LangChain do host divergir) |

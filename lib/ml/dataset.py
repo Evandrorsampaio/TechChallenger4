@@ -294,6 +294,29 @@ def verificar_dataset(n: int = N_REGISTROS, seed: int = RANDOM_SEED) -> dict[str
     return {'ok': True, 'sha256': atual}
 
 
+def perfilar(df: pd.DataFrame | None = None) -> dict[str, Any]:
+    """T-16: estatísticas medidas do Parquet (não inventadas)."""
+    if df is None:
+        df = pd.read_parquet(caminho_parquet())
+    nulos = {c: int(df[c].isna().sum()) for c in FEATURES if c in df.columns}
+    return {
+        'n': int(len(df)),
+        'n_features': N_FEATURES,
+        'prevalencia_alto_risco': float(df['alto_risco'].mean()) if 'alto_risco' in df.columns else None,
+        'splits': {str(k): int(v) for k, v in df['split'].value_counts().items()} if 'split' in df.columns else {},
+        'nulos_por_feature': nulos,
+        'natureza': 'SINTETICO',
+    }
+
+
+def gravar_perfil(df: pd.DataFrame | None = None) -> Path:
+    data = perfilar(df)
+    path = artifacts_dir() / 'data' / 'perfil_v1.json'
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
+    return path
+
+
 def carregar_xy(df: pd.DataFrame | None = None) -> tuple[pd.DataFrame, pd.Series, pd.DataFrame]:
     """Devolve X (24 features), y, e o frame completo. Remove risco_latente de X."""
     if df is None:

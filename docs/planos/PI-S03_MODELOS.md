@@ -107,13 +107,13 @@ CA-13 (dois modelos + baselines), CA-14 (limiar), CA-15 (comparação com IC), C
 
 ## Definição de pronto
 
-- [ ] 4 `model_card.json` com os 9 campos
-- [ ] `artifacts/metrics/comparacao.json` com ponto e IC
-- [ ] `limiar.json` gerado na validação
-- [ ] `analise_erros.json` com perfil de FN (prioridade clínica) e FP
-- [ ] `scripts/train.py` e `scripts/evaluate.py` código 0 em CPU, sem Drive
-- [ ] Testes de payload e estabilidade verdes
-- [ ] Nenhum documento de `docs/ml/` preenchido com número digitado à mão (isso é T-66)
+- [x] 4 `model_card.json` com os 9 campos
+- [x] `artifacts/metrics/comparacao.json` com ponto e IC
+- [x] `limiar.json` gerado na validação
+- [x] `analise_erros.json` com perfil de FN (prioridade clínica) e FP
+- [x] `scripts/train.py` e `scripts/evaluate.py` código 0 em CPU, sem Drive
+- [x] Testes de payload e estabilidade verdes
+- [x] Nenhum documento de `docs/ml/` preenchido com número digitado à mão (isso é T-66)
 
 ## Rollback
 

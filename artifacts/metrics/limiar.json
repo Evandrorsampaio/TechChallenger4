@@ -1,3 +1,6 @@
 {
-  "dummy_prior": 0.2057142857142857
+  "dummy_prior": 0.2057142857142857,
+  "baseline_regra": 0.0,
+  "logistic_regression": 0.2782268517591518,
+  "random_forest": 0.323043884645939
 }
