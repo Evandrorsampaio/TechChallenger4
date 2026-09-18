@@ -1,0 +1,23 @@
+{
+  "nome": "random_forest",
+  "versao": "1.0.0",
+  "dataset_version": "v1.0.0",
+  "threshold": 0.323043884645939,
+  "hiperparametros": {
+    "modelo__max_depth": 8,
+    "modelo__min_samples_leaf": 4,
+    "modelo__n_estimators": 200
+  },
+  "metricas_teste": {
+    "recall_positivo": 0.9473684210526315,
+    "precision_positivo": 0.24554039874081846,
+    "pr_auc": 0.5570341259372873,
+    "roc_auc": 0.7925154317709684,
+    "f1_macro": 0.39,
+    "brier": 0.18448252010837596,
+    "acuracia": 0.39
+  },
+  "semente": 42,
+  "timestamp": "2026-09-18T15:14:26Z",
+  "pipeline_version": "1.0.0"
+}

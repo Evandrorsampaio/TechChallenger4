@@ -1,0 +1,36 @@
+{
+  "limiar": 0.5,
+  "matriz_confusao": {
+    "tn": 2956,
+    "fp": 1492,
+    "fn": 433,
+    "tp": 719
+  },
+  "precision_por_classe": {
+    "habitual": 0.8722336972558277,
+    "alto_risco": 0.3251922207146088
+  },
+  "recall_por_classe": {
+    "habitual": 0.664568345323741,
+    "alto_risco": 0.6241319444444444
+  },
+  "f1_por_classe": {
+    "habitual": 0.7543702947556463,
+    "alto_risco": 0.42759440975319657
+  },
+  "precision_macro": 0.5987129589852183,
+  "recall_macro": 0.6443501448840927,
+  "f1_macro": 0.5909823522544214,
+  "recall_positivo": 0.6241319444444444,
+  "precision_positivo": 0.3251922207146088,
+  "roc_auc": 0.6443501448840927,
+  "pr_auc": 0.2802842816042443,
+  "brier": 0.34375,
+  "especificidade": 0.664568345323741,
+  "npv": 0.8722336972558277,
+  "acuracia": 0.65625,
+  "acuracia_nao_decisoria": true,
+  "split": "treino",
+  "modelo": "baseline_regra",
+  "dataset_version": "v1.0.0"
+}

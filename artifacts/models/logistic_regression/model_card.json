@@ -1,0 +1,22 @@
+{
+  "nome": "logistic_regression",
+  "versao": "1.0.0",
+  "dataset_version": "v1.0.0",
+  "threshold": 0.2782268517591518,
+  "hiperparametros": {
+    "modelo__C": 10.0,
+    "modelo__penalty": "l2"
+  },
+  "metricas_teste": {
+    "recall_positivo": 0.9554655870445344,
+    "precision_positivo": 0.2648709315375982,
+    "pr_auc": 0.5900373384465858,
+    "roc_auc": 0.8044105339626408,
+    "f1_macro": 0.4435144928545367,
+    "brier": 0.18316278629036692,
+    "acuracia": 0.445
+  },
+  "semente": 42,
+  "timestamp": "2026-09-18T15:14:26Z",
+  "pipeline_version": "1.0.0"
+}

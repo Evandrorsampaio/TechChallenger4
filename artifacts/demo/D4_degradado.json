@@ -1,0 +1,41 @@
+{
+  "modo": "degradado",
+  "prediction": "alto_risco",
+  "probabilities": null,
+  "threshold": null,
+  "top_features": [],
+  "dados_imputados": [],
+  "regras_disparadas": [],
+  "fontes": [
+    {
+      "trecho": "Pré-natal de alto risco: encaminhar à referência regional.",
+      "doc_id": "ms_prenatal_alto_risco",
+      "category": "ginecologia_obstetricia",
+      "chunk_id": "c1"
+    }
+  ],
+  "safety_notice": "Resultado de apoio à decisão. Não realiza diagnóstico definitivo. Não substitui profissionais de saúde. Não deve ser utilizado como única fonte de decisão. Situações críticas devem ser encaminhadas para avaliação humana.",
+  "aviso_dados_sinteticos": "Modelo treinado em dados sintéticos. Sem validação clínica. Métricas medem a recuperação de um processo gerador definido por esta equipe.",
+  "resposta_texto": "As variáveis que mais contribuíram para esta classificação foram as listadas no payload. Encaminhar ao pré-natal de alto risco conforme o resultado do modelo. Não alterar as probabilidades informadas.\n\nResultado de apoio à decisão. Não realiza diagnóstico definitivo. Não substitui profissionais de saúde. Não deve ser utilizado como única fonte de decisão. Situações críticas devem ser encaminhadas para avaliação humana.\n\nModelo treinado em dados sintéticos. Sem validação clínica. Métricas medem a recuperação de um processo gerador definido por esta equipe.",
+  "campos_faltantes": [],
+  "erros_validacao": [],
+  "requer_intervencao_humana": false,
+  "intervencao": null,
+  "texto_descartado": false,
+  "auditoria_id": 4,
+  "correlation_id": "ebafb497-a999-4f22-a4d5-9c4421ca06d7",
+  "raciocinio": [
+    "Validação de contrato ok (24 features).",
+    "Regras SINAIS_ALARME_OBST: 0 disparo(s).",
+    "Falha forçada para modo degradado (demo/teste).",
+    "modo_degradado → alto_risco; critérios=['idade <16 ou >35a', 'HAS prévia ou induzida']",
+    "RAG: 1 trecho(s) para query clínica.",
+    "Síntese LLM gerada (somente leitura do payload).",
+    "Validação LLM: aprovada",
+    "Avisos de segurança anexados.",
+    "Auditoria predicoes_ml id=4."
+  ],
+  "falha_rag": null,
+  "falha_modelo": "forcado",
+  "explanation_method": "regra_deterministica"
+}

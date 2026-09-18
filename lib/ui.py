@@ -12,6 +12,7 @@ Se `workflows` não for passado, só Tab 1 e o checklist da Tab 3 aparecem.
 """
 from __future__ import annotations
 
+import json
 from typing import Any
 
 from . import alertas as alertas_mod
@@ -161,6 +162,8 @@ def _render_violencia_wf(state: dict) -> str:
     if r.get('protocolo_seguranca_ativado'):
         md.append('\n🔒 **Protocolo de segurança ATIVADO** '
                   '— atendimento em ambiente reservado, sem acompanhante.')
+        for m in r.get('medidas') or []:
+            md.append(f'- {m}')
 
     if r.get('conduta_sugerida'):
         md.append(f"\n### Conduta sugerida\n\n{r['conduta_sugerida']}")
@@ -280,6 +283,66 @@ def _render_prevencao(state: dict) -> str:
     return '\n'.join(md)
 
 
+def _render_risco_ml(state: dict) -> str:
+    r = state.get('resposta_estruturada') or state
+    modo = r.get('modo') or '?'
+    md = [f'## Risco gestacional (ML) — modo `{modo}`']
+    if modo == 'degradado':
+        md.append('\n⚠️ **Modo degradado:** o modelo supervisionado não estava disponível. '
+                  'A classificação abaixo veio da regra determinística `CRITERIOS_ALTO_RISCO`.')
+    if modo == 'bypass_regra':
+        md.append('\n🚨 **Encaminhamento imediato** por sinal de alarme obstétrico. O modelo não foi executado.')
+    if r.get('requer_intervencao_humana'):
+        iv = r.get('intervencao') or {}
+        md.append('\n### Dados incompletos')
+        md.append(iv.get('pergunta') or 'Completar campos obrigatórios.')
+        if r.get('campos_faltantes'):
+            md.append('**Campos:** ' + ', '.join(r['campos_faltantes']))
+    if r.get('erros_validacao'):
+        md.append('\n### Erros de validação')
+        for e in r['erros_validacao']:
+            md.append(f"- `{e.get('campo')}`: {e.get('mensagem')}")
+    pred = r.get('prediction')
+    if pred:
+        md.append(f'\n**Classificação:** `{pred}`')
+    probs = r.get('probabilities') or {}
+    if probs:
+        md.append(
+            f"**Probabilidade alto risco:** {probs.get('alto_risco')}  |  "
+            f"**Limiar operacional:** {r.get('threshold')}"
+        )
+    elif r.get('threshold') is not None:
+        md.append(f'**Limiar:** {r.get("threshold")}')
+    if r.get('regras_disparadas'):
+        md.append('\n**Regras de alarme disparadas:**')
+        for x in r['regras_disparadas']:
+            md.append(f'- {x}')
+    if r.get('top_features'):
+        md.append('\n**Variáveis que mais contribuíram para esta classificação:**')
+        for t in r['top_features']:
+            md.append(f"- `{t.get('feature')}` ({t.get('direction')}): {t.get('contribution')}")
+    if r.get('dados_imputados'):
+        md.append('\n**Campos opcionais imputados:** ' + ', '.join(r['dados_imputados']))
+    fontes = r.get('fontes') or []
+    if fontes:
+        md.append('\n**Fontes recuperadas:**')
+        for f in fontes:
+            md.append(f"- `{f.get('doc_id')}` ({f.get('category')})")
+    else:
+        md.append('\n_Nenhuma fonte documental recuperada nesta execução._')
+    if r.get('resposta_texto'):
+        md.append('\n### Síntese\n')
+        md.append(r['resposta_texto'])
+    md.append('\n' + (r.get('safety_notice') or ''))
+    md.append(r.get('aviso_dados_sinteticos') or '')
+    if r.get('raciocinio'):
+        md.append('\n<details><summary>Trace</summary>\n')
+        for linha in r['raciocinio']:
+            md.append(f'- {linha}')
+        md.append('\n</details>')
+    return '\n'.join(md)
+
+
 # =============================================================================
 # UI principal
 # =============================================================================
@@ -308,6 +371,7 @@ def build_ui(agent, conn, default_usuario: str = 'sessao_demo',
     wf_violencia  = workflows.get('violencia')
     wf_obstetrico = workflows.get('obstetrico')
     wf_prevencao  = workflows.get('prevencao')
+    wf_risco_ml   = workflows.get('risco_ml')
 
     pacientes_choices = _lista_pacientes(conn)
     historico_estado: dict[str, Any] = {'mensagens': []}
@@ -413,6 +477,29 @@ def build_ui(agent, conn, default_usuario: str = 'sessao_demo',
             return '⚠️ Workflow não disponível.'
         state = wf_prevencao.invoke({'paciente_id': paciente_id})
         return _render_prevencao(state)
+
+    def on_wf_risco_ml(payload_json, descricao, forcar_deg, paciente_id):
+        if wf_risco_ml is None:
+            return '⚠️ Workflow não disponível.'
+        try:
+            dados = json.loads(payload_json or '{}')
+        except json.JSONDecodeError as exc:
+            return f'JSON inválido: {exc}'
+        try:
+            state = wf_risco_ml.invoke({
+                'dados_clinicos': dados,
+                'descricao_clinica': descricao or '',
+                'paciente_id': paciente_id,
+                'usuario': tools_mod.get_usuario_atual(),
+                'forcar_degradado': bool(forcar_deg),
+            })
+            return _render_risco_ml(state)
+        except Exception as exc:  # noqa: BLE001 — CA / RNF-17
+            return (
+                'Não foi possível concluir a estratificação. '
+                'Revise o payload (11 campos obrigatórios) e tente de novo. '
+                f'Detalhe técnico: `{type(exc).__name__}`.'
+            )
 
     # ---- layout ----
 
@@ -589,6 +676,48 @@ def build_ui(agent, conn, default_usuario: str = 'sessao_demo',
                         prev_out = gr.Markdown(elem_classes='out-box')
                         prev_btn.click(on_wf_prevencao,
                                       inputs=[paciente], outputs=prev_out)
+
+                    # === TAB 6 — Risco Gestacional (ML) ===
+                    with gr.Tab('📈 Risco Gestacional (ML)'):
+                        gr.Markdown(
+                            '**Campos obrigatórios (11):** `idade`, `imc_pre_gestacional`, '
+                            '`ig_semanas`, `gestacoes`, `partos`, `abortos`, `pas_mmhg`, '
+                            '`pad_mmhg`, `has_cronica`, `diabetes_previo`, `gemelaridade`.\n\n'
+                            'Opcionais podem faltar (imputados). Obrigatórios ausentes **não** são imputados.\n\n'
+                            '_Resultado de apoio à decisão. Dados sintéticos. Não substitui avaliação clínica._'
+                        )
+                        ml_json = gr.Textbox(
+                            label='Payload JSON das features',
+                            lines=12,
+                            value=(
+                                '{\n'
+                                '  "idade": 28,\n'
+                                '  "imc_pre_gestacional": 24.0,\n'
+                                '  "ig_semanas": 22,\n'
+                                '  "gestacoes": 2,\n'
+                                '  "partos": 1,\n'
+                                '  "abortos": 0,\n'
+                                '  "pas_mmhg": 118,\n'
+                                '  "pad_mmhg": 72,\n'
+                                '  "has_cronica": false,\n'
+                                '  "diabetes_previo": false,\n'
+                                '  "gemelaridade": false\n'
+                                '}'
+                            ),
+                        )
+                        ml_desc = gr.Textbox(
+                            label='Descrição clínica (regras de alarme)',
+                            lines=3,
+                            placeholder='Opcional. Ex.: cefaleia intensa, escotomas, epigastralgia.',
+                        )
+                        ml_deg = gr.Checkbox(label='Forçar modo degradado (demo)', value=False)
+                        ml_btn = gr.Button('Estratificar risco', variant='primary')
+                        ml_out = gr.Markdown(elem_classes='out-box')
+                        ml_btn.click(
+                            on_wf_risco_ml,
+                            inputs=[ml_json, ml_desc, ml_deg, paciente],
+                            outputs=ml_out,
+                        )
 
         gr.Markdown(
             '\n_Dados clínicos sintéticos. Acesso a registros de violência auditado '

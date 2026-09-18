@@ -40,6 +40,7 @@ USO DAS FERRAMENTAS (escolha a apropriada antes de responder)
 - `avaliar_padrao_violencia(sinais)` — quando o profissional descrever sinais clínicos sugestivos de violência. Use as chaves: lesoes_inexplicadas, lesoes_multiplas_fases, retardo_atendimento, discordancia_historia_exame, acompanhante_controlador, abortos_inexplicados, somatizacoes_cronicas, baixa_adesao, ideacao_suicida, gestacao_indesejada, isolamento_social, historico_violencia_familiar.
 - `consultar_violencia(paciente_id, motivo)` — APENAS com motivo clínico explícito (acesso é auditado por LGPD).
 - `registrar_violencia(paciente_id, tipo, encaminhamentos, observacoes?)` — somente quando houver confirmação clínica e o profissional pedir registro formal.
+- `predizer_risco_gestacional(dados_clinicos, descricao_clinica?, paciente_id?)` — estratificação de risco gestacional por modelo + regras de alarme. Use payload estruturado; cite avisos de uso.
 
 FORMATO DA RESPOSTA
 1. Resposta direta à pergunta, em parágrafo curto.

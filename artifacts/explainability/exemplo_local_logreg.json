@@ -1,0 +1,54 @@
+{
+  "predicao": {
+    "model_name": "logistic_regression",
+    "model_version": "1.0.0",
+    "dataset_version": "v1.0.0",
+    "prediction": "alto_risco",
+    "threshold": 0.2782268517591518,
+    "probabilities": {
+      "habitual": 0.676216,
+      "alto_risco": 0.323784
+    },
+    "dados_imputados": [],
+    "features_hash": "f2011cc841b82c9e848710e4363f7a768e0dd3cd48a5865152f4ad86511817f8",
+    "safety_notice": "Resultado de apoio à decisão. Não realiza diagnóstico definitivo. Não substitui profissionais de saúde. Não deve ser utilizado como única fonte de decisão. Situações críticas devem ser encaminhadas para avaliação humana.",
+    "aviso_dados_sinteticos": "Modelo treinado em dados sintéticos. Sem validação clínica. Métricas medem a recuperação de um processo gerador definido por esta equipe."
+  },
+  "explicacao": {
+    "explanation_method": "coef_linear",
+    "explanation_scope": "local",
+    "top_features": [
+      {
+        "feature": "pas_mmhg",
+        "value": 118,
+        "contribution": 0.21195115104495132,
+        "direction": "aumenta"
+      },
+      {
+        "feature": "imc_pre_gestacional",
+        "value": 24.0,
+        "contribution": -0.1352754033297112,
+        "direction": "reduz"
+      },
+      {
+        "feature": "glicemia_jejum_mg_dl",
+        "value": 82.0,
+        "contribution": -0.086775660296531,
+        "direction": "reduz"
+      },
+      {
+        "feature": "escolaridade_anos",
+        "value": 12,
+        "contribution": -0.06115479792729405,
+        "direction": "reduz"
+      },
+      {
+        "feature": "cesareas_previas",
+        "value": 0,
+        "contribution": -0.03094286079170258,
+        "direction": "reduz"
+      }
+    ],
+    "aviso": null
+  }
+}

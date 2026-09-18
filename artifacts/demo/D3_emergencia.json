@@ -1,0 +1,44 @@
+{
+  "modo": "bypass_regra",
+  "prediction": "alto_risco",
+  "probabilities": null,
+  "threshold": null,
+  "top_features": [],
+  "dados_imputados": [],
+  "regras_disparadas": [
+    "Cefaleia intensa / refratária — suspeita pré-eclâmpsia",
+    "Alterações visuais (escotomas, turvação) — suspeita pré-eclâmpsia",
+    "Dor epigástrica em barra — suspeita HELLP"
+  ],
+  "fontes": [
+    {
+      "trecho": "Pré-natal de alto risco: encaminhar à referência regional.",
+      "doc_id": "ms_prenatal_alto_risco",
+      "category": "ginecologia_obstetricia",
+      "chunk_id": "c1"
+    }
+  ],
+  "safety_notice": "Resultado de apoio à decisão. Não realiza diagnóstico definitivo. Não substitui profissionais de saúde. Não deve ser utilizado como única fonte de decisão. Situações críticas devem ser encaminhadas para avaliação humana.",
+  "aviso_dados_sinteticos": "Modelo treinado em dados sintéticos. Sem validação clínica. Métricas medem a recuperação de um processo gerador definido por esta equipe.",
+  "resposta_texto": "As variáveis que mais contribuíram para esta classificação foram as listadas no payload. Encaminhar ao pré-natal de alto risco conforme o resultado do modelo. Não alterar as probabilidades informadas.\n\nResultado de apoio à decisão. Não realiza diagnóstico definitivo. Não substitui profissionais de saúde. Não deve ser utilizado como única fonte de decisão. Situações críticas devem ser encaminhadas para avaliação humana.\n\nModelo treinado em dados sintéticos. Sem validação clínica. Métricas medem a recuperação de um processo gerador definido por esta equipe.",
+  "campos_faltantes": [],
+  "erros_validacao": [],
+  "requer_intervencao_humana": false,
+  "intervencao": null,
+  "texto_descartado": false,
+  "auditoria_id": 3,
+  "correlation_id": "7ea4bd94-e9a5-4218-a2f7-05709688cde4",
+  "raciocinio": [
+    "Validação de contrato ok (24 features).",
+    "Regras SINAIS_ALARME_OBST: 3 disparo(s).",
+    "bypass_ml: emergência obstétrica, ML não executado.",
+    "RAG: 1 trecho(s) para query clínica.",
+    "Síntese LLM gerada (somente leitura do payload).",
+    "Validação LLM: aprovada",
+    "Avisos de segurança anexados.",
+    "Auditoria predicoes_ml id=3."
+  ],
+  "falha_rag": null,
+  "falha_modelo": null,
+  "explanation_method": null
+}

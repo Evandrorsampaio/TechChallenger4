@@ -1,0 +1,36 @@
+{
+  "limiar": 0.5,
+  "matriz_confusao": {
+    "tn": 3729,
+    "fp": 719,
+    "fn": 351,
+    "tp": 801
+  },
+  "precision_por_classe": {
+    "habitual": 0.9139705882352941,
+    "alto_risco": 0.5269736842105263
+  },
+  "recall_por_classe": {
+    "habitual": 0.8383543165467626,
+    "alto_risco": 0.6953125
+  },
+  "f1_por_classe": {
+    "habitual": 0.8745309568480301,
+    "alto_risco": 0.5995508982035929
+  },
+  "precision_macro": 0.7204721362229102,
+  "recall_macro": 0.7668334082733813,
+  "f1_macro": 0.7370409275258114,
+  "recall_positivo": 0.6953125,
+  "precision_positivo": 0.5269736842105263,
+  "roc_auc": 0.8567737606789568,
+  "pr_auc": 0.6848881806854172,
+  "brier": 0.17046061061823137,
+  "especificidade": 0.8383543165467626,
+  "npv": 0.9139705882352941,
+  "acuracia": 0.8089285714285714,
+  "acuracia_nao_decisoria": true,
+  "split": "treino",
+  "modelo": "random_forest",
+  "dataset_version": "v1.0.0"
+}

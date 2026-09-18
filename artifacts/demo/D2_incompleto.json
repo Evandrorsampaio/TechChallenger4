@@ -1,0 +1,39 @@
+{
+  "modo": "incompleto",
+  "prediction": "incompleto",
+  "probabilities": null,
+  "threshold": null,
+  "top_features": [],
+  "dados_imputados": [],
+  "regras_disparadas": [],
+  "fontes": [],
+  "safety_notice": "Resultado de apoio à decisão. Não realiza diagnóstico definitivo. Não substitui profissionais de saúde. Não deve ser utilizado como única fonte de decisão. Situações críticas devem ser encaminhadas para avaliação humana.",
+  "aviso_dados_sinteticos": "Modelo treinado em dados sintéticos. Sem validação clínica. Métricas medem a recuperação de um processo gerador definido por esta equipe.",
+  "resposta_texto": "**Modo:** `incompleto`\n**Classificação:** `incompleto`\n_Nenhuma fonte documental recuperada nesta execução._\n\nResultado de apoio à decisão. Não realiza diagnóstico definitivo. Não substitui profissionais de saúde. Não deve ser utilizado como única fonte de decisão. Situações críticas devem ser encaminhadas para avaliação humana.\nModelo treinado em dados sintéticos. Sem validação clínica. Métricas medem a recuperação de um processo gerador definido por esta equipe.",
+  "campos_faltantes": [
+    "pas_mmhg"
+  ],
+  "erros_validacao": [],
+  "requer_intervencao_humana": true,
+  "intervencao": {
+    "tipo": "complemento_obrigatorio",
+    "campos": [
+      "pas_mmhg"
+    ],
+    "pergunta": "Campos obrigatórios ausentes: pas_mmhg. Completar os dados e resubmeter. Valores obrigatórios não são imputados.",
+    "opcoes": null
+  },
+  "texto_descartado": false,
+  "auditoria_id": 2,
+  "correlation_id": "1ff90ad7-76bb-4e7d-8166-405edf788722",
+  "raciocinio": [
+    "Dados incompletos: ['pas_mmhg']",
+    "Caminho dados_incompletos (sem imputação, sem RAG).",
+    "Human-in-the-loop: solicitar complemento.",
+    "Avisos de segurança anexados.",
+    "Auditoria predicoes_ml id=2."
+  ],
+  "falha_rag": null,
+  "falha_modelo": null,
+  "explanation_method": null
+}

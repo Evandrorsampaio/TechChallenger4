@@ -18,10 +18,12 @@ from .triagem import build_triagem_workflow, TriagemState
 from .violencia import build_violencia_workflow, ViolenciaState
 from .obstetrico import build_obstetrico_workflow, ObstetricoState
 from .prevencao import build_prevencao_workflow, PrevencaoState
+from .risco_ml import build_risco_ml_workflow, RiscoMLState
 
 __all__ = [
     'build_triagem_workflow', 'TriagemState',
     'build_violencia_workflow', 'ViolenciaState',
     'build_obstetrico_workflow', 'ObstetricoState',
     'build_prevencao_workflow', 'PrevencaoState',
+    'build_risco_ml_workflow', 'RiscoMLState',
 ]

@@ -49,6 +49,16 @@ wandb/
 **/finetune/
 **/chroma/
 
+# Artefatos de ML da nova fase
+artifacts/data/*.parquet
+artifacts/data/*.verify.parquet
+artifacts/models/**/*.joblib
+!artifacts/data/*.manifest.json
+!artifacts/models/**/model_card.json
+!artifacts/metrics/*.json
+!artifacts/explainability/*.json
+!artifacts/demo/*.json
+
 # Métricas e relatórios gerados pelo notebook de avaliação
 # (versionar manualmente os finais selecionados, não esses dump intermediários)
 **/eval_report.json

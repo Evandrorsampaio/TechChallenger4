@@ -1,0 +1,21 @@
+{
+  "nome": "dummy_prior",
+  "versao": "1.0.0",
+  "dataset_version": "v1.0.0",
+  "threshold": 0.2057142857142857,
+  "hiperparametros": {
+    "strategy": "prior"
+  },
+  "metricas_teste": {
+    "recall_positivo": 1.0,
+    "precision_positivo": 0.20583333333333334,
+    "pr_auc": 0.20583333333333334,
+    "roc_auc": 0.5,
+    "f1_macro": 0.17069799585349,
+    "brier": 0.1634659863945578,
+    "acuracia": 0.20583333333333334
+  },
+  "semente": 42,
+  "timestamp": "2026-09-18T15:14:26Z",
+  "pipeline_version": "1.0.0"
+}

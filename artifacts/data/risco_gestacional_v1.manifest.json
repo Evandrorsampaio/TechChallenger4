@@ -1,0 +1,22 @@
+{
+  "sha256": "6a3b6aefe9e2cf1bb3ec9123386cac4812fd4ef1602657d7950668d5abc20e2f",
+  "semente": 42,
+  "contrato_version": "v1.0.0",
+  "dataset_version": "v1.0.0",
+  "gerador_version": "1.0.0",
+  "timestamp_utc": "2026-09-18T15:10:00Z",
+  "n_registros": 8000,
+  "n_features": 24,
+  "natureza": "SINTETICO",
+  "aviso": "Dataset sintético demonstrativo. Métricas não são validação clínica.",
+  "contagem_por_classe": {
+    "habitual": 6354,
+    "alto_risco": 1646
+  },
+  "contagem_por_split": {
+    "treino": 5600,
+    "validacao": 1200,
+    "teste": 1200
+  },
+  "prevalencia_alto_risco": 0.20575
+}

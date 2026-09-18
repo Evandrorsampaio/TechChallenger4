@@ -1,3 +1,15 @@
+> **Tech Challenge FIAP — Pós Tech em IA para Devs — Fase 3, com evolução de ML (Fase 4 no repositório).**
+> Projeto acadêmico. **Não substitui avaliação clínica.** Modelo treinado em **dados sintéticos**. Sem validação clínica.
+
+## Evolução ML (2026-09-18)
+
+Pipeline: dados estruturados → `lib/ml` → explicabilidade → regras `SINAIS_ALARME_OBST` → workflow `risco_ml` → RAG (quando houver retriever) → síntese LLM somente-leitura (`FakeChatModel` no CPU) → Gradio (6ª aba) → auditoria `predicoes_ml`.
+
+- Dataset: 8000 linhas, semente 42, sha256 no manifesto `artifacts/data/risco_gestacional_v1.manifest.json`.
+- Vencedor por PR-AUC no teste: **regressão logística** (0,590; recall+ 0,955 no limiar 0,278 da validação). Fonte: `artifacts/metrics/`.
+- Demo: `python scripts/run_demo.py`. UI CPU: `python scripts/app.py`.
+- Docker: `techchallenger4-demo:cpu` (1,78 GB, 2026-09-18). Build 699 s, `docker run` exit 0 com os 4 cenários. Log: `docs/deploy/EXECUCAO_DOCKER.md`. A imagem usa `FakeChatModel`, não o Llama.
+
 # Assistente Clínico Hospitalar — Saúde da Mulher
 
 Assistente virtual de apoio à equipe de saúde (médicos, enfermeiros, residentes, técnicos) de um hospital especializado em **saúde e segurança da mulher**, construído a partir de:

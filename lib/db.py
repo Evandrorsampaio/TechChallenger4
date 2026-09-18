@@ -5,15 +5,17 @@ Override via env var HOSPITAL_DB_PATH para uso local.
 """
 from __future__ import annotations
 
-import os
 import sqlite3
 from pathlib import Path
 
-DEFAULT_DB_PATH = '/content/drive/MyDrive/AssistenteHospitalar/files/hospital.db'
+from lib.config import DEFAULT_DB_PATH, hospital_db_path
+
+# Reexportado para notebooks da Fase 3 que importam lib.db.DEFAULT_DB_PATH.
+DEFAULT_DB_PATH = DEFAULT_DB_PATH
 
 
 def get_db_path() -> Path:
-    return Path(os.environ.get('HOSPITAL_DB_PATH', DEFAULT_DB_PATH))
+    return hospital_db_path()
 
 
 def connect(path: str | Path | None = None) -> sqlite3.Connection:
@@ -100,6 +102,24 @@ CREATE TABLE IF NOT EXISTS ciclos_menstruais (
     FOREIGN KEY (paciente_id) REFERENCES pacientes(paciente_id)
 );
 CREATE INDEX IF NOT EXISTS idx_ciclos_pac ON ciclos_menstruais(paciente_id, data_inicio);
+
+CREATE TABLE IF NOT EXISTS predicoes_ml (
+    id                INTEGER PRIMARY KEY,
+    timestamp         DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    usuario           TEXT NOT NULL,
+    paciente_id       INTEGER,
+    modelo_nome       TEXT NOT NULL,
+    modelo_versao     TEXT NOT NULL,
+    dataset_versao    TEXT NOT NULL,
+    features_hash     TEXT NOT NULL,
+    predicao          TEXT NOT NULL,
+    probabilidade     REAL,
+    threshold         REAL,
+    explicacao_metodo TEXT,
+    top_features      TEXT,
+    regras_disparadas TEXT,
+    modo              TEXT NOT NULL
+);
 """
 
 
@@ -113,6 +133,7 @@ def reset_database(conn: sqlite3.Connection) -> None:
     tables = [
         'ciclos_menstruais', 'medicamentos', 'log_acesso',
         'registros_violencia', 'exames', 'prontuario_gineco', 'pacientes',
+        'predicoes_ml',
     ]
     for t in tables:
         conn.execute(f'DROP TABLE IF EXISTS {t}')

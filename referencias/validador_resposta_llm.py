@@ -1,3 +1,8 @@
+"""Validador da Fase 3.
+
+Preferir `lib.validacao` na evolução ML. Este módulo permanece para os notebooks
+e para o import reexportado; não apagar.
+"""
 from __future__ import annotations
 
 import json

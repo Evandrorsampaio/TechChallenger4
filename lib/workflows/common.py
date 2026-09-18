@@ -62,18 +62,30 @@ def llm_text(chat_model, user_prompt: str, system_prompt: str | None = None) -> 
 
 def rag_search(retriever, query: str, categoria: str | None = None,
                k: int = 4) -> list[dict]:
-    """Busca no Chroma. Filtra por categoria em pós-processamento."""
-    docs = retriever.invoke(query)
+    """Busca no Chroma. Prefere filtro nativo; cai para pós-processamento."""
+    docs = []
+    if categoria:
+        try:
+            if hasattr(retriever, 'vectorstore') and hasattr(retriever.vectorstore, 'similarity_search'):
+                docs = retriever.vectorstore.similarity_search(
+                    query, k=k, filter={'category': categoria}
+                )
+            elif hasattr(retriever, 'invoke'):
+                docs = retriever.invoke(query)
+        except Exception:
+            docs = retriever.invoke(query) if hasattr(retriever, 'invoke') else []
+    else:
+        docs = retriever.invoke(query)
     out = []
-    for d in docs[:k * 2]:
-        meta = d.metadata or {}
-        if categoria and meta.get('category') != categoria:
+    for d in docs[: k * 2]:
+        meta = getattr(d, 'metadata', None) or {}
+        if categoria and meta.get('category') and meta.get('category') != categoria:
             continue
         out.append({
-            'trecho': d.page_content,
-            'doc_id': meta.get('doc_id', '?'),
-            'category': meta.get('category', '?'),
-            'chunk_id': meta.get('chunk_id', '?'),
+            'trecho': getattr(d, 'page_content', '') if not isinstance(d, dict) else d.get('trecho', ''),
+            'doc_id': meta.get('doc_id', '?') if meta else (d.get('doc_id', '?') if isinstance(d, dict) else '?'),
+            'category': meta.get('category', '?') if meta else (d.get('category', '?') if isinstance(d, dict) else '?'),
+            'chunk_id': meta.get('chunk_id', '?') if meta else (d.get('chunk_id', '?') if isinstance(d, dict) else '?'),
         })
         if len(out) >= k:
             break

@@ -14,7 +14,6 @@ Uso com agente LangChain:
 """
 from __future__ import annotations
 
-import os
 from pathlib import Path
 from typing import Any
 
@@ -48,8 +47,8 @@ def load_finetuned(
     from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 
     if adapter_dir is None:
-        drive_base = os.environ.get('DRIVE_BASE', '/content/drive/MyDrive/AssistenteHospitalar')
-        adapter_dir = _latest_adapter_dir(f'{drive_base}/files/finetune')
+        from lib.config import drive_base as _drive_base
+        adapter_dir = _latest_adapter_dir(f'{_drive_base()}/files/finetune')
 
     kwargs: dict[str, Any] = {'torch_dtype': torch.bfloat16, 'device_map': 'auto'}
     if use_4bit:
