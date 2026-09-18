@@ -39,47 +39,53 @@ T-17 pode ser adiado se o prazo apertar (Should). T-08, T-10, T-13, T-15 e T-18 
 
 ## Agentes e skills
 
-| Tarefa | Agente | Skills |
-|---|---|---|
-| T-08, T-09 | `ArchitectureAgent`, `SecurityAndComplianceAgent` | `environment_configuration`, `dependency_analysis` |
-| T-10 | `MLOpsAndDeploymentAgent` | `environment_configuration`, `reproducibility_validation` |
-| T-11…T-17 | `DataEngineeringAgent` | `data_contract_generation`, `synthetic_data_generation`, `dataset_profiling`, `data_leakage_detection`, `labeling_strategy`, `train_test_split_validation` |
-| T-18 | `TestingAndValidationAgent` | `unit_test_generation`, `test_evidence_collection` |
+
+| Tarefa     | Agente                                            | Skills                                                                                                                                                     |
+| ---------- | ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| T-08, T-09 | `ArchitectureAgent`, `SecurityAndComplianceAgent` | `environment_configuration`, `dependency_analysis`                                                                                                         |
+| T-10       | `MLOpsAndDeploymentAgent`                         | `environment_configuration`, `reproducibility_validation`                                                                                                  |
+| T-11…T-17  | `DataEngineeringAgent`                            | `data_contract_generation`, `synthetic_data_generation`, `dataset_profiling`, `data_leakage_detection`, `labeling_strategy`, `train_test_split_validation` |
+| T-18       | `TestingAndValidationAgent`                       | `unit_test_generation`, `test_evidence_collection`                                                                                                         |
+
 
 ## Arquivos
 
 ### Criar
 
-| Arquivo | Tarefa | Conteúdo mínimo |
-|---|---|---|
-| `lib/config.py` | T-08 | `HOSPITAL_DB_PATH`, `DRIVE_BASE`, `HF_TOKEN`, `PERFIL_EXECUCAO`, `ML_RISCO_HABILITADO` (default `"0"`), `ARTIFACTS_DIR`, `RANDOM_SEED=42` |
-| `.env.example` | T-09 | as mesmas chaves, sem segredo real |
-| `requirements.txt` | T-10 | base (pydantic, python-dotenv, …) com `==` |
-| `requirements-ml.txt` | T-10 | pandas, numpy, scikit-learn, joblib, pyarrow; `shap` opcional/comentado se quebrar 3.13 |
-| `requirements-llm.txt` | T-10 | torch, transformers, peft, bitsandbytes, langchain, langgraph, chromadb, sentence-transformers, gradio — **não** instalado no Docker `demo-cpu` |
-| `lib/ml/__init__.py` | T-11 | exporta schema público |
-| `lib/ml/schema.py` | T-11, T-12, T-17 | `N_FEATURES = 24`, `GestanteFeatures`, `DadosIncompletosError` |
-| `lib/ml/dataset.py` | T-13, T-14 | `numpy.random.default_rng(42)`, manifesto |
-| `lib/ml/features.py` | T-15 | `ColumnTransformer` dentro de `Pipeline` |
-| `tests/unit/test_configuracao_central.py` | T-08 | |
-| `tests/unit/test_sem_segredos.py` | T-09 | |
-| `tests/unit/test_schema_gestante.py` | T-11 | `len(FEATURES) == N_FEATURES == 24` |
-| `tests/unit/test_validacao_entrada.py` | T-11 | |
-| `tests/unit/test_dados_incompletos.py` | T-12 | |
-| `tests/unit/test_mensagens_de_erro.py` | T-12 | |
-| `tests/unit/test_dataset_reprodutivel.py` | T-13, T-14 | |
-| `tests/unit/test_contrato_dataset.py` | T-13 | |
-| `tests/unit/test_dataset_sem_vazamento.py` | T-15, T-16 | `risco_latente` ausente da matriz |
-| `tests/unit/test_features_pipeline.py` | T-15 | |
-| `tests/unit/test_features_de_paciente.py` | T-17 | |
+
+| Arquivo                                    | Tarefa           | Conteúdo mínimo                                                                                                                                 |
+| ------------------------------------------ | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `lib/config.py`                            | T-08             | `HOSPITAL_DB_PATH`, `DRIVE_BASE`, `HF_TOKEN`, `PERFIL_EXECUCAO`, `ML_RISCO_HABILITADO` (default `"0"`), `ARTIFACTS_DIR`, `RANDOM_SEED=42`       |
+| `.env.example`                             | T-09             | as mesmas chaves, sem segredo real                                                                                                              |
+| `requirements.txt`                         | T-10             | base (pydantic, python-dotenv, …) com `==`                                                                                                      |
+| `requirements-ml.txt`                      | T-10             | pandas, numpy, scikit-learn, joblib, pyarrow; `shap` opcional/comentado se quebrar 3.13                                                         |
+| `requirements-llm.txt`                     | T-10             | torch, transformers, peft, bitsandbytes, langchain, langgraph, chromadb, sentence-transformers, gradio — **não** instalado no Docker `demo-cpu` |
+| `lib/ml/__init__.py`                       | T-11             | exporta schema público                                                                                                                          |
+| `lib/ml/schema.py`                         | T-11, T-12, T-17 | `N_FEATURES = 24`, `GestanteFeatures`, `DadosIncompletosError`                                                                                  |
+| `lib/ml/dataset.py`                        | T-13, T-14       | `numpy.random.default_rng(42)`, manifesto                                                                                                       |
+| `lib/ml/features.py`                       | T-15             | `ColumnTransformer` dentro de `Pipeline`                                                                                                        |
+| `tests/unit/test_configuracao_central.py`  | T-08             |                                                                                                                                                 |
+| `tests/unit/test_sem_segredos.py`          | T-09             |                                                                                                                                                 |
+| `tests/unit/test_schema_gestante.py`       | T-11             | `len(FEATURES) == N_FEATURES == 24`                                                                                                             |
+| `tests/unit/test_validacao_entrada.py`     | T-11             |                                                                                                                                                 |
+| `tests/unit/test_dados_incompletos.py`     | T-12             |                                                                                                                                                 |
+| `tests/unit/test_mensagens_de_erro.py`     | T-12             |                                                                                                                                                 |
+| `tests/unit/test_dataset_reprodutivel.py`  | T-13, T-14       |                                                                                                                                                 |
+| `tests/unit/test_contrato_dataset.py`      | T-13             |                                                                                                                                                 |
+| `tests/unit/test_dataset_sem_vazamento.py` | T-15, T-16       | `risco_latente` ausente da matriz                                                                                                               |
+| `tests/unit/test_features_pipeline.py`     | T-15             |                                                                                                                                                 |
+| `tests/unit/test_features_de_paciente.py`  | T-17             |                                                                                                                                                 |
+
 
 ### Estender
 
-| Arquivo | Como | O que não fazer |
-|---|---|---|
-| `lib/db.py` | Ler path via `lib.config` **preservando** o default Colab atual | Não mudar o DDL das 7 tabelas |
-| `lib/llm.py` | Idem para `DRIVE_BASE` | Não alterar `BitsAndBytesConfig` |
-| `.gitignore` | Versionar `*.manifest.json`; ignorar `*.parquet` e `*.joblib` | Não versionar `hospital.db` |
+
+| Arquivo      | Como                                                            | O que não fazer                  |
+| ------------ | --------------------------------------------------------------- | -------------------------------- |
+| `lib/db.py`  | Ler path via `lib.config` **preservando** o default Colab atual | Não mudar o DDL das 7 tabelas    |
+| `lib/llm.py` | Idem para `DRIVE_BASE`                                          | Não alterar `BitsAndBytesConfig` |
+| `.gitignore` | Versionar `*.manifest.json`; ignorar `*.parquet` e `*.joblib`   | Não versionar `hospital.db`      |
+
 
 ### Não tocar
 
@@ -106,31 +112,35 @@ Opcionais (13): `escolaridade_anos`, `cesareas_previas`, `natimorto_previo`, `pr
 
 ## Critérios de aceite da sprint
 
-| CA | Como prova |
-|---|---|
-| CA-01, CA-02 | schema Pydantic rejeita extra e fora de faixa |
+
+| CA           | Como prova                                                                     |
+| ------------ | ------------------------------------------------------------------------------ |
+| CA-01, CA-02 | schema Pydantic rejeita extra e fora de faixa                                  |
 | CA-03, CA-05 | `DadosIncompletosError` lista campos; ponte com `hospital.db` declara ausentes |
-| CA-10 | manifesto + hash idêntico em duas gerações |
-| CA-11 | `risco_latente` fora de `X`; pipeline com fit só no treino |
-| CA-12 | 24 features, 8 000 linhas, prevalência 0,22 ± 0,02 |
-| CA-37 | `.env.example` cobre 100 % das variáveis de `config.py` |
+| CA-10        | manifesto + hash idêntico em duas gerações                                     |
+| CA-11        | `risco_latente` fora de `X`; pipeline com fit só no treino                     |
+| CA-12        | 24 features, 8 000 linhas, prevalência 0,22 ± 0,02                             |
+| CA-37        | `.env.example` cobre 100 % das variáveis de `config.py`                        |
+
 
 ## Riscos desta sprint
 
-| Risco | Mitigação |
-|---|---|
-| RIS-04 vazamento | teste dedicado; `risco_latente` removido no loader |
-| RIS-11 RNG numpy | `default_rng`; pins em `requirements-ml.txt` |
+
+| Risco                       | Mitigação                                                                                           |
+| --------------------------- | --------------------------------------------------------------------------------------------------- |
+| RIS-04 vazamento            | teste dedicado; `risco_latente` removido no loader                                                  |
+| RIS-11 RNG numpy            | `default_rng`; pins em `requirements-ml.txt`                                                        |
 | Pins quebram no Python 3.13 | T-10 instala em venv limpo **antes** de seguir; se `shap` falhar, fica fora deste arquivo (ADR-008) |
+
 
 ## Definição de pronto
 
-- [ ] `lib/config.py` resolve as variáveis; testes de config passam
-- [ ] Três requirements com `==` em cada linha; log de install limpo anexado (não precisa ser Docker ainda)
-- [ ] Parquet gerado + manifesto versionado + hash reproduzido
-- [ ] `Pipeline` serializável
-- [ ] `pytest tests/unit/` da camada de dados verde, sem GPU/rede/Drive
-- [ ] `QUALIDADE_DOS_DADOS.md` contém estatísticas **medidas**, ou declara explicitamente que T-16 ficou para o fim da sprint com `perfil_v1.json` como evidência
+- [x] `lib/config.py` resolve as variáveis; testes de config passam
+- [x] Três requirements com `==` em cada linha; log de install limpo anexado (não precisa ser Docker ainda)
+- [x] Parquet gerado + manifesto versionado + hash reproduzido
+- [x] `Pipeline` serializável
+- [x] `pytest tests/unit/` da camada de dados verde, sem GPU/rede/Drive
+- [x] `QUALIDADE_DOS_DADOS.md` contém estatísticas **medidas**, ou declara explicitamente que T-16 ficou para o fim da sprint com `perfil_v1.json` como evidência
 
 ## Rollback
 
