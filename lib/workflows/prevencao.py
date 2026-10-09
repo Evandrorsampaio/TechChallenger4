@@ -23,15 +23,16 @@ o LLM só gera linguagem para orientações e lembretes.
 """
 from __future__ import annotations
 
-from datetime import date, timedelta
+from datetime import timedelta
 from typing import TypedDict
+
+from lib.config import REFERENCE_DATE
 
 from . import common
 from .. import tools as tools_mod
 from .. import alertas as alertas_mod
 
-
-TODAY = date(2026, 5, 23)
+TODAY = REFERENCE_DATE
 
 
 class PrevencaoState(TypedDict, total=False):
@@ -279,15 +280,15 @@ def build_prevencao_workflow(chat_model, conn, retriever):
     g = StateGraph(PrevencaoState)
     g.add_node('carregar_historico', lambda s: _carregar_historico(s, conn))
     g.add_node('identificar_exames_devidos', lambda s: _identificar_exames_devidos(s, conn))
-    g.add_node('orientacoes_preventivas', _orientacoes_preventivas(chat_model, retriever))
+    g.add_node('gerar_orientacoes_preventivas', _orientacoes_preventivas(chat_model, retriever))
     g.add_node('agendar_automaticamente', _agendar_automaticamente)
     g.add_node('gerar_lembretes', _gerar_lembretes(chat_model))
     g.add_node('compilar_resposta', _compilar_resposta)
 
     g.add_edge(START, 'carregar_historico')
     g.add_edge('carregar_historico', 'identificar_exames_devidos')
-    g.add_edge('identificar_exames_devidos', 'orientacoes_preventivas')
-    g.add_edge('orientacoes_preventivas', 'agendar_automaticamente')
+    g.add_edge('identificar_exames_devidos', 'gerar_orientacoes_preventivas')
+    g.add_edge('gerar_orientacoes_preventivas', 'agendar_automaticamente')
     g.add_edge('agendar_automaticamente', 'gerar_lembretes')
     g.add_edge('gerar_lembretes', 'compilar_resposta')
     g.add_edge('compilar_resposta', END)

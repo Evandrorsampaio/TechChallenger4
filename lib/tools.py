@@ -13,7 +13,6 @@ from typing import Any
 from pydantic import BaseModel, Field
 
 from . import alertas as alertas_mod
-from . import db as db_mod
 
 
 # Identificador do profissional logado (em produção viria de OAuth/SSO).
@@ -67,6 +66,21 @@ class RegistroViolenciaInput(BaseModel):
 class ConsultarViolenciaInput(BaseModel):
     paciente_id: int
     motivo: str = Field(..., description='Justificativa clínica do acesso (vai para o log)')
+
+
+class BuscarProtocoloInput(BaseModel):
+    query: str = Field(..., description='Consulta em linguagem natural sobre o protocolo')
+    categoria: str | None = Field(
+        None,
+        description="Filtro opcional: 'ginecologia_obstetricia', 'cancer', 'planejamento', 'violencia', 'saude_mental'",
+    )
+
+
+class PredizerRiscoGestacionalInput(BaseModel):
+    dados_clinicos: dict = Field(..., description='Payload com as 11 features obrigatórias (e opcionais)')
+    descricao_clinica: str | None = Field(None, description='Texto livre para regras de alarme obstétrico')
+    paciente_id: int | None = None
+    forcar_degradado: bool = False
 
 
 class AvaliarPadraoViolenciaInput(BaseModel):
@@ -217,24 +231,34 @@ def buscar_protocolo(query: str, retriever, k: int = 4,
     """Busca chunks dos protocolos via retriever Chroma já indexado.
 
     `retriever` deve ser um objeto com .invoke(query) -> List[Document].
-    Filtragem por categoria é feita em pós-processamento porque o retriever
-    em si não suporta filtro dinâmico em todas as versões do langchain.
+    Delega a `lib.workflows.common.rag_search` (filtro nativo com fallback).
     """
-    docs = retriever.invoke(query)
-    resultados = []
-    for d in docs[:k * 2]:  # pega mais e filtra
-        meta = d.metadata or {}
-        if categoria and meta.get('category') != categoria:
-            continue
-        resultados.append({
-            'trecho': d.page_content,
-            'doc_id': meta.get('doc_id'),
-            'category': meta.get('category'),
-            'chunk_id': meta.get('chunk_id'),
-        })
-        if len(resultados) >= k:
-            break
-    return resultados
+    from lib.workflows.common import rag_search
+
+    return rag_search(retriever, query, categoria=categoria, k=k)
+
+
+def predizer_risco_gestacional(
+    dados_clinicos: dict,
+    conn: sqlite3.Connection,
+    retriever,
+    descricao_clinica: str | None = None,
+    paciente_id: int | None = None,
+    forcar_degradado: bool = False,
+) -> dict[str, Any]:
+    """Invoca o workflow risco_ml (CPU: FakeChatModel)."""
+    from lib.llm_fake import FakeChatModel
+    from lib.workflows.risco_ml import build_risco_ml_workflow
+
+    wf = build_risco_ml_workflow(FakeChatModel(), conn, retriever)
+    state = wf.invoke({
+        'dados_clinicos': dados_clinicos,
+        'descricao_clinica': descricao_clinica or '',
+        'paciente_id': paciente_id,
+        'usuario': get_usuario_atual(),
+        'forcar_degradado': forcar_degradado,
+    })
+    return state.get('resposta_estruturada') or state
 
 
 # ---------- Adaptadores LangChain (criados a partir de uma conexão + retriever) ----------
@@ -303,5 +327,21 @@ def build_langchain_tools(conn: sqlite3.Connection, retriever):
             name='buscar_protocolo',
             description=('Busca trechos dos protocolos clínicos (ginecologia/obstetrícia, câncer mama/colo, '
                          'planejamento familiar, violência doméstica, saúde mental). Use para condutas, doses, fluxos.'),
+            args_schema=BuscarProtocoloInput,
+        ),
+        StructuredTool.from_function(
+            func=lambda dados_clinicos, descricao_clinica=None, paciente_id=None, forcar_degradado=False:
+                predizer_risco_gestacional(
+                    dados_clinicos, conn, retriever,
+                    descricao_clinica=descricao_clinica,
+                    paciente_id=paciente_id,
+                    forcar_degradado=forcar_degradado,
+                ),
+            name='predizer_risco_gestacional',
+            description=(
+                'Classifica risco gestacional (habitual vs alto_risco) com modelo supervisionado, '
+                'regras de alarme e explicabilidade. Entrada estruturada; não substitui avaliação clínica.'
+            ),
+            args_schema=PredizerRiscoGestacionalInput,
         ),
     ]

@@ -1,0 +1,10 @@
+# LLM / Gradio / RAG — perfil full-gpu ou demo-cpu com UI
+# NÃO instalar na imagem Docker ml-only.
+# Versões pinadas; instalação validada apenas quando o perfil exigir.
+gradio==5.29.0
+langchain==0.3.25
+langchain-core==0.3.59
+langgraph==0.4.5
+chromadb==1.0.9
+sentence-transformers==4.1.0
+# torch / transformers / peft / bitsandbytes: ambiente GPU (Colab). Não pinados aqui para CPU Windows.

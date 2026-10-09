@@ -48,6 +48,7 @@ class ViolenciaState(TypedDict, total=False):
     conduta_sugerida: str
     encaminhamentos: list[str]
     protocolo_seguranca_ativado: bool
+    medidas: list[str]
     equipe_acionada: list[str]
     notificacao_sinan: bool
     registro_id: int | None
@@ -114,6 +115,7 @@ def _protocolo_seguranca(state: ViolenciaState) -> dict:
     ]
     return {
         'protocolo_seguranca_ativado': True,
+        'medidas': medidas,
         'raciocinio': state.get('raciocinio', []) +
                       ['Protocolo de segurança ATIVADO (alta suspeita).'],
     }
@@ -242,6 +244,7 @@ def _compilar_resposta(state: ViolenciaState) -> dict:
         'nivel': state.get('nivel'),
         'conduta_sugerida': state.get('conduta_sugerida'),
         'protocolo_seguranca_ativado': state.get('protocolo_seguranca_ativado', False),
+        'medidas': state.get('medidas', []),
         'equipe_acionada': state.get('equipe_acionada', []),
         'encaminhamentos': state.get('encaminhamentos', []),
         'notificacao_sinan': state.get('notificacao_sinan', False),

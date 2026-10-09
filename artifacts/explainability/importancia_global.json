@@ -1,0 +1,55 @@
+{
+  "explanation_method": "permutacao",
+  "explanation_scope": "global",
+  "top_features": [
+    {
+      "feature": "pad_mmhg",
+      "value": null,
+      "contribution": 0.04363118808141664,
+      "direction": "aumenta"
+    },
+    {
+      "feature": "pas_mmhg",
+      "value": null,
+      "contribution": 0.04297372209535877,
+      "direction": "aumenta"
+    },
+    {
+      "feature": "has_cronica",
+      "value": null,
+      "contribution": 0.042857618168204464,
+      "direction": "aumenta"
+    },
+    {
+      "feature": "imc_pre_gestacional",
+      "value": null,
+      "contribution": 0.041458856314070175,
+      "direction": "aumenta"
+    },
+    {
+      "feature": "glicemia_jejum_mg_dl",
+      "value": null,
+      "contribution": -0.03593021496517393,
+      "direction": "reduz"
+    },
+    {
+      "feature": "diabetes_previo",
+      "value": null,
+      "contribution": -0.029287694743152237,
+      "direction": "reduz"
+    },
+    {
+      "feature": "cardiopatia",
+      "value": null,
+      "contribution": 0.013678703756859811,
+      "direction": "aumenta"
+    },
+    {
+      "feature": "pre_eclampsia_previa",
+      "value": null,
+      "contribution": 0.010387910720499854,
+      "direction": "aumenta"
+    }
+  ],
+  "aviso": "Importância global por permutação (average_precision). Não interpretar como efeito causal nem como contribuição desta paciente."
+}

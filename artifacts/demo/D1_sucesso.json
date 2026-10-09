@@ -1,0 +1,104 @@
+{
+  "modo": "normal",
+  "prediction": "alto_risco",
+  "probabilities": {
+    "habitual": 0.676216,
+    "alto_risco": 0.323784
+  },
+  "threshold": 0.2782268517591518,
+  "top_features": [
+    {
+      "feature": "pas_mmhg",
+      "value": 118,
+      "contribution": 0.21195115104495132,
+      "direction": "aumenta"
+    },
+    {
+      "feature": "imc_pre_gestacional",
+      "value": 24.0,
+      "contribution": -0.1352754033297112,
+      "direction": "reduz"
+    },
+    {
+      "feature": "glicemia_jejum_mg_dl",
+      "value": 82.0,
+      "contribution": -0.086775660296531,
+      "direction": "reduz"
+    },
+    {
+      "feature": "escolaridade_anos",
+      "value": 12,
+      "contribution": -0.06115479792729405,
+      "direction": "reduz"
+    },
+    {
+      "feature": "cesareas_previas",
+      "value": 0,
+      "contribution": -0.03094286079170258,
+      "direction": "reduz"
+    }
+  ],
+  "dados_imputados": [],
+  "regras_disparadas": [],
+  "fontes": [
+    {
+      "trecho": "Gestação de alto risco: fatores como hipertensão arterial crônica, diabetes prévio, gemelaridade, idade materna avançada, pré-eclâmpsia anterior e natimorto prévio indicam encaminhamento à referência regional. O pré-natal de alto risco não substitui a avaliação presencial. Proteinúria, pressão arterial elevada e sintomas de alarme (cefaleia intensa, escotomas, epigastralgia) exigem conduta imediata no serviço de urgência obstétrica.",
+      "doc_id": "ms_manual_tecnico_gestacao_alto_risco.pdf",
+      "category": "ginecologia_obstetricia",
+      "chunk_id": "ms_manual_tecnico_gestacao_alto_risco.pdf::0"
+    },
+    {
+      "trecho": "Pré-natal de risco habitual: consultas mensais até 28 semanas, quinzenais até 36 e semanais até o parto, conforme organização da rede. Registrar idade gestacional, pressão arterial, peso, altura uterina, batimentos fetais e resultados de hemoglobina e glicemia de jejum. Sinais de alarme devem ser explicados a cada consulta. Este recorte é educacional e não constitui protocolo assistencial completo.",
+      "doc_id": "ms_caderneta_gestante_prenatal.pdf",
+      "category": "ginecologia_obstetricia",
+      "chunk_id": "ms_caderneta_gestante_prenatal.pdf::0"
+    },
+    {
+      "trecho": "Hipertensão na gestação: pressão arterial persistente elevada, proteinúria e sintomas neurológicos ou epigástricos sugerem pré-eclâmpsia e demandam avaliação urgente. Não se recomenda esperar o limiar do classificador estatístico quando há sinais de alarme. Sulfato de magnésio e anti-hipertensivos seguem protocolo institucional e prescrição médica. Fonte de apoio à equipe, não à paciente.",
+      "doc_id": "febrasgo_sindromes_hipertensivas_gestacao.pdf",
+      "category": "ginecologia_obstetricia",
+      "chunk_id": "febrasgo_sindromes_hipertensivas_gestacao.pdf::0"
+    }
+  ],
+  "retrieved_sources": [
+    {
+      "doc_id": "ms_manual_tecnico_gestacao_alto_risco.pdf",
+      "category": "ginecologia_obstetricia",
+      "chunk_id": "ms_manual_tecnico_gestacao_alto_risco.pdf::0"
+    },
+    {
+      "doc_id": "ms_caderneta_gestante_prenatal.pdf",
+      "category": "ginecologia_obstetricia",
+      "chunk_id": "ms_caderneta_gestante_prenatal.pdf::0"
+    },
+    {
+      "doc_id": "febrasgo_sindromes_hipertensivas_gestacao.pdf",
+      "category": "ginecologia_obstetricia",
+      "chunk_id": "febrasgo_sindromes_hipertensivas_gestacao.pdf::0"
+    }
+  ],
+  "safety_notice": "Resultado de apoio à decisão. Não realiza diagnóstico definitivo. Não substitui profissionais de saúde. Não deve ser utilizado como única fonte de decisão. Situações críticas devem ser encaminhadas para avaliação humana.",
+  "aviso_dados_sinteticos": "Modelo treinado em dados sintéticos. Sem validação clínica. Métricas medem a recuperação de um processo gerador definido por esta equipe.",
+  "resposta_texto": "As variáveis que mais contribuíram para esta classificação foram as listadas no payload. Encaminhar ao pré-natal de alto risco conforme o resultado do modelo. Não alterar as probabilidades informadas.\n\nResultado de apoio à decisão. Não realiza diagnóstico definitivo. Não substitui profissionais de saúde. Não deve ser utilizado como única fonte de decisão. Situações críticas devem ser encaminhadas para avaliação humana.\n\nModelo treinado em dados sintéticos. Sem validação clínica. Métricas medem a recuperação de um processo gerador definido por esta equipe.",
+  "campos_faltantes": [],
+  "erros_validacao": [],
+  "requer_intervencao_humana": false,
+  "intervencao": null,
+  "texto_descartado": false,
+  "auditoria_id": 1,
+  "correlation_id": "9452699b-3b24-4577-ba42-5aa5c5a1dc45",
+  "raciocinio": [
+    "Validação de contrato ok (24 features).",
+    "Regras SINAIS_ALARME_OBST: 0 disparo(s).",
+    "ML logistic_regression: alto_risco P=0.323784 limiar=0.2782268517591518",
+    "Explicação: coef_linear.",
+    "RAG: 3 trecho(s) para query clínica.",
+    "Síntese LLM gerada (somente leitura do payload).",
+    "Validação LLM: aprovada",
+    "Avisos de segurança anexados.",
+    "Auditoria predicoes_ml id=1."
+  ],
+  "falha_rag": null,
+  "falha_modelo": null,
+  "explanation_method": "coef_linear"
+}

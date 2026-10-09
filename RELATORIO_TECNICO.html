@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <title>Relatório Técnico — Guardiã AI (Saúde e Segurança da Mulher)</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 40px auto;
+            max-width: 900px;
+            line-height: 1.6;
+            color: #1e293b;
+            background: #ffffff;
+            padding: 0 20px;
+        }
+        h1, h2, h3, h4 {
+            color: #0f172a;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 8px;
+            margin-top: 24px;
+        }
+        code {
+            background: #f1f5f9;
+            color: #0f172a;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: Consolas, Monaco, monospace;
+            font-size: 0.9em;
+        }
+        pre code {
+            display: block;
+            padding: 12px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #cbd5e1;
+            padding: 10px 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f8fafc;
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        blockquote {
+            border-left: 4px solid #2563eb;
+            margin: 16px 0;
+            padding: 8px 16px;
+            background-color: #eff6ff;
+            color: #1e40af;
+        }
+        @media print {
+            body {
+                margin: 0;
+                padding: 0;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+<h1>Relatório Técnico — Guardiã AI (Saúde e Segurança da Mulher)</h1>
+<p><strong>Tech Challenge FIAP — Pós Tech em IA para Devs — Fase 5</strong><br />
+<strong>Grupo:</strong> Evandro Rosa Sampaio, Gustavo Brasil Pires Octaviano, Paulo Roberto Goncalves, Wallace Gomes da Silva</p>
+<p><strong>Vídeo (≤ 15 min):</strong> a gravar — roteiro em <a href="ROTEIRO_VIDEO.md"><code>ROTEIRO_VIDEO.md</code></a>. O link YouTube da Fase 3 (<code>watch?v=4Wgx4tiHWQw</code>) <strong>não</strong> é a apresentação desta entrega.<br />
+<strong>PDF:</strong> gerar HTML com <code>python scripts/export_pdf_html.py</code> e imprimir em PDF (Chrome: Imprimir → Salvar como PDF). <code>RELATORIO_TECNICO.html</code> acompanha este Markdown.</p>
+<blockquote>
+<p>Projeto acadêmico. <strong>Não substitui avaliação clínica.</strong> O classificador de risco gestacional usa <strong>dados 100 % sintéticos</strong>. Sem validação por especialistas.</p>
+</blockquote>
+<hr />
+<h2>1. Problema</h2>
+<p>A <strong>Guardiã AI</strong> apoia a <strong>equipe de saúde</strong> (não a paciente) em dois eixos do desafio:</p>
+<ol>
+<li><strong>Triagem de gestante</strong> — estimar risco habitual vs. alto risco a partir de variáveis estruturadas, com regras de alarme <strong>antes</strong> do modelo.</li>
+<li><strong>Relato de segurança</strong> — fluxo de violência (matriz SINAN, auditoria LGPD), sem decisão automática de notificação.</li>
+</ol>
+<p>O LLM <strong>não classifica</strong> o risco obstétrico: lê números já calculados (ADR-001 / contrato anti-alucinação). No perfil CPU/Docker usa-se <code>FakeChatModel</code>; Llama 3.2 3B + QLoRA permanece no pipeline Colab da Fase 3.</p>
+<hr />
+<h2>2. Fluxo da Fase 5</h2>
+<pre><code class="language-mermaid">flowchart LR
+  entrada[Entrada_UI_ou_JSON]
+  ml[Regras_mais_ML]
+  rag[RAG]
+  llm[LLM_somente_leitura]
+  ui[Gradio]
+  entrada --&gt; ml --&gt; rag --&gt; llm --&gt; ui
+</code></pre>
+<p>Implementação: <a href="lib/workflows/risco_ml.py"><code>lib/workflows/risco_ml.py</code></a> + 6ª aba em <a href="lib/ui.py"><code>lib/ui.py</code></a>.</p>
+<hr />
+<h2>3. Dados e preparação</h2>
+<p>| Atributo | Valor | Evidência |
+|---|---|---|
+| Natureza | Sintético (gerador latente + Bernoulli; ADR-004) | <code>artifacts/data/risco_gestacional_v1.manifest.json</code> |
+| n | 8 000 linhas, 24 features | mesmo manifesto |
+| Semente | 42 | manifesto |
+| SHA-256 | <code>6a3b6aefe9e2cf1bb3ec9123386cac4812fd4ef1602657d7950668d5abc20e2f</code> | manifesto |
+| Splits | 5 600 / 1 200 / 1 200 | manifesto |
+| Prevalência alto risco | 0,20575 | manifesto |</p>
+<p>Não há PHI. O mock de prontuário (50 pacientes, Faker pt_BR) é independente do dataset tabular.</p>
+<hr />
+<h2>4. Modelos e métricas</h2>
+<p>Comparação no <strong>mesmo split de teste</strong>. Métrica de escolha: <strong>PR-AUC</strong> (classe positiva desbalanceada). Acurácia <strong>não</strong> decide o modelo (<code>acuracia_nao_decisoria</code>).</p>
+<p>Fonte: <code>artifacts/metrics/comparacao.json</code> e <code>logistic_regression_teste.json</code>.</p>
+<p>| Modelo | PR-AUC (teste) | Observação |
+|---|---|---|
+| Dummy (prior) | 0,206 | baseline de prevalência |
+| Regra clínica | 0,263 | baseline determinístico |
+| <strong>Regressão logística</strong> | <strong>0,590</strong> | <strong>vencedor</strong>; recall+ 0,955 no limiar 0,278 (limiar <strong>da validação</strong>) |
+| Random Forest | 0,557 | segundo |</p>
+<p>Limiar operacional 0,278 <strong>não</strong> é 0,5. Explicabilidade no CPU: <code>coef_linear</code> (LogReg) ou permutação global (RF). SHAP é opcional e <strong>não</strong> está no ambiente padrão (<code>requirements-ml.txt</code>).</p>
+<hr />
+<h2>5. RAG</h2>
+<p>| Perfil | Mecanismo | <code>doc_id</code> |
+|---|---|---|
+| <strong>demo-cpu / Docker</strong> | Retriever lexical <a href="lib/rag_local.py"><code>lib/rag_local.py</code></a> sobre <a href="artifacts/rag/protocolos_subset.json"><code>artifacts/rag/protocolos_subset.json</code></a> | arquivos <code>.pdf</code> estáveis (recorte didático) |
+| Colab / GPU | Chroma + MiniLM; notebook <a href="06_indexar_protocolos.ipynb"><code>06_indexar_protocolos.ipynb</code></a> com <code>CHUNK_SIZE=1000</code>, overlap 200 | índice fora do Git (Drive) |</p>
+<p>A ferramenta <code>buscar_protocolo</code> e o nó RAG de <code>risco_ml</code> usam o mesmo retriever injetado. Sem índice, o fluxo devolve <code>retrieved_sources: []</code> sem abortar.</p>
+<hr />
+<h2>6. LLM</h2>
+<ul>
+<li><strong>CPU/Docker:</strong> <code>FakeChatModel</code> — declara o modo; não inventa métricas (validador em <code>lib/ml/llm_contract.py</code>).</li>
+<li><strong>Colab:</strong> Llama 3.2 3B Instruct + adapter QLoRA (Fase 3). Human-in-the-loop: o profissional confirma conduta; o sistema não prescreve.</li>
+</ul>
+<hr />
+<h2>7. Arquitetura (produto nesta branch)</h2>
+<ul>
+<li>10 tools LangChain (inclui <code>predizer_risco_gestacional</code>)</li>
+<li>5 grafos LangGraph (Triagem, Violência, Obstétrico, Prevenção, <code>risco_ml</code>)</li>
+<li>6 abas Gradio (título <strong>Guardiã AI</strong>)</li>
+<li>SQLite: tabelas da Fase 3 + <code>predicoes_ml</code> (hash de features, sem payload clínico em claro)</li>
+<li>Docker <code>demo-cpu</code>: sklearn + FakeChatModel, sem Llama</li>
+</ul>
+<pre><code class="language-mermaid">flowchart TB
+  UI[Gradio_Guardia_AI]
+  UI --&gt; Agent[ReAct]
+  UI --&gt; WFs[5_StateGraphs]
+  Agent --&gt; Tools[10_StructuredTools]
+  WFs --&gt; Tools
+  Tools --&gt; RAG[RAG_local_ou_Chroma]
+  Tools --&gt; DB[(SQLite)]
+  WFs --&gt; ML[lib_ml]
+  Agent --&gt; LLM[FakeChat_ou_Llama]
+  WFs --&gt; LLM
+</code></pre>
+<hr />
+<h2>8. Segurança, ética e limites</h2>
+<ul>
+<li>Nunca prescrever; nunca diagnosticar de forma definitiva; nunca falar com a paciente.</li>
+<li>Violência: <code>log_acesso</code> com motivo ≥ 5 caracteres; SINAN por regra, não pelo LLM.</li>
+<li>Sinais de alarme obstétrico <strong>bypassam</strong> o ML.</li>
+<li>Sem criptografia at-rest (mock acadêmico). Sem SSO.</li>
+</ul>
+<hr />
+<h2>9. Entregáveis do enunciado</h2>
+<p>| Item | Estado |
+|---|---|
+| Git + README | este repositório |
+| UI | Gradio, <code>python scripts/app.py</code> |
+| Dockerfile | perfil <code>demo-cpu</code> |
+| Relatório técnico | este arquivo + HTML |
+| Vídeo ≤ 15 min | <strong>pendente</strong> (humano) |
+| RAG com citação | subset CPU + Chroma no Colab |</p>
+<hr />
+<h2>10. Limitações</h2>
+<ol>
+<li>Métricas de ML <strong>não</strong> são validação clínica.</li>
+<li>Subset RAG CPU é recorte educacional, não os 39 PDFs completos.</li>
+<li>Vídeo e merge para <code>main</code> (se a banca clonar <code>main</code>) ficam fora deste Markdown.</li>
+<li><code>pip-audit</code> documentado, pins não alteradas.</li>
+</ol>
+<hr />
+<h2>Anexo — Como reproduzir no CPU</h2>
+<pre><code class="language-text">pip install -r requirements.txt -r requirements-ml.txt
+python scripts/train.py --verificar-dataset
+python -m pytest -q
+python scripts/run_demo.py
+python scripts/app.py
+python scripts/export_pdf_html.py
+</code></pre>
+
+</body>
+</html>

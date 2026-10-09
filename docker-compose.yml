@@ -1,0 +1,12 @@
+services:
+  demo:
+    build: .
+    ports:
+      - "7860:7860"
+    environment:
+      PERFIL_EXECUCAO: demo-cpu
+      HOSPITAL_DB_PATH: /app/artifacts/demo/hospital.db
+      ARTIFACTS_DIR: /app/artifacts
+    volumes:
+      - ./artifacts:/app/artifacts
+    command: ["python", "scripts/app.py"]

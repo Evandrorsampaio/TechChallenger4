@@ -1,0 +1,37 @@
+{
+  "explanation_method": "coef_linear",
+  "explanation_scope": "local",
+  "top_features": [
+    {
+      "feature": "pas_mmhg",
+      "value": 118,
+      "contribution": 0.21195115104495132,
+      "direction": "aumenta"
+    },
+    {
+      "feature": "imc_pre_gestacional",
+      "value": 24.0,
+      "contribution": -0.1352754033297112,
+      "direction": "reduz"
+    },
+    {
+      "feature": "glicemia_jejum_mg_dl",
+      "value": 82.0,
+      "contribution": -0.086775660296531,
+      "direction": "reduz"
+    },
+    {
+      "feature": "escolaridade_anos",
+      "value": 12,
+      "contribution": -0.06115479792729405,
+      "direction": "reduz"
+    },
+    {
+      "feature": "cesareas_previas",
+      "value": 0,
+      "contribution": -0.03094286079170258,
+      "direction": "reduz"
+    }
+  ],
+  "aviso": null
+}

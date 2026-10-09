@@ -29,6 +29,8 @@ from __future__ import annotations
 
 from typing import TypedDict
 
+from lib.config import ml_risco_habilitado
+
 from . import common
 
 
@@ -349,16 +351,23 @@ def build_obstetrico_workflow(chat_model, conn, retriever):
     g.add_node('coletar_dados_gestante', _coletar_dados_gestante(chat_model))
     g.add_node('avaliar_risco_gestacional', _avaliar_risco_gestacional(chat_model))
     g.add_node('detectar_alertas_urgencia', _detectar_alertas_urgencia)
-    g.add_node('orientacoes_especificas', _orientacoes_especificas(chat_model, retriever))
+    g.add_node('gerar_orientacoes_especificas', _orientacoes_especificas(chat_model, retriever))
     g.add_node('agendar_exames', _agendar_exames)
     g.add_node('definir_acompanhamento', _definir_acompanhamento)
     g.add_node('compilar_resposta', _compilar_resposta)
 
     g.add_edge(START, 'coletar_dados_gestante')
     g.add_edge('coletar_dados_gestante', 'avaliar_risco_gestacional')
-    g.add_edge('avaliar_risco_gestacional', 'detectar_alertas_urgencia')
-    g.add_edge('detectar_alertas_urgencia', 'orientacoes_especificas')
-    g.add_edge('orientacoes_especificas', 'agendar_exames')
+    if ml_risco_habilitado():
+        from .risco_ml import classificar_risco_ml_opcional
+
+        g.add_node('classificar_risco_ml', classificar_risco_ml_opcional)
+        g.add_edge('avaliar_risco_gestacional', 'classificar_risco_ml')
+        g.add_edge('classificar_risco_ml', 'detectar_alertas_urgencia')
+    else:
+        g.add_edge('avaliar_risco_gestacional', 'detectar_alertas_urgencia')
+    g.add_edge('detectar_alertas_urgencia', 'gerar_orientacoes_especificas')
+    g.add_edge('gerar_orientacoes_especificas', 'agendar_exames')
     g.add_edge('agendar_exames', 'definir_acompanhamento')
     g.add_edge('definir_acompanhamento', 'compilar_resposta')
     g.add_edge('compilar_resposta', END)

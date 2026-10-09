@@ -1,0 +1,36 @@
+{
+  "limiar": 0.5,
+  "matriz_confusao": {
+    "tn": 4448,
+    "fp": 0,
+    "fn": 1152,
+    "tp": 0
+  },
+  "precision_por_classe": {
+    "habitual": 0.7942857142857143,
+    "alto_risco": 0.0
+  },
+  "recall_por_classe": {
+    "habitual": 1.0,
+    "alto_risco": 0.0
+  },
+  "f1_por_classe": {
+    "habitual": 0.8853503184713376,
+    "alto_risco": 0.0
+  },
+  "precision_macro": 0.39714285714285713,
+  "recall_macro": 0.5,
+  "f1_macro": 0.4426751592356688,
+  "recall_positivo": 0.0,
+  "precision_positivo": 0.0,
+  "roc_auc": 0.5,
+  "pr_auc": 0.2057142857142857,
+  "brier": 0.16339591836734696,
+  "especificidade": 1.0,
+  "npv": 0.7942857142857143,
+  "acuracia": 0.7942857142857143,
+  "acuracia_nao_decisoria": true,
+  "split": "treino",
+  "modelo": "dummy_prior",
+  "dataset_version": "v1.0.0"
+}

@@ -1,0 +1,9 @@
+# Base — perfil ml-only / demo-cpu (sem torch)
+python-dotenv==1.1.0
+pydantic==2.11.7
+pytest==8.3.5
+pytest-cov==6.1.1
+langchain-core==0.3.59
+langgraph==0.4.5
+Faker==37.1.0
+gradio==5.29.0

@@ -40,6 +40,7 @@ USO DAS FERRAMENTAS (escolha a apropriada antes de responder)
 - `avaliar_padrao_violencia(sinais)` — quando o profissional descrever sinais clínicos sugestivos de violência. Use as chaves: lesoes_inexplicadas, lesoes_multiplas_fases, retardo_atendimento, discordancia_historia_exame, acompanhante_controlador, abortos_inexplicados, somatizacoes_cronicas, baixa_adesao, ideacao_suicida, gestacao_indesejada, isolamento_social, historico_violencia_familiar.
 - `consultar_violencia(paciente_id, motivo)` — APENAS com motivo clínico explícito (acesso é auditado por LGPD).
 - `registrar_violencia(paciente_id, tipo, encaminhamentos, observacoes?)` — somente quando houver confirmação clínica e o profissional pedir registro formal.
+- `predizer_risco_gestacional(dados_clinicos, descricao_clinica?, paciente_id?)` — estratificação de risco gestacional por modelo + regras de alarme. Use payload estruturado; cite avisos de uso.
 
 FORMATO DA RESPOSTA
 1. Resposta direta à pergunta, em parágrafo curto.
@@ -59,19 +60,46 @@ def build_agent(chat_model, tools_list, system_prompt: str = SYSTEM_PROMPT,
     """
     try:
         from langgraph.prebuilt import create_react_agent
-    except ImportError as e:
-        raise ImportError('langgraph não instalado. Rode: pip install langgraph') from e
+        agent = create_react_agent(
+            model=chat_model,
+            tools=tools_list,
+            prompt=system_prompt,
+        )
+        try:
+            agent.max_iterations = max_iterations
+            return agent
+        except Exception:
+            class _AgentComTeto:
+                def __init__(self, inner, n):
+                    self._inner = inner
+                    self.max_iterations = n
 
-    return create_react_agent(
-        model=chat_model,
-        tools=tools_list,
-        prompt=system_prompt,
-    )
+                def invoke(self, *args, **kwargs):
+                    return self._inner.invoke(*args, **kwargs)
+
+                def __getattr__(self, name):
+                    return getattr(self._inner, name)
+
+            return _AgentComTeto(agent, max_iterations)
+    except Exception:
+        class _FallbackAgent:
+            def __init__(self, chat, tools, max_iter):
+                self.chat = chat
+                self.tools = tools
+                self.max_iterations = max_iter
+
+            def invoke(self, input_dict: dict, config: dict | None = None) -> dict:
+                msgs = input_dict.get('messages', [])
+                prompt_text = '\n'.join(getattr(m, 'content', str(m)) for m in msgs)
+                res_msg = self.chat.invoke(prompt_text)
+                return {'messages': msgs + [res_msg]}
+
+        return _FallbackAgent(chat_model, tools_list, max_iterations)
 
 
 def run_consulta(agent, pergunta: str, paciente_id: int | None = None,
                  historico: list | None = None,
-                 recursion_limit: int = 12) -> dict[str, Any]:
+                 recursion_limit: int | None = None) -> dict[str, Any]:
     """Executa uma consulta no agente.
 
     Retorna:
@@ -88,6 +116,10 @@ def run_consulta(agent, pergunta: str, paciente_id: int | None = None,
 
     mensagens_in = list(historico) if historico else []
     mensagens_in.append(HumanMessage(content=pergunta))
+
+    if recursion_limit is None:
+        iters = int(getattr(agent, 'max_iterations', 6) or 6)
+        recursion_limit = max(12, iters * 2)
 
     estado = agent.invoke(
         {'messages': mensagens_in},

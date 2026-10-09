@@ -1,0 +1,36 @@
+{
+  "limiar": 0.2782268517591518,
+  "matriz_confusao": {
+    "tn": 292,
+    "fp": 661,
+    "fn": 24,
+    "tp": 223
+  },
+  "precision_por_classe": {
+    "habitual": 0.9240506329113924,
+    "alto_risco": 0.252262443438914
+  },
+  "recall_por_classe": {
+    "habitual": 0.30640083945435465,
+    "alto_risco": 0.902834008097166
+  },
+  "f1_por_classe": {
+    "habitual": 0.46020488573680063,
+    "alto_risco": 0.394341290893015
+  },
+  "precision_macro": 0.5881565381751532,
+  "recall_macro": 0.6046174237757603,
+  "f1_macro": 0.42727308831490785,
+  "recall_positivo": 0.902834008097166,
+  "precision_positivo": 0.252262443438914,
+  "roc_auc": 0.7568343734467333,
+  "pr_auc": 0.48925551377174026,
+  "brier": 0.18920801423345707,
+  "especificidade": 0.30640083945435465,
+  "npv": 0.9240506329113924,
+  "acuracia": 0.42916666666666664,
+  "acuracia_nao_decisoria": true,
+  "split": "validacao",
+  "modelo": "logistic_regression",
+  "dataset_version": "v1.0.0"
+}
