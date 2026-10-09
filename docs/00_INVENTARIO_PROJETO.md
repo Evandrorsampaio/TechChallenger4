@@ -217,7 +217,7 @@ inferência de assinatura pelo LangChain. Risco de instabilidade de tool calling
 
 ### 7.1 Achado crítico no RAG — descompasso entre tamanho de chunk e janela do encoder
 
-`[COD]` `06_indexar_protocolos.ipynb` define `CHUNK_SIZE, CHUNK_OVERLAP = 6000, 400` (em
+`[COD]` `06_indexar_protocolos.ipynb` define `CHUNK_SIZE, CHUNK_OVERLAP = 1000, 200` (em
 **caracteres**) e indexa com `paraphrase-multilingual-MiniLM-L12-v2` sem sobrescrever
 `max_seq_length`.
 

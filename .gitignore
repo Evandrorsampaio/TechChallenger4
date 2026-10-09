@@ -31,6 +31,8 @@ htmlcov/
 # Ficam no Drive ou Git LFS, não no repo principal
 files/
 *.pdf
+!RELATORIO_TECNICO.pdf
+!RELATORIO_TECNICO.html
 *.bin
 *.safetensors
 *.gguf

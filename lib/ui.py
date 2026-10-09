@@ -1,4 +1,4 @@
-"""Interface Gradio para o assistente clínico.
+"""Interface Gradio da Guardiã AI.
 
 Layout (com workflows habilitados):
 - Sidebar:    profissional, paciente em contexto, painel de alertas
@@ -7,6 +7,7 @@ Layout (com workflows habilitados):
 - Tab 3:      Detecção de Violência (workflow LangGraph) + checklist heurístico
 - Tab 4:      Atendimento Obstétrico (workflow LangGraph)
 - Tab 5:      Prevenção e Rastreamento (workflow LangGraph)
+- Tab 6:      Risco Gestacional (ML)
 
 Se `workflows` não for passado, só Tab 1 e o checklist da Tab 3 aparecem.
 """
@@ -599,11 +600,12 @@ def build_ui(agent, conn, default_usuario: str = 'sessao_demo',
     }
     """
 
-    with gr.Blocks(title='Assistente Clínico — Saúde da Mulher',
+    with gr.Blocks(title='Guardiã AI — Saúde e Segurança da Mulher',
                    theme=gr.themes.Soft(), css=css) as app:
         gr.Markdown(
-            '# Assistente Clínico — Saúde da Mulher\n'
-            '_Apoio à equipe de saúde do hospital. Não substitui avaliação clínica._'
+            '# Guardiã AI — Saúde e Segurança da Mulher\n'
+            '_Apoio à equipe (triagem de gestante e relato de segurança). '
+            'Não substitui avaliação clínica. Dados de risco são sintéticos._'
         )
 
         with gr.Row():

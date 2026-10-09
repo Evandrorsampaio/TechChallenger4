@@ -7,6 +7,7 @@
   "dados_imputados": [],
   "regras_disparadas": [],
   "fontes": [],
+  "retrieved_sources": [],
   "safety_notice": "Resultado de apoio à decisão. Não realiza diagnóstico definitivo. Não substitui profissionais de saúde. Não deve ser utilizado como única fonte de decisão. Situações críticas devem ser encaminhadas para avaliação humana.",
   "aviso_dados_sinteticos": "Modelo treinado em dados sintéticos. Sem validação clínica. Métricas medem a recuperação de um processo gerador definido por esta equipe.",
   "resposta_texto": "**Modo:** `incompleto`\n**Classificação:** `incompleto`\n_Nenhuma fonte documental recuperada nesta execução._\n\nResultado de apoio à decisão. Não realiza diagnóstico definitivo. Não substitui profissionais de saúde. Não deve ser utilizado como única fonte de decisão. Situações críticas devem ser encaminhadas para avaliação humana.\nModelo treinado em dados sintéticos. Sem validação clínica. Métricas medem a recuperação de um processo gerador definido por esta equipe.",
@@ -25,7 +26,7 @@
   },
   "texto_descartado": false,
   "auditoria_id": 2,
-  "correlation_id": "8ed75918-dee4-4d41-beb9-cd2cae462e4f",
+  "correlation_id": "d6465a62-a89f-4c84-8424-cecfdf7029f8",
   "raciocinio": [
     "Dados incompletos: ['pas_mmhg']",
     "Caminho dados_incompletos (sem imputação, sem RAG).",

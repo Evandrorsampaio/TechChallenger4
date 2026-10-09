@@ -24,6 +24,7 @@ COPY pyproject.toml .env.example ./
 COPY artifacts/metrics ./artifacts/metrics
 COPY artifacts/models ./artifacts/models
 COPY artifacts/data ./artifacts/data
+COPY artifacts/rag ./artifacts/rag
 
 EXPOSE 7860
 

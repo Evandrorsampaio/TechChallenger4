@@ -1,6 +1,6 @@
 # Plano de Testes e Estratégia de Homologação
 
-**Projeto:** Assistente Clínico Hospitalar em Saúde da Mulher  
+**Projeto:** Guardiã AI — Saúde e Segurança da Mulher  
 
 ---
 

@@ -9,10 +9,9 @@
 ---
 
 > ### Banner de estado
-> Os artefatos do RAG (`files/chroma/`, `fontes_saude_mulher_v2.json`) **não estão no repositório**
-> — são gitignored e vivem no Google Drive do autor (`00_INVENTARIO_PROJETO.md` §5). As contagens
-> "1392 chunks" e "39 PDFs" são afirmações de documentação (`[DOC]`), não verificadas por execução
-> nesta fase. Nenhuma métrica de recuperação foi medida; ver `AVALIACAO_RECUPERACAO.md`.
+> **CPU / Docker:** corpus lexical em `artifacts/rag/protocolos_subset.json` (`lib/rag_local.py`),
+> com `doc_id` estável. **Colab:** `files/chroma/` e `fontes_saude_mulher_v2.json` continuam fora
+> do Git (Drive). Contagens "1392 chunks" / "39 PDFs" são `[DOC]`. Ver `AVALIACAO_RECUPERACAO.md`.
 
 ---
 
@@ -47,8 +46,8 @@ Implementado em `06_indexar_protocolos.ipynb`, célula 3. Parâmetros:
 
 | Parâmetro | Valor |
 |---|---|
-| `CHUNK_SIZE` | 6000 caracteres |
-| `CHUNK_OVERLAP` | 400 caracteres |
+| `CHUNK_SIZE` | 1000 caracteres (`06_indexar_protocolos.ipynb`; SFT no notebook 02 pode permanecer 6000/400) |
+| `CHUNK_OVERLAP` | 200 caracteres |
 | Corte preferencial | quebra de parágrafo (`\n\n`) |
 | Janela de busca do corte | do início do chunk até `size`, aceitando o corte se cair além de `size // 2` |
 | Normalização prévia | `re.sub(r'\n{3,}', '\n\n', text)` |
@@ -74,6 +73,10 @@ def chunk_text(text, size=CHUNK_SIZE, overlap=CHUNK_OVERLAP):
 ```
 
 ### 2.1 Leitura crítica dos parâmetros
+
+O notebook **06** passou a `CHUNK_SIZE=1000` / overlap 200. O texto abaixo descreve o **problema
+histórico** (e o notebook 02 / SFT, que ainda pode usar 6000/400). Reindexar o Chroma no Drive é
+necessário para o índice GPU refletir o notebook 06.
 
 **6000 caracteres é um chunk grande** — aproximadamente 1200–1500 tokens em português. Isso tem
 duas consequências opostas e ambas reais:
@@ -128,8 +131,8 @@ aproximadamente o **primeiro terço** do seu texto. Os outros dois terços estã
 devolvidos como `page_content`, mas **não influenciaram o vetor** que decide se o chunk é
 recuperado.
 
-Isto é um achado de leitura de código, não uma suposição: `CHUNK_SIZE = 6000` está na célula 2 do
-notebook 06, e o limite de 512 tokens é propriedade do modelo declarado na mesma célula.
+O notebook 06 vigente usa **1000/200**. O diagnóstico abaixo vale para o índice Colab antigo (6000/400)
+e para o SFT do notebook 02. A janela real do MiniLM no Hub é 128 tokens; 512 era a hipótese antiga.
 
 Implicações concretas:
 

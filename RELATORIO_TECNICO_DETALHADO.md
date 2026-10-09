@@ -1,4 +1,6 @@
-# Relatório Técnico Detalhado — Assistente Clínico Hospitalar em Saúde da Mulher
+# Relatório Técnico Detalhado — Guardiã AI (Saúde e Segurança da Mulher)
+
+> A entrega executiva da **Fase 5** é [`RELATORIO_TECNICO.md`](RELATORIO_TECNICO.md). Este arquivo permanece como anexo acadêmico da Fase 3 (QLoRA / ROUGE).
 
 **Tech Challenge FIAP — Pós Tech em IA para Devs — Fase 3**
 

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.0 — 2026-10-09
+
+Equalização Fase 5 nesta branch: branding **Guardiã AI**, relatório técnico reescrito, RAG lexical na demo CPU (`doc_id` real), notebook 06 em chunk 1000/200. SHAP e vídeo continuam fora do código.
+
 ## 0.4.0 — 2026-09-18
 
 Evolução aditiva: dataset sintético v1, quatro modelos, workflow `risco_ml`, aba Gradio, auditoria `predicoes_ml`, FakeChatModel.

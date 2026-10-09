@@ -573,7 +573,7 @@ vinculantes deste repositório. Cada um aponta os cenários e requisitos que o c
 | 11 | Dados incompletos são tratados sem imputação silenciosa, com acionamento humano | CA-05, CA-06, CA-07; RF-03, RF-21, RNF-18 | `tests/unit/test_dados_incompletos.py` | **Atendido** |
 | 12 | O modelo está integrado a um workflow LangGraph com ramificação e tratamento de erro | CA-22, CA-23, CA-24; RF-12, RNF-09 | `lib/workflows/risco_ml.py` + diagrama | **Atendido** (compile LangGraph + executor equivalente se o runtime LangChain do host divergir) |
 | 13 | O LLM comunica o resultado sem poder alterar os números | CA-25, CA-26, CA-27; RF-13, RF-23 | `lib/ml/llm_contract.py` + `tests/unit/test_contrato_llm.py` | **Atendido** |
-| 14 | O RAG fornece suporte documental à resposta, com fonte citada | CA-20, CA-21; RF-11 | FakeRetriever nos testes; Chroma real só no perfil GPU/Colab | **Parcial** |
+| 14 | O RAG fornece suporte documental à resposta, com fonte citada | CA-20, CA-21; RF-11 | CPU: `lib/rag_local.py` + `artifacts/rag/protocolos_subset.json` (`tests/integration/test_rag_cpu_demo.py`). Chroma completo só no Colab. | **Atendido** (subset CPU; índice 39 PDFs fora do Git) |
 | 15 | Avisos de segurança e limites de uso clínico acompanham toda saída | CA-28, CA-29; RF-14, RNF-19 | payload + aba ML | **Atendido** |
 | 16 | Toda predição é auditável, sem persistir dados clínicos em claro | CA-30, CA-31, CA-32; RF-15, RNF-06 | Tabela `predicoes_ml` (`features_hash`) | **Atendido** |
 | 17 | A interface expõe a predição com probabilidade, explicação e incerteza | CA-29, CA-33; RF-16 | `lib/ui.py` aba 6 | **Atendido** (sem captura de tela neste ciclo) |
@@ -581,6 +581,6 @@ vinculantes deste repositório. Cada um aponta os cenários e requisitos que o c
 | 19 | A execução local e em Docker está documentada e **comprovada por log de execução real** | CA-35, CA-36, CA-37; RF-18, RF-19, RNF-11 | `docs/deploy/EXECUCAO_LOCAL.md` e `EXECUCAO_DOCKER.md` | **Atendido** — build 699 s, imagem 1,78 GB (`3dd7f0b4e3d1`), `docker run` exit 0 em 12 s (`docs/deploy/EXECUCAO_DOCKER.md`) |
 | 20 | Há suíte de testes automatizados com evidência, e o sistema anterior continua funcionando | CA-38, CA-40; RF-20, RNF-04, RNF-20 | `docs/testes/RELATORIO_DE_TESTES.md` + `tests/regression/` | **Atendido** |
 
-**Resumo: 17 atendidos, 2 parciais (explicabilidade SHAP opcional; RAG real só no perfil GPU/Colab).**
+**Resumo: 19 atendidos no recorte desta branch; SHAP continua opcional (critério 9 já atendido via `coef_linear`/permutação). Índice Chroma dos 39 PDFs permanece no Drive/Colab.**
 
 `[INF]` Os critérios 3, 19 e 20 dependem de **execução**, não só de código. O critério 3 tem manifesto SHA-256. O 20 tem `pytest` verde. O 19 tem log local; o `docker build` deste ciclo falhou porque o daemon não estava no ar.

@@ -41,23 +41,8 @@ CASO_OK = {
 from lib.db import init_schema, reset_database
 from lib.llm_fake import FakeChatModel
 from lib.mock_data import populate
+from lib.rag_local import build_local_retriever
 from lib.workflows.risco_ml import build_risco_ml_workflow
-
-
-class _Doc:
-    def __init__(self, text, meta):
-        self.page_content = text
-        self.metadata = meta
-
-
-class FakeRetriever:
-    def invoke(self, query: str):
-        return [
-            _Doc(
-                'Pré-natal de alto risco: encaminhar à referência regional.',
-                {'doc_id': 'ms_prenatal_alto_risco', 'category': 'ginecologia_obstetricia', 'chunk_id': 'c1'},
-            )
-        ]
 
 
 def _conn(path: Path) -> sqlite3.Connection:
@@ -78,7 +63,7 @@ def main() -> int:
     init_schema(conn)
     populate(conn, seed=42, verbose=False)
 
-    wf = build_risco_ml_workflow(FakeChatModel(), conn, FakeRetriever())
+    wf = build_risco_ml_workflow(FakeChatModel(), conn, build_local_retriever())
     cenario_alto = dict(CASO_OK)
     cenario_alto.update({'idade': 41, 'has_cronica': True, 'pas_mmhg': 150, 'pad_mmhg': 95})
     incompleto = dict(CASO_OK)

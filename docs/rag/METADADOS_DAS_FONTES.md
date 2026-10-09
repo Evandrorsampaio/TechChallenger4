@@ -104,7 +104,7 @@ prática, **a flag `sensitive` está indexada e não é lida por ninguém no cam
 
 ```mermaid
 flowchart LR
-    A["fontes_saude_mulher_v2.json<br/>filename, category, sensitive, name"] --> B["chunk_text()<br/>6000/400"]
+    A["fontes_saude_mulher_v2.json<br/>filename, category, sensitive, name"] --> B["chunk_text()<br/>1000/200 no notebook 06"]
     B --> C["Document.metadata<br/>doc_id, chunk_id, category, sensitive, name"]
     C --> D[("Chroma<br/>protocolos_saude_mulher")]
     D --> E["retriever.invoke(query)"]

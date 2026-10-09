@@ -532,6 +532,16 @@ def auditar(conn):
 
 def compilar_resposta(state: RiscoMLState) -> dict:
     payload = state.get('payload_llm') or {}
+    fontes = state.get('fontes') or []
+    retrieved = payload.get('retrieved_sources') or [
+        {
+            'doc_id': f.get('doc_id'),
+            'category': f.get('category'),
+            'chunk_id': f.get('chunk_id'),
+            'trecho': (f.get('trecho') or '')[:500],
+        }
+        for f in fontes
+    ]
     resp = {
         'modo': state.get('modo'),
         'prediction': payload.get('prediction') or (state.get('resultado_predicao') or {}).get('prediction'),
@@ -540,7 +550,8 @@ def compilar_resposta(state: RiscoMLState) -> dict:
         'top_features': payload.get('top_features') or [],
         'dados_imputados': payload.get('dados_imputados') or state.get('dados_imputados') or [],
         'regras_disparadas': state.get('regras_disparadas') or [],
-        'fontes': state.get('fontes') or [],
+        'fontes': fontes,
+        'retrieved_sources': retrieved,
         'safety_notice': SAFETY_NOTICE,
         'aviso_dados_sinteticos': AVISO_SINTETICO,
         'resposta_texto': state.get('resposta_texto') or '',

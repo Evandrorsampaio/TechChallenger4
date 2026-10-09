@@ -1,7 +1,7 @@
-> **Tech Challenge FIAP — Pós Tech em IA para Devs — Fase 3 + evolução de risco gestacional (ML) neste repositório.**
+> **Tech Challenge FIAP — Pós Tech em IA para Devs — Fase 5: Guardiã AI.**
 > Projeto acadêmico. **Não substitui avaliação clínica.** O classificador de risco usa **dados 100 % sintéticos**. Sem validação clínica.
 
-As sprints de implementação (PI-S01…PI-S08) estão **fechadas com evidência** (`docs/planos/`). O que ainda falta é a **finalização de entrega** (git, apresentação, RAG real, dívida de dependências) — ver [Passos que faltam para finalização](#passos-que-faltam-para-finalização).
+As sprints PI-S01…PI-S08 estão **fechadas** (`docs/planos/`). O produto (ML + LangGraph + Gradio + Docker) está nesta branch. O que ainda é entrega humana ou git está em [Passos que faltam para finalização](#passos-que-faltam-para-finalização).
 
 ## Evolução ML (2026-09-18)
 
@@ -24,39 +24,29 @@ python scripts/run_demo.py
 python scripts/app.py
 ```
 
-Docker (perfil `demo-cpu`): `docker build -t techchallenger4-demo:cpu .` e o `docker run` documentado em `docs/deploy/EXECUCAO_DOCKER.md`. Llama / Chroma de produção: perfil Colab (`Como rodar` abaixo), não esta imagem.
+Docker (perfil `demo-cpu`): `docker build -t techchallenger4-demo:cpu .` e o `docker run` documentado em `docs/deploy/EXECUCAO_DOCKER.md`. Llama / Chroma completo: perfil Colab (`Como rodar` abaixo). Na demo CPU o RAG é o subset lexical versionado (`lib/rag_local.py`).
 
 ## Passos que faltam para finalização
 
-A implementação das 8 sprints **não** é o mesmo que “projeto entregue na banca”. Falta o seguinte.
+O código do produto **já está nesta branch**. Falta só o que a banca pede fora do repositório ou no Git de entrega.
 
-### Entrega (Must para fechar o challenge)
+### Ainda humano / git
 
-1. **Commit e push** do que ainda estiver só na working tree da branch `feat/evolucao-ml-risco-gestacional`, depois **PR para `main`** (CI em `.github/workflows/ci.yml`).
-2. **Vídeo ≤ 15 min** seguindo [`docs/demo/ROTEIRO_VIDEO.md`](docs/demo/ROTEIRO_VIDEO.md) e o checklist [`docs/demo/CHECKLIST_APRESENTACAO.md`](docs/demo/CHECKLIST_APRESENTACAO.md): dizer em voz alta que os dados são sintéticos; ler PR-AUC/recall do JSON; mostrar limiar 0,278 (não 0,5); bypass de emergência; avisos na UI; Docker só com o que o log prova.
-3. **Capturas da 6ª aba** Gradio (os quatro modos: normal, incompleto, bypass, degradado). O critério de aceite 17 está atendido no código; **não há screenshot versionado**.
-4. Conferir o pacote de entrega FIAP (relatórios na raiz, notebooks 01–10, [`docs/planos/RELATORIO_CICLO_FINAL.md`](docs/planos/RELATORIO_CICLO_FINAL.md)).
+1. **Vídeo ≤ 15 min** — [`docs/demo/ROTEIRO_VIDEO.md`](docs/demo/ROTEIRO_VIDEO.md): dados sintéticos em voz alta; PR-AUC/recall do JSON; limiar 0,278; bypass; avisos na UI; Docker só com o que o log prova. Trocar o YouTube da Fase 3 no relatório quando o vídeo estiver publicado.
+2. **PR para `main`** se a banca clonar `main` (CI em `.github/workflows/ci.yml`).
+3. **PDF da banca** se o HTML não bastar: `python scripts/export_pdf_html.py` e imprimir `RELATORIO_TECNICO.html`.
 
-### RAG e LLM reais (Parcial hoje)
+### Opcional (não bloqueia o enunciado)
 
-5. **Indexar Chroma neste ambiente** (`06_indexar_protocolos.ipynb` / Drive). Testes usam `FakeRetriever`. Critério 14 permanece **parcial** até o retriever real devolver `doc_id` do trecho que entrou no prompt.
-6. **Baixar os pesos** de `paraphrase-multilingual-MiniLM-L12-v2` e confirmar `SentenceTransformer(...).max_seq_length` (config do Hub = **128**). Sem rechunking automático: chunks de 6000 caracteres continuam desalinhados da janela; reindexar com chunk menor é decisão da fase seguinte.
-7. **Rodar o Llama + adapter QLoRA no Colab** (GPU, `HF_TOKEN`, `requirements-llm.txt`). CPU/Docker continuam com `FakeChatModel` de propósito.
+4. Capturas da 6ª aba (quatro modos). Índice **Chroma** no Colab (`06_indexar_protocolos.ipynb`, chunk 1000/200) se for mostrar GPU. Pesos MiniLM locais. Llama + QLoRA no Colab. **`shap`** se o Python permitir. Bump de `pip-audit` com regressão.
 
-### Qualidade opcional (Should / Could)
+### Fora do escopo (não afirmar o contrário)
 
-8. Instalar **`shap`** (se o Python permitir) para explicação local do Random Forest; hoje a cascata é `coef_linear` (LogReg) ou permutação global. Ver [`docs/ml/EXPLICABILIDADE.md`](docs/ml/EXPLICABILIDADE.md).
-9. Tratar o **`pip-audit`** ([`docs/deploy/PIP_AUDIT.md`](docs/deploy/PIP_AUDIT.md)): 92 avisos em 10 pacotes. As pins **não** foram alteradas para não quebrar a demo; bump (Gradio/Pillow/LangGraph/…) precisa de regressão da suíte.
-10. Ponte **`features_de_paciente` ↔ `hospital.db`** na 6ª aba: a função e o teste unitário existem; o preenchimento automático a partir do prontuário mock ainda pode ser o caminho feliz da demo ao vivo.
+5. Validação clínica em dados reais, SSO, criptografia at-rest.
 
-### Fora do escopo acadêmico (não bloquear a nota; não afirmar o contrário)
+# Guardiã AI — Saúde e Segurança da Mulher
 
-11. **Validação clínica** em dados reais, especialistas, remoção de PHI, autenticação SSO, criptografia at-rest — explicitamente **não feitos**.
-12. Corpo-modelo vazio em alguns `docs/ml/*.md` (abaixo do banner de status): não interpolar células `—`; a fonte de verdade é `artifacts/metrics/`.
-
-# Assistente Clínico Hospitalar — Saúde da Mulher
-
-Assistente virtual de apoio à equipe de saúde (médicos, enfermeiros, residentes, técnicos) de um hospital especializado em **saúde e segurança da mulher**, construído a partir de:
+Assistente virtual de apoio à equipe de saúde (médicos, enfermeiros, residentes, técnicos) especializado em **saúde e segurança da mulher**. Jornada principal: **triagem de gestante** (aba Risco Gestacional ML) e **relato de segurança** (aba Violência). Construído a partir de:
 
 - **Fine-tuning QLoRA** do Llama 3.2 3B Instruct sobre 6414 pares Q&A sintéticos derivados de protocolos do Ministério da Saúde, FEBRASGO, OMS e INCA;
 - **RAG** sobre 1392 chunks dos mesmos protocolos via ChromaDB + embeddings multilíngues;
@@ -64,7 +54,7 @@ Assistente virtual de apoio à equipe de saúde (médicos, enfermeiros, resident
 - **5 fluxos LangGraph** (Triagem, Violência, Obstétrico, Prevenção, **Risco gestacional ML**);
 - **UI Gradio** com **6** abas (as 5 da Fase 3 + Risco Gestacional ML).
 
-> **Tech Challenge FIAP — Pós Tech em IA para Devs — Fase 3.**
+> **Tech Challenge FIAP — Pós Tech em IA para Devs — Fase 5 (Guardiã AI).**
 > Projeto acadêmico. Não substitui avaliação clínica profissional.
 
 ---
@@ -98,41 +88,35 @@ O vídeo demo (até 15 min) está descrito em [`docs/demo/ROTEIRO_VIDEO.md`](doc
 
 ```
 ┌──────────────────────────────────────────────────────────────────┐
-│                  UI Gradio (Colab + share=True)                  │
+│           UI Gradio — Guardiã AI (6 abas; CPU ou Colab)          │
 └────────────────────────────┬─────────────────────────────────────┘
                              │
-       ┌─────────────────────┴─────────────────────┐
-       │              4 LangGraph Workflows         │
-       │  ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌──┐│
-       │  │ Triagem │ │ Violen- │ │ Obstétri-│ │P.││
-       │  │ Ginec.  │ │ cia     │ │ co       │ │..││
-       │  └────┬────┘ └────┬────┘ └────┬─────┘ └─┬┘│
-       └───────┼───────────┼───────────┼─────────┼─┘
-               │           │           │         │
-       ┌───────▼───────────▼───────────▼─────────▼─────┐
-       │  9 Tools (LangChain StructuredTool)            │
-       │  consultar_prontuario, historico_exames,       │
-       │  exames_atrasados, consultar_medicamento,      │
-       │  calendario_menstrual, avaliar_padrao_violencia│
-       │  consultar_violencia (auditado LGPD),          │
-       │  registrar_violencia, buscar_protocolo (RAG)   │
-       └─┬──────────────────────────────────────┬───────┘
-         │                                      │
-   ┌─────▼─────┐                       ┌────────▼────────┐
-   │ SQLite    │                       │ Chroma (RAG)    │
-   │ mock      │                       │ 1392 chunks     │
-   │ 50 pacs   │                       │ MiniLM 384d     │
-   │ + log_    │                       │ multilíngue     │
-   │ acesso    │                       └─────────────────┘
+       ┌─────────────────────┴──────────────────────────┐
+       │              5 LangGraph Workflows              │
+       │  Triagem | Violência | Obstétrico | Prevenção   │
+       │                    risco_ml                     │
+       └───────┬────────────────────────────────────────┘
+               │
+       ┌───────▼────────────────────────────────────────┐
+       │  10 Tools (LangChain StructuredTool)            │
+       │  9 da Fase 3 + predizer_risco_gestacional       │
+       │  buscar_protocolo (RAG local CPU ou Chroma)     │
+       └─┬──────────────────────────────┬───────────────┘
+         │                              │
+   ┌─────▼─────┐                 ┌──────▼──────────────┐
+   │ SQLite    │                 │ RAG                 │
+   │ 50 pacs   │                 │ subset JSON (CPU)   │
+   │ predicoes │                 │ Chroma MiniLM Colab │
+   │ _ml       │                 └─────────────────────┘
    └───────────┘
          │
    ┌─────▼──────────────────────────────────────────────┐
-   │ LLM: Llama 3.2 3B Instruct + adapter QLoRA         │
-   │       (treinado com 5134 ex SFT em PT-BR)          │
+   │ LLM: FakeChatModel (CPU/Docker) ou Llama 3.2 3B    │
+   │      + QLoRA (Colab). Somente leitura dos números. │
    └────────────────────────────────────────────────────┘
 ```
 
-A evolução acrescenta o 5º grafo `risco_ml`, a 10ª tool, a 6ª aba e a tabela `predicoes_ml`. Detalhes Fase 3: [`ARQUITETURA.md`](ARQUITETURA.md). Alvo da evolução: [`docs/arquitetura/ARQUITETURA_ALVO.md`](docs/arquitetura/ARQUITETURA_ALVO.md).
+Detalhes Fase 3: [`ARQUITETURA.md`](ARQUITETURA.md). Alvo da evolução: [`docs/arquitetura/ARQUITETURA_ALVO.md`](docs/arquitetura/ARQUITETURA_ALVO.md).
 
 ---
 
@@ -336,7 +320,7 @@ Análise detalhada no [`RELATORIO_TECNICO_DETALHADO.md`](RELATORIO_TECNICO_DETAL
 - **[`docs/ml/METRICAS_E_RESULTADOS.md`](docs/ml/METRICAS_E_RESULTADOS.md)** — números do teste (fonte: `artifacts/metrics/`)
 - **[`docs/deploy/EXECUCAO_DOCKER.md`](docs/deploy/EXECUCAO_DOCKER.md)** / [`EXECUCAO_LOCAL.md`](docs/deploy/EXECUCAO_LOCAL.md)
 - **[`docs/requisitos/CRITERIOS_DE_ACEITE.md`](docs/requisitos/CRITERIOS_DE_ACEITE.md)** — 20 critérios da evolução
-- **[`RELATORIO_TECNICO.md`](RELATORIO_TECNICO.md)** — relatório executivo Fase 3
+- **[`RELATORIO_TECNICO.md`](RELATORIO_TECNICO.md)** — relatório executivo Fase 5 (Guardiã AI)
 - **[`RELATORIO_TECNICO_DETALHADO.md`](RELATORIO_TECNICO_DETALHADO.md)** — relatório acadêmico estendido Fase 3
 - **[`ARQUITETURA.md`](ARQUITETURA.md)** — decisões técnicas Fase 3
 - **[`docs/demo/ROTEIRO_VIDEO.md`](docs/demo/ROTEIRO_VIDEO.md)** — roteiro do vídeo (Fase 3 + ML)

@@ -1,6 +1,6 @@
 # Roadmap de Testes e Guia de Homologação
 
-**Projeto:** Assistente Clínico Hospitalar em Saúde da Mulher  
+**Projeto:** Guardiã AI — Saúde e Segurança da Mulher  
 **Versão:** 1.0.0  
 **Data:** 2026-09-21  
 **Público-alvo:** Desenvolvedores, QA e Avaliadores Acadêmicos  

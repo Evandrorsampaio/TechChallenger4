@@ -22,3 +22,4 @@ def test_ui_tem_seis_abas_principais():
     ]
     for titulo in principais:
         assert titulo in src
+    assert 'Guardiã AI' in src
