@@ -254,7 +254,9 @@ fine-tuning-rag-documentos-fiap/
 
 ## Como rodar no Colab (Llama + Chroma)
 
-Para a demo local, use [Como executar o projeto](#como-executar-o-projeto) (CPU). Esta seção é o pipeline **Llama + RAG no Colab** (Fase 3), com GPU.
+Atalho: abra [`COLAB_EXECUTAR.ipynb`](COLAB_EXECUTAR.ipynb) no Colab (GPU) e **Executar tudo**. Clona o repo, monta o Drive, sobe Gradio (`share=True`). Com `HF_TOKEN` + GPU carrega o Llama; senão usa `FakeChatModel`. Não substitui o treino QLoRA (`02`/`03`).
+
+Para a demo local, use [Como executar o projeto](#como-executar-o-projeto) (CPU). O restante desta seção é o pipeline **Llama + RAG** notebook a notebook (Fase 3).
 
 ### Pré-requisitos (Fase 3 / GPU)
 
