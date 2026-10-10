@@ -10,21 +10,81 @@ Pipeline: dados estruturados → `lib/ml` → explicabilidade → regras `SINAIS
 - Dataset: 8000 linhas, semente 42, sha256 em `artifacts/data/risco_gestacional_v1.manifest.json`.
 - Vencedor por PR-AUC no teste: **regressão logística** (0,590; recall+ 0,955 no limiar 0,278 da validação). Fonte: `artifacts/metrics/comparacao.json`.
 - 10 tools LangChain (a 10ª é `predizer_risco_gestacional`); 5 grafos (os 4 da Fase 3 + `risco_ml`); 6 abas Gradio.
-- Demo: `python scripts/run_demo.py`. UI CPU: `python scripts/app.py`.
-- Docker: `techchallenger4-demo:cpu` (1,78 GB, 2026-09-18). Build 699 s, `docker run` exit 0. Log: `docs/deploy/EXECUCAO_DOCKER.md`. A imagem usa `FakeChatModel`, **não** o Llama 3.2 3B.
+- Demo CLI: `python scripts/run_demo.py`. UI: `python scripts/app.py` → http://localhost:7860.
+- Docker `demo-cpu` usa `FakeChatModel`, **não** o Llama 3.2 3B. Log: [`docs/deploy/EXECUCAO_DOCKER.md`](docs/deploy/EXECUCAO_DOCKER.md).
 
-### Como rodar a evolução (CPU, sem GPU)
+## Como executar o projeto
+
+Caminho padrão após o clone: CPU local, sem GPU e sem Hugging Face. Llama + Chroma completo é só o [pipeline Colab](#como-rodar-no-colab-llama--chroma).
+
+### Requisitos
+
+- Python 3.12 ou 3.13
+- Git; clone da `main`
+- (Opcional) Docker Desktop
+
+### 1. Instalar
 
 ```text
+git clone https://github.com/Evandrorsampaio/TechChallenger4.git
+cd TechChallenger4
 pip install -r requirements.txt -r requirements-ml.txt
-cp .env.example .env   # Windows: copy .env.example .env
+```
+
+Windows: `copy .env.example .env`  
+Linux/macOS: `cp .env.example .env`
+
+Não é preciso `HF_TOKEN` neste perfil.
+
+### 2. Conferir o modelo e os testes
+
+```text
 python scripts/train.py --verificar-dataset
 python -m pytest -q
+```
+
+`--verificar-dataset` valida o manifesto SHA-256 (`artifacts/data/risco_gestacional_v1.manifest.json`). Só rode `python scripts/train.py` sem flag se quiser retreinar.
+
+### 3. Demo em quatro cenários (CLI)
+
+```text
 python scripts/run_demo.py
+```
+
+Gera `artifacts/demo/D1_sucesso.json` … `D4_degradado.json` (normal, incompleto, bypass de emergência, degradado) com `retrieved_sources` e `doc_id` do subset RAG.
+
+### 4. Interface Gradio
+
+```text
 python scripts/app.py
 ```
 
-Docker (perfil `demo-cpu`): `docker build -t techchallenger4-demo:cpu .` e o `docker run` documentado em `docs/deploy/EXECUCAO_DOCKER.md`. Llama / Chroma completo: perfil Colab (`Como rodar` abaixo). Na demo CPU o RAG é o subset lexical versionado (`lib/rag_local.py`).
+Abra **http://localhost:7860**. Título: **Guardiã AI**. Seis abas; na sidebar escolha qualquer paciente (nomes Faker). CPU usa `FakeChatModel` e RAG lexical (`lib/rag_local.py`).
+
+### 5. Docker
+
+CLI (quatro cenários, como no log de evidência):
+
+```text
+docker build -t techchallenger4-demo:cpu .
+docker run --rm techchallenger4-demo:cpu
+```
+
+UI no browser (`app.py` na porta 7860):
+
+```text
+docker compose up --build
+```
+
+A imagem **não** carrega Llama. Detalhes: [`docs/deploy/EXECUCAO_DOCKER.md`](docs/deploy/EXECUCAO_DOCKER.md).
+
+### 6. Relatório HTML / PDF
+
+```text
+python scripts/export_pdf_html.py
+```
+
+Abre `RELATORIO_TECNICO.html`; no Chrome: Imprimir → Salvar como PDF.
 
 ## Passos que faltam para finalização
 
@@ -32,9 +92,7 @@ O código do produto **já está nesta branch**. Falta só o que a banca pede fo
 
 ### Ainda humano / git
 
-1. **Vídeo ≤ 15 min** — [`docs/demo/ROTEIRO_VIDEO.md`](docs/demo/ROTEIRO_VIDEO.md): dados sintéticos em voz alta; PR-AUC/recall do JSON; limiar 0,278; bypass; avisos na UI; Docker só com o que o log prova. Trocar o YouTube da Fase 3 no relatório quando o vídeo estiver publicado.
-2. **PR para `main`** se a banca clonar `main` (CI em `.github/workflows/ci.yml`).
-3. **PDF da banca** se o HTML não bastar: `python scripts/export_pdf_html.py` e imprimir `RELATORIO_TECNICO.html`.
+1. **PDF da banca** se o HTML não bastar: passo 6 da execução.
 
 ### Opcional (não bloqueia o enunciado)
 
@@ -62,13 +120,14 @@ Assistente virtual de apoio à equipe de saúde (médicos, enfermeiros, resident
 ## Sumário
 
 - [Evolução ML (2026-09-18)](#evolução-ml-2026-09-18)
+- [Como executar o projeto](#como-executar-o-projeto)
 - [Passos que faltam para finalização](#passos-que-faltam-para-finalização)
 - [Demonstração](#demonstração)
 - [Arquitetura](#arquitetura)
 - [Estrutura do repositório](#estrutura-do-repositório)
 - [Stack técnico](#stack-técnico)
-- [Como rodar](#como-rodar)
-- [Pipeline em 10 notebooks](#pipeline-em-9-notebooks)
+- [Como rodar no Colab (Llama + Chroma)](#como-rodar-no-colab-llama--chroma)
+- [Pipeline em 10 notebooks](#pipeline-em-10-notebooks)
 - [Categorias cobertas](#categorias-cobertas)
 - [Segurança, ética e LGPD](#segurança-ética-e-lgpd)
 - [Limitações conhecidas](#limitações-conhecidas)
@@ -80,7 +139,7 @@ Assistente virtual de apoio à equipe de saúde (médicos, enfermeiros, resident
 
 Capturas dos 4 fluxos LangGraph rodando ponta-a-ponta estão disponíveis em [`09_demo_workflows.ipynb`](09_demo_workflows.ipynb) (com diagramas Mermaid auto-gerados) e a UI integrada em [`08_app_gradio.ipynb`](08_app_gradio.ipynb).
 
-O vídeo demo (até 15 min) está descrito em [`docs/demo/ROTEIRO_VIDEO.md`](docs/demo/ROTEIRO_VIDEO.md) (cópia na raiz: [`ROTEIRO_VIDEO.md`](ROTEIRO_VIDEO.md)). Demo ML: [`docs/demo/GUIA_DEMO.md`](docs/demo/GUIA_DEMO.md) e JSON em `artifacts/demo/`.
+JSON dos quatro modos da demo CLI: `artifacts/demo/`. Notebooks Colab: [`09_demo_workflows.ipynb`](09_demo_workflows.ipynb), [`08_app_gradio.ipynb`](08_app_gradio.ipynb).
 
 ---
 
@@ -128,7 +187,6 @@ fine-tuning-rag-documentos-fiap/
 ├── ARQUITETURA.md                         ← decisões técnicas, schema, contratos
 ├── RELATORIO_TECNICO.md                   ← relatório executivo (visão de ~3 páginas)
 ├── RELATORIO_TECNICO_DETALHADO.md         ← relatório acadêmico estendido
-├── ROTEIRO_VIDEO.md                       ← roteiro do vídeo demo (≤15 min)
 ├── .gitignore                             ← exclui .env, dados grandes, adapters
 │
 ├── 01_extrair_protocolos.ipynb            ← PDF → JSON (PyMuPDF)
@@ -194,9 +252,9 @@ fine-tuning-rag-documentos-fiap/
 
 ---
 
-## Como rodar
+## Como rodar no Colab (Llama + Chroma)
 
-Para **só o classificador e a demo CPU**, use a seção [Como rodar a evolução](#como-rodar-a-evolução-cpu-sem-gpu). O restante desta seção é o pipeline **Llama + RAG no Colab** (Fase 3).
+Para a demo local, use [Como executar o projeto](#como-executar-o-projeto) (CPU). Esta seção é o pipeline **Llama + RAG no Colab** (Fase 3), com GPU.
 
 ### Pré-requisitos (Fase 3 / GPU)
 
@@ -323,7 +381,6 @@ Análise detalhada no [`RELATORIO_TECNICO_DETALHADO.md`](RELATORIO_TECNICO_DETAL
 - **[`RELATORIO_TECNICO.md`](RELATORIO_TECNICO.md)** — relatório executivo Fase 5 (Guardiã AI)
 - **[`RELATORIO_TECNICO_DETALHADO.md`](RELATORIO_TECNICO_DETALHADO.md)** — relatório acadêmico estendido Fase 3
 - **[`ARQUITETURA.md`](ARQUITETURA.md)** — decisões técnicas Fase 3
-- **[`docs/demo/ROTEIRO_VIDEO.md`](docs/demo/ROTEIRO_VIDEO.md)** — roteiro do vídeo (Fase 3 + ML)
 
 ---
 
