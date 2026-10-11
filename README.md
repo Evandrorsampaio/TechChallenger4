@@ -1,27 +1,127 @@
-> **Tech Challenge FIAP — Pós Tech em IA para Devs — Fase 5: Guardiã AI.**
-> Projeto acadêmico. **Não substitui avaliação clínica.** O classificador de risco usa **dados 100 % sintéticos**. Sem validação clínica.
+# Guardiã AI — Inteligência Artificial para Saúde e Segurança da Mulher
 
-As sprints PI-S01…PI-S08 estão **fechadas** (`docs/planos/`). O produto (ML + LangGraph + Gradio + Docker) está nesta branch. O que ainda é entrega humana ou git está em [Passos que faltam para finalização](#passos-que-faltam-para-finalização).
+**Tech Challenge FIAP — Pós Tech em IA para Devs — Fase 5.**
+**Grupo:** Evandro Rosa Sampaio, Gustavo Brasil Pires Octaviano, Paulo Roberto Goncalves, Wallace Gomes da Silva.
 
-## Evolução ML (2026-09-18)
+> Projeto acadêmico. **Não substitui avaliação clínica.** O classificador de risco gestacional usa **dados 100 % sintéticos** e não passou por validação clínica. A IA é um sistema de **apoio ao profissional**: a decisão final é sempre de uma pessoa responsável pelo atendimento.
 
-Pipeline: dados estruturados → `lib/ml` → explicabilidade → regras `SINAIS_ALARME_OBST` → workflow `risco_ml` → RAG (quando houver retriever) → síntese LLM somente-leitura (`FakeChatModel` no CPU) → Gradio (6ª aba) → auditoria `predicoes_ml`.
+---
 
-- Dataset: 8000 linhas, semente 42, sha256 em `artifacts/data/risco_gestacional_v1.manifest.json`.
-- Vencedor por PR-AUC no teste: **regressão logística** (0,590; recall+ 0,955 no limiar 0,278 da validação). Fonte: `artifacts/metrics/comparacao.json`.
-- 10 tools LangChain (a 10ª é `predizer_risco_gestacional`); 5 grafos (os 4 da Fase 3 + `risco_ml`); 6 abas Gradio.
-- Demo CLI: `python scripts/run_demo.py`. UI: `python scripts/app.py` → http://localhost:7860.
-- Docker `demo-cpu` usa `FakeChatModel`, **não** o Llama 3.2 3B. Log: [`docs/deploy/EXECUCAO_DOCKER.md`](docs/deploy/EXECUCAO_DOCKER.md).
+## Sumário
 
-## Como executar o projeto
+- [O problema](#o-problema)
+- [Arquitetura](#arquitetura)
+- [Principais resultados](#principais-resultados)
+- [Como executar](#como-executar)
+- [Entregáveis](#entregáveis)
+- [Onde encontrar cada requisito do enunciado](#onde-encontrar-cada-requisito-do-enunciado)
+- [Segurança, ética e LGPD](#segurança-ética-e-lgpd)
+- [Limitações](#limitações)
+- [Estrutura do repositório](#estrutura-do-repositório)
+- [Stack técnico](#stack-técnico)
+- [Pipeline completo no Colab (Llama + Chroma)](#pipeline-completo-no-colab-llama--chroma)
+- [Documentação adicional](#documentação-adicional)
 
-Caminho padrão após o clone: CPU local, sem GPU e sem Hugging Face. Llama + Chroma completo é só o [pipeline Colab](#como-rodar-no-colab-llama--chroma).
+---
+
+## O problema
+
+A Guardiã AI apoia a **equipe de saúde** (médicos, enfermeiros, residentes, técnicos) na análise inicial de um atendimento. Ela não se dirige à paciente. A solução trabalha os dois contextos do desafio:
+
+1. **Saúde da mulher — triagem de gestante (cenário principal).** A partir de 24 variáveis clínicas estruturadas, estima se a gestação é de risco habitual ou de alto risco. Regras de sinais de alarme obstétrico rodam **antes** do modelo: em emergência, o ML é pulado e o caso vai direto para encaminhamento.
+2. **Segurança da mulher — relato de violência.** O fluxo de violência analisa o relato, calcula um score de suspeita, consulta protocolos e orienta a notificação SINAN. A notificação nunca é decidida automaticamente: depende de confirmação clínica.
+
+Fluxo da jornada principal:
+
+```
+Entrada dos dados → regras de alarme → modelo de ML → explicabilidade
+  → consulta a protocolos (RAG) → síntese pela LLM → validação da resposta
+  → avisos de segurança → auditoria → apresentação ao profissional
+```
+
+A LLM **não classifica** o risco: ela só lê os números já calculados e os explica. Um validador descarta qualquer texto que altere probabilidades ou limiares, e nesse caso a resposta volta a um template determinístico.
+
+---
+
+## Arquitetura
+
+```
+┌──────────────────────────────────────────────────────────────────┐
+│              UI Gradio — Guardiã AI (6 abas)                     │
+└────────────────────────────┬─────────────────────────────────────┘
+                             │
+       ┌─────────────────────┴──────────────────────────┐
+       │  LangGraph: 5 StateGraphs                       │
+       │  Triagem | Violência | Obstétrico | Prevenção   │
+       │  risco_ml (jornada principal da Fase 5)         │
+       │  + agente LangChain ReAct (aba de consulta)     │
+       └───────┬────────────────────────────────────────┘
+               │
+       ┌───────▼────────────────────────────────────────┐
+       │  10 tools LangChain (StructuredTool)            │
+       │  inclui predizer_risco_gestacional              │
+       │  e buscar_protocolo (RAG)                       │
+       └─┬───────────────┬──────────────────┬───────────┘
+         │               │                  │
+   ┌─────▼─────┐  ┌──────▼───────────┐ ┌────▼──────────────────┐
+   │ SQLite    │  │ lib/ml           │ │ RAG                   │
+   │ prontuário│  │ LogReg / RF      │ │ CPU: lexical, subset  │
+   │ log_acesso│  │ explicabilidade  │ │ Colab: Chroma MiniLM  │
+   │ predicoes │  └──────────────────┘ └───────────────────────┘
+   │ _ml       │
+   └───────────┘
+         │
+   ┌─────▼──────────────────────────────────────────────┐
+   │ LLM: FakeChatModel (CPU/Docker) ou                 │
+   │      Llama 3.2 3B + QLoRA (Colab, GPU)             │
+   └────────────────────────────────────────────────────┘
+```
+
+O workflow `risco_ml` ([`lib/workflows/risco_ml.py`](lib/workflows/risco_ml.py)) tem 16 nós e 4 rotas condicionais:
+
+| Modo | Quando acontece | O que o fluxo faz |
+|---|---|---|
+| `normal` | Dados completos, sem sinal de alarme | ML, explicabilidade, RAG, LLM |
+| `bypass_regra` | Relato com sinal de alarme (ex.: pré-eclâmpsia grave) | Pula o ML e indica encaminhamento imediato |
+| `incompleto` | Campos obrigatórios ausentes | Não imputa; pede complemento ao profissional (human-in-the-loop) |
+| `degradado` | Modelo indisponível | Classifica por regra clínica determinística e avisa |
+
+Diagramas e decisões: [`docs/arquitetura/DIAGRAMA_LANGGRAPH.md`](docs/arquitetura/DIAGRAMA_LANGGRAPH.md), [`docs/arquitetura/DECISOES_ARQUITETURAIS.md`](docs/arquitetura/DECISOES_ARQUITETURAIS.md) e [`ARQUITETURA.md`](ARQUITETURA.md) (base da Fase 3).
+
+---
+
+## Principais resultados
+
+**Dados:** 8000 gestantes sintéticas, 24 variáveis, semente 42, prevalência de alto risco de 20,6 %, divisão 5600 / 1200 / 1200 (treino / validação / teste). O SHA-256 do dataset está em [`artifacts/data/risco_gestacional_v1.manifest.json`](artifacts/data/risco_gestacional_v1.manifest.json).
+
+**Modelos comparados no mesmo conjunto de teste** (fonte: [`artifacts/metrics/comparacao.json`](artifacts/metrics/comparacao.json)):
+
+| Modelo | PR-AUC | Recall (alto risco) | Precisão (alto risco) |
+|---|---|---|---|
+| Dummy (prevalência) | 0,206 | — | — |
+| Regra clínica | 0,263 | — | — |
+| **Regressão logística (escolhido)** | **0,590** | **0,955** | 0,265 |
+| Random forest | 0,557 | 0,947 | 0,246 |
+
+Por que essas métricas e não a acurácia:
+
+- A classe de interesse (alto risco) é minoritária. Um modelo que responde sempre "habitual" teria 79 % de acurácia sem detectar nenhum caso. Por isso o modelo é escolhido pela **PR-AUC**, e a acurácia fica registrada como não decisória.
+- Um **falso negativo** (gestante de alto risco classificada como habitual) pode atrasar o encaminhamento e é o erro mais grave. O limiar operacional (0,278, calibrado na validação, não 0,5) prioriza o recall: no teste, só 11 de 247 casos de alto risco passaram despercebidos.
+- O custo dessa escolha é a baixa precisão: muitos falsos positivos, que geram avaliações extras feitas pelo profissional. É um custo aceitável para uma ferramenta de triagem que não decide sozinha.
+
+**Explicabilidade:** cada predição mostra as variáveis que mais contribuíram, por coeficientes da regressão logística ou importância das variáveis do random forest. SHAP é usado quando a biblioteca está instalada (é opcional). Detalhes em [`docs/ml/EXPLICABILIDADE.md`](docs/ml/EXPLICABILIDADE.md) e [`docs/ml/METRICAS_E_RESULTADOS.md`](docs/ml/METRICAS_E_RESULTADOS.md).
+
+---
+
+## Como executar
+
+O caminho padrão roda em CPU, sem GPU e sem conta no Hugging Face. O pipeline com Llama e Chroma está em [Pipeline completo no Colab](#pipeline-completo-no-colab-llama--chroma).
 
 ### Requisitos
 
 - Python 3.12 ou 3.13
-- Git; clone da `main`
-- (Opcional) Docker Desktop
+- Git
+- Docker Desktop (opcional)
 
 ### 1. Instalar
 
@@ -31,27 +131,24 @@ cd TechChallenger4
 pip install -r requirements.txt -r requirements-ml.txt
 ```
 
-Windows: `copy .env.example .env`  
-Linux/macOS: `cp .env.example .env`
+Copie o arquivo de ambiente (Windows: `copy .env.example .env`; Linux/macOS: `cp .env.example .env`). Não é preciso `HF_TOKEN` neste perfil.
 
-Não é preciso `HF_TOKEN` neste perfil.
-
-### 2. Conferir o modelo e os testes
+### 2. Conferir o dataset e rodar os testes
 
 ```text
 python scripts/train.py --verificar-dataset
 python -m pytest -q
 ```
 
-`--verificar-dataset` valida o manifesto SHA-256 (`artifacts/data/risco_gestacional_v1.manifest.json`). Só rode `python scripts/train.py` sem flag se quiser retreinar.
+`--verificar-dataset` confere o SHA-256 do dataset. Para retreinar os modelos, rode `python scripts/train.py` sem a flag; para reavaliar, `python scripts/evaluate.py`.
 
-### 3. Demo em quatro cenários (CLI)
+### 3. Demo de linha de comando (quatro cenários)
 
 ```text
 python scripts/run_demo.py
 ```
 
-Gera `artifacts/demo/D1_sucesso.json` … `D4_degradado.json` (normal, incompleto, bypass de emergência, degradado) com `retrieved_sources` e `doc_id` do subset RAG.
+Gera `artifacts/demo/D1_sucesso.json`, `D2_incompleto.json`, `D3_emergencia.json` e `D4_degradado.json`, um para cada modo do workflow, com as fontes do RAG (`retrieved_sources`).
 
 ### 4. Interface Gradio
 
@@ -59,248 +156,188 @@ Gera `artifacts/demo/D1_sucesso.json` … `D4_degradado.json` (normal, incomplet
 python scripts/app.py
 ```
 
-Abra **http://localhost:7860**. Título: **Guardiã AI**. Seis abas; na sidebar escolha qualquer paciente (nomes Faker). CPU usa `FakeChatModel` e RAG lexical (`lib/rag_local.py`).
+Abra http://localhost:7860. Escolha uma paciente na barra lateral (nomes gerados pelo Faker). A aba **Risco Gestacional (ML)** executa a jornada principal; a aba **Violência** cobre o contexto de segurança.
 
 ### 5. Docker
 
-CLI (quatro cenários, como no log de evidência):
+Demo de linha de comando:
 
 ```text
 docker build -t techchallenger4-demo:cpu .
 docker run --rm techchallenger4-demo:cpu
 ```
 
-UI no browser (`app.py` na porta 7860):
+Interface no navegador (porta 7860):
 
 ```text
 docker compose up --build
 ```
 
-A imagem **não** carrega Llama. Detalhes: [`docs/deploy/EXECUCAO_DOCKER.md`](docs/deploy/EXECUCAO_DOCKER.md).
+A imagem não inclui o Llama. Detalhes em [`docs/deploy/EXECUCAO_DOCKER.md`](docs/deploy/EXECUCAO_DOCKER.md).
 
-### 6. Relatório HTML / PDF
+### 6. Relatório técnico em PDF
 
 ```text
 python scripts/export_pdf_html.py
 ```
 
-Abre `RELATORIO_TECNICO.html`; no Chrome: Imprimir → Salvar como PDF.
-
-## Passos que faltam para finalização
-
-O código do produto **já está nesta branch**. Falta só o que a banca pede fora do repositório ou no Git de entrega.
-
-### Ainda humano / git
-
-1. **PDF da banca** se o HTML não bastar: passo 6 da execução.
-
-### Opcional (não bloqueia o enunciado)
-
-4. Capturas da 6ª aba (quatro modos). Índice **Chroma** no Colab (`06_indexar_protocolos.ipynb`, chunk 1000/200) se for mostrar GPU. Pesos MiniLM locais. Llama + QLoRA no Colab. **`shap`** se o Python permitir. Bump de `pip-audit` com regressão.
-
-### Fora do escopo (não afirmar o contrário)
-
-5. Validação clínica em dados reais, SSO, criptografia at-rest.
-
-# Guardiã AI — Saúde e Segurança da Mulher
-
-Assistente virtual de apoio à equipe de saúde (médicos, enfermeiros, residentes, técnicos) especializado em **saúde e segurança da mulher**. Jornada principal: **triagem de gestante** (aba Risco Gestacional ML) e **relato de segurança** (aba Violência). Construído a partir de:
-
-- **Fine-tuning QLoRA** do Llama 3.2 3B Instruct sobre 6414 pares Q&A sintéticos derivados de protocolos do Ministério da Saúde, FEBRASGO, OMS e INCA;
-- **RAG** sobre 1392 chunks dos mesmos protocolos via ChromaDB + embeddings multilíngues;
-- **Agente LangChain** com **10** ferramentas estruturadas (as 9 da Fase 3 + `predizer_risco_gestacional`);
-- **5 fluxos LangGraph** (Triagem, Violência, Obstétrico, Prevenção, **Risco gestacional ML**);
-- **UI Gradio** com **6** abas (as 5 da Fase 3 + Risco Gestacional ML).
-
-> **Tech Challenge FIAP — Pós Tech em IA para Devs — Fase 5 (Guardiã AI).**
-> Projeto acadêmico. Não substitui avaliação clínica profissional.
+Abra o `RELATORIO_TECNICO.html` gerado no Chrome e use Imprimir → Salvar como PDF.
 
 ---
 
-## Sumário
+## Entregáveis
 
-- [Evolução ML (2026-09-18)](#evolução-ml-2026-09-18)
-- [Como executar o projeto](#como-executar-o-projeto)
-- [Passos que faltam para finalização](#passos-que-faltam-para-finalização)
-- [Demonstração](#demonstração)
-- [Arquitetura](#arquitetura)
-- [Estrutura do repositório](#estrutura-do-repositório)
-- [Stack técnico](#stack-técnico)
-- [Como rodar no Colab (Llama + Chroma)](#como-rodar-no-colab-llama--chroma)
-- [Pipeline em 10 notebooks](#pipeline-em-10-notebooks)
-- [Categorias cobertas](#categorias-cobertas)
-- [Segurança, ética e LGPD](#segurança-ética-e-lgpd)
-- [Limitações conhecidas](#limitações-conhecidas)
-- [Documentação adicional](#documentação-adicional)
+| Entregável | Onde está | Situação |
+|---|---|---|
+| Código-fonte | `lib/`, `scripts/` | Pronto |
+| Scripts de treino dos modelos | `scripts/train.py`, `scripts/evaluate.py`, `lib/ml/` | Pronto |
+| Instruções de execução | [Como executar](#como-executar) | Pronto |
+| Interface | Gradio, `python scripts/app.py` | Pronto |
+| Dockerfile | [`Dockerfile`](Dockerfile), [`docker-compose.yml`](docker-compose.yml) | Pronto |
+| Relatório técnico | [`RELATORIO_TECNICO.md`](RELATORIO_TECNICO.md) e `.html` | Falta exportar o PDF |
+| Vídeo de até 15 minutos | Roteiro em [`ROTEIRO_VIDEO.md`](ROTEIRO_VIDEO.md) | Falta gravar e publicar o link aqui |
 
 ---
 
-## Demonstração
+## Onde encontrar cada requisito do enunciado
 
-Capturas dos 4 fluxos LangGraph rodando ponta-a-ponta estão disponíveis em [`09_demo_workflows.ipynb`](09_demo_workflows.ipynb) (com diagramas Mermaid auto-gerados) e a UI integrada em [`08_app_gradio.ipynb`](08_app_gradio.ipynb).
-
-JSON dos quatro modos da demo CLI: `artifacts/demo/`. Notebooks Colab: [`09_demo_workflows.ipynb`](09_demo_workflows.ipynb), [`08_app_gradio.ipynb`](08_app_gradio.ipynb).
+| Requisito | Onde encontrar |
+|---|---|
+| Dataset relacionado ao problema | [`artifacts/data/`](artifacts/data/), [`docs/dados/`](docs/dados/) |
+| Exploração e preparação dos dados | [`lib/ml/dataset.py`](lib/ml/dataset.py), [`lib/ml/features.py`](lib/ml/features.py), [`docs/dados/QUALIDADE_DOS_DADOS.md`](docs/dados/QUALIDADE_DOS_DADOS.md) |
+| Pelo menos dois modelos comparados | [`lib/ml/train.py`](lib/ml/train.py), [`artifacts/metrics/comparacao.json`](artifacts/metrics/comparacao.json), [`docs/ml/COMPARACAO_MODELOS.md`](docs/ml/COMPARACAO_MODELOS.md) |
+| Justificativa das métricas e impacto dos erros | [Principais resultados](#principais-resultados), [`artifacts/metrics/analise_erros.json`](artifacts/metrics/analise_erros.json) |
+| Interpretação do modelo | [`lib/ml/explain.py`](lib/ml/explain.py), [`artifacts/explainability/`](artifacts/explainability/) |
+| Integração com LLM | [`lib/llm.py`](lib/llm.py), [`lib/ml/llm_contract.py`](lib/ml/llm_contract.py), nó `sintetizar_com_llm` |
+| RAG com indicação da fonte | [`lib/rag_local.py`](lib/rag_local.py), [`06_indexar_protocolos.ipynb`](06_indexar_protocolos.ipynb), campo `retrieved_sources` |
+| LangChain / LangGraph | [`lib/workflows/`](lib/workflows/), [`lib/agent.py`](lib/agent.py), [`lib/tools.py`](lib/tools.py) |
+| IA como apoio, sem decisão automática | Avisos obrigatórios no fluxo de risco, modo `incompleto`, confirmação clínica no fluxo de violência |
+| Registro das análises | Tabelas `predicoes_ml` e `log_acesso` em [`lib/db.py`](lib/db.py) |
 
 ---
 
-## Arquitetura
+## Segurança, ética e LGPD
 
-```
-┌──────────────────────────────────────────────────────────────────┐
-│           UI Gradio — Guardiã AI (6 abas; CPU ou Colab)          │
-└────────────────────────────┬─────────────────────────────────────┘
-                             │
-       ┌─────────────────────┴──────────────────────────┐
-       │              5 LangGraph Workflows              │
-       │  Triagem | Violência | Obstétrico | Prevenção   │
-       │                    risco_ml                     │
-       └───────┬────────────────────────────────────────┘
-               │
-       ┌───────▼────────────────────────────────────────┐
-       │  10 Tools (LangChain StructuredTool)            │
-       │  9 da Fase 3 + predizer_risco_gestacional       │
-       │  buscar_protocolo (RAG local CPU ou Chroma)     │
-       └─┬──────────────────────────────┬───────────────┘
-         │                              │
-   ┌─────▼─────┐                 ┌──────▼──────────────┐
-   │ SQLite    │                 │ RAG                 │
-   │ 50 pacs   │                 │ subset JSON (CPU)   │
-   │ predicoes │                 │ Chroma MiniLM Colab │
-   │ _ml       │                 └─────────────────────┘
-   └───────────┘
-         │
-   ┌─────▼──────────────────────────────────────────────┐
-   │ LLM: FakeChatModel (CPU/Docker) ou Llama 3.2 3B    │
-   │      + QLoRA (Colab). Somente leitura dos números. │
-   └────────────────────────────────────────────────────┘
-```
+**Limites de atuação** (no prompt do agente e nos workflows):
 
-Detalhes Fase 3: [`ARQUITETURA.md`](ARQUITETURA.md). Alvo da evolução: [`docs/arquitetura/ARQUITETURA_ALVO.md`](docs/arquitetura/ARQUITETURA_ALVO.md).
+- Nunca prescreve medicação nem dá diagnóstico definitivo.
+- Sinais de alarme obstétrico são tratados por regra determinística, antes do ML.
+- Casos suspeitos de violência são sempre encaminhados a profissionais qualificados; a notificação SINAN depende de confirmação clínica.
+- Com dados insuficientes, o sistema pede complemento em vez de imputar valores obrigatórios.
+- Toda resposta do fluxo de risco gestacional carrega o aviso de apoio à decisão e o aviso de dados sintéticos.
+
+**Auditoria:**
+
+- `predicoes_ml` registra cada análise de risco: usuário, paciente, modelo e versão, versão do dataset, hash das variáveis de entrada, predição, probabilidade, limiar, método de explicação, principais variáveis, regras disparadas e modo de execução.
+- `log_acesso` registra cada consulta ou gravação de registros de violência, com timestamp, usuário, paciente e motivo clínico obrigatório (mínimo de 5 caracteres).
+
+**Dados pessoais:** todo o prontuário é sintético (Faker pt_BR, 50 pacientes), o CPF é guardado como hash SHA-256 e os registros de violência ficam em tabela separada.
+
+---
+
+## Limitações
+
+1. **Sem validação clínica.** O dataset tabular e os pares de perguntas e respostas do fine-tuning são sintéticos. As métricas não representam desempenho em pacientes reais.
+2. **LLM no perfil CPU/Docker.** A execução local e a imagem Docker usam o `FakeChatModel`, um dublê determinístico com respostas fixas por padrão de texto. O Llama 3.2 3B com QLoRA só roda no Colab com GPU.
+3. **RAG no perfil CPU/Docker.** Usa busca lexical sobre um recorte pequeno dos protocolos ([`artifacts/rag/protocolos_subset.json`](artifacts/rag/protocolos_subset.json)). O índice Chroma completo (1392 trechos de 39 PDFs) fica no Google Drive, fora do Git.
+4. **Baixa precisão do classificador.** O limiar prioriza o recall; cerca de três em cada quatro alertas de alto risco são falsos positivos.
+5. **Auditoria por hash.** `predicoes_ml` guarda o hash das variáveis de entrada, não os valores.
+6. **Sem criptografia at-rest e sem autenticação federada.** O campo `usuario` é simples; em produção viria de OAuth/SSO.
+7. **Fine-tuning da Fase 3 com regressões.** Ver [resultados do fine-tuning](#resultados-do-fine-tuning).
 
 ---
 
 ## Estrutura do repositório
 
 ```
-fine-tuning-rag-documentos-fiap/
-├── README.md                              ← você está aqui
-├── ARQUITETURA.md                         ← decisões técnicas, schema, contratos
-├── RELATORIO_TECNICO.md                   ← relatório executivo (visão de ~3 páginas)
-├── RELATORIO_TECNICO_DETALHADO.md         ← relatório acadêmico estendido
-├── .gitignore                             ← exclui .env, dados grandes, adapters
+TechChallenger4/
+├── README.md                        ← você está aqui
+├── RELATORIO_TECNICO.md / .html     ← relatório técnico da Fase 5
+├── RELATORIO_TECNICO_DETALHADO.md   ← relatório acadêmico estendido (Fase 3)
+├── ARQUITETURA.md                   ← decisões técnicas, schema, contratos (Fase 3)
+├── ROTEIRO_VIDEO.md                 ← roteiro do vídeo de apresentação
+├── Dockerfile / docker-compose.yml  ← perfil demo-cpu
+├── requirements*.txt                ← dependências (base, ML, LLM)
 │
-├── 01_extrair_protocolos.ipynb            ← PDF → JSON (PyMuPDF)
-├── 02_gerar_dataset_sft.ipynb             ← chunking + geração Q&A via Llama 3.1 8B
-├── 03_treinar_qlora.ipynb                 ← SFT QLoRA do Llama 3.2 3B
-├── 04_avaliar_modelo.ipynb                ← base vs FT (ROUGE + heurísticas)
-├── 05_gerar_dados_mock.ipynb              ← popula hospital.db
-├── 06_indexar_protocolos.ipynb            ← indexa Chroma
-├── 07_testar_tools_alertas.ipynb          ← sanity check das tools
-├── 08_app_gradio.ipynb                    ← orquestrador UI completo
-├── 09_demo_workflows.ipynb                ← demo dos 4 fluxos + Mermaid
-├── 10_relatorio_utilizacao.ipynb          ← relatório gerencial: cobertura, auditoria LGPD, KPIs
+├── lib/
+│   ├── ml/                          ← schema, dataset, features, treino, predição, explicabilidade
+│   ├── workflows/                   ← 5 StateGraphs (triagem, violência, obstétrico, prevenção, risco_ml)
+│   ├── tools.py                     ← 10 StructuredTools LangChain
+│   ├── agent.py                     ← agente LangGraph ReAct
+│   ├── ui.py                        ← interface Gradio (6 abas)
+│   ├── db.py                        ← SQLite: prontuário, log_acesso, predicoes_ml
+│   ├── rag_local.py                 ← retriever lexical (CPU)
+│   ├── llm.py / llm_fake.py         ← Llama + QLoRA (Colab) / dublê determinístico (CPU)
+│   ├── alertas.py, validacao.py     ← regras determinísticas e validação da resposta da LLM
+│   ├── mock_data.py                 ← prontuário sintético (Faker pt_BR)
+│   └── templates/                   ← modelos de documentos clínicos (BI-RADS, SINAN, pré-natal...)
 │
-├── scripts/                               ← train, evaluate, predict, run_demo, app
-├── tests/                                 ← unit / integration / e2e / regression
-├── artifacts/                             ← metrics, models (cards), demo, explainability
-├── docs/                                  ← planos, ML, deploy, requisitos, demo
+├── scripts/                         ← train, evaluate, predict, run_demo, app, export_pdf_html
+├── artifacts/                       ← data, models, metrics, explainability, rag, demo
+├── tests/                           ← unit, integration, e2e, regression
+├── docs/                            ← arquitetura, dados, ML, RAG, LLM, segurança, deploy, testes
 │
-└── lib/
-    ├── db.py                              ← SQLite + 7 tabelas Fase 3 + predicoes_ml
-    ├── ml/                                ← schema, dataset, treino, predict, explain
-    ├── mock_data.py                       ← Faker pt_BR + cenários clínicos
-    ├── alertas.py                         ← regras determinísticas MS/FEBRASGO
-    ├── tools.py                           ← 10 StructuredTools LangChain
-    ├── llm.py                             ← load_finetuned + ChatHuggingFace
-    ├── agent.py                           ← LangGraph ReAct agent
-    ├── ui.py                              ← Gradio Blocks (chat + triagem)
-    ├── workflows/
-    │   ├── common.py                      ← llm_json, rag_search, estimar_confianca
-    │   ├── triagem.py                     ← StateGraph: 7 nodes + edge condicional
-    │   ├── violencia.py                   ← StateGraph: 7 nodes + matriz SINAN
-    │   ├── obstetrico.py                  ← StateGraph: 7 nodes + alertas obstétricos
-    │   ├── prevencao.py                   ← StateGraph: 6 nodes + agendamento
-    │   └── risco_ml.py                    ← validação → regras → ML → RAG → LLM
-    └── templates/                         ← modelos especializados de documentos clínicos
-        ├── README.md                      ← índice + instruções de uso
-        ├── laudo_mamografia_birads.md     ← laudo BI-RADS (ACR / INCA)
-        ├── laudo_colposcopia_biopsia.md   ← colposcopia + AP de colo (IFCPC 2011 / INCA)
-        ├── receita_terapia_hormonal.md    ← receita COC/POP/DIU/TRH com checklist FEBRASGO
-        ├── acompanhamento_prenatal_puerperio.md  ← caderneta pré-natal + 2 puerperais (EPDS)
-        ├── ficha_notificacao_sinan_violencia.md  ← Ficha SINAN compulsória
-        └── relatorio_atendimento_violencia.md    ← relatório circunstanciado (Norma Técnica MS)
+├── 01…10_*.ipynb                    ← pipeline LLM + RAG no Colab (Fase 3)
+└── COLAB_EXECUTAR.ipynb             ← atalho para subir a aplicação no Colab
 ```
 
 ---
 
 ## Stack técnico
 
-| Camada | Tecnologia | Versão |
-|---|---|---|
-| LLM base | meta-llama/Llama-3.2-3B-Instruct | — |
-| LLM gerador (dataset) | meta-llama/Llama-3.1-8B-Instruct | — |
-| Fine-tuning | QLoRA (4-bit NF4 + bfloat16) | bitsandbytes ≥ 0.45 |
-| Treino | TRL SFTTrainer + PEFT | trl ≥ 0.12, peft ≥ 0.13 |
-| Embeddings | sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2 | 384d; `max_seq_length` 128 no Hub |
-| Vector store | Chroma | persistente em Drive (ausente na imagem CPU) |
-| ML tabular | scikit-learn (LogReg, RF, Dummy, regra) | `requirements-ml.txt` |
-| Orquestração | LangChain + LangGraph | pins em `requirements.txt` |
-| Base estruturada | SQLite (7 tabelas Fase 3 + `predicoes_ml`) | stdlib |
-| UI | Gradio Blocks | 6 abas |
-| Runtime ML/demo | CPU local ou Docker `demo-cpu` | sem Llama |
-| Runtime LLM | Google Colab Pro (A100/L4) | Fase 3 |
+| Camada | Tecnologia |
+|---|---|
+| ML tabular | scikit-learn (regressão logística, random forest, dummy, regra clínica) |
+| Explicabilidade | coeficientes lineares, importância de variáveis, SHAP (opcional) |
+| Orquestração | LangChain + LangGraph |
+| LLM | `FakeChatModel` (CPU/Docker); meta-llama/Llama-3.2-3B-Instruct + QLoRA (Colab) |
+| Embeddings / vector store | paraphrase-multilingual-MiniLM-L12-v2 + Chroma (Colab) |
+| Base estruturada | SQLite |
+| Interface | Gradio Blocks |
+| Execução | CPU local, Docker (`demo-cpu`) ou Google Colab com GPU |
 
 ---
 
-## Como rodar no Colab (Llama + Chroma)
+## Pipeline completo no Colab (Llama + Chroma)
 
-Atalho: abra [`COLAB_EXECUTAR.ipynb`](COLAB_EXECUTAR.ipynb) no Colab (GPU) e **Executar tudo**. Clona o repo, monta o Drive, sobe Gradio (`share=True`). Com `HF_TOKEN` + GPU carrega o Llama; senão usa `FakeChatModel`. Não substitui o treino QLoRA (`02`/`03`).
+A base de LLM e RAG foi construída na Fase 3 e é reaproveitada aqui: fine-tuning QLoRA do Llama 3.2 3B sobre 6414 pares de perguntas e respostas sintéticos derivados de protocolos do Ministério da Saúde, FEBRASGO, OMS e INCA, e RAG sobre 1392 trechos desses protocolos.
 
-Para a demo local, use [Como executar o projeto](#como-executar-o-projeto) (CPU). O restante desta seção é o pipeline **Llama + RAG** notebook a notebook (Fase 3).
+**Atalho:** abra [`COLAB_EXECUTAR.ipynb`](COLAB_EXECUTAR.ipynb) no Colab com GPU e execute tudo. Ele clona o repositório, monta o Drive e sobe o Gradio com link público (`share=True`). Com `HF_TOKEN` e GPU carrega o Llama; sem eles, usa o `FakeChatModel`. Não refaz o treino QLoRA.
 
-### Pré-requisitos (Fase 3 / GPU)
+### Pré-requisitos
 
-1. **Google Colab Pro** (ou Pro+) com GPU **A100** ou **L4**.
-2. **Conta HuggingFace** com aprovação Meta para `Llama-3.1-8B-Instruct` e `Llama-3.2-3B-Instruct`.
-3. **Google Drive** com a seguinte estrutura mínima:
+1. Google Colab Pro (ou Pro+) com GPU A100 ou L4.
+2. Conta no Hugging Face com acesso aprovado pela Meta a `Llama-3.1-8B-Instruct` e `Llama-3.2-3B-Instruct`.
+3. Google Drive com a estrutura:
    ```
    /MyDrive/AssistenteHospitalar/
-   ├── .env                              ← HF_TOKEN=hf_xxx
-   ├── lib/                              ← upload da pasta lib/ deste repo
-   │   ├── db.py, tools.py, llm.py, agent.py, ui.py, ...
-   │   └── workflows/
-   └── files/
-       └── (PDFs originais dos protocolos por categoria — opcional, se for refazer extração)
+   ├── .env          ← HF_TOKEN=hf_xxx
+   ├── lib/          ← cópia da pasta lib/ deste repositório
+   └── files/        ← PDFs dos protocolos (opcional, só para refazer a extração)
    ```
 
-A pasta `lib/` precisa estar **diretamente em `AssistenteHospitalar/`** (não dentro de subpasta), porque os notebooks fazem `sys.path.insert(0, '/content/drive/MyDrive/AssistenteHospitalar')` e depois `from lib import ...`.
+A pasta `lib/` precisa ficar diretamente em `AssistenteHospitalar/`, porque os notebooks fazem `sys.path.insert(0, '/content/drive/MyDrive/AssistenteHospitalar')` antes de `from lib import ...`.
 
-### Pipeline em 10 notebooks
-
-Cada notebook é numerado pela ordem de execução. Saídas de um alimentam o próximo via Drive.
+### Notebooks
 
 | # | Notebook | Saída | Tempo |
 |---|---|---|---|
 | 01 | [`01_extrair_protocolos.ipynb`](01_extrair_protocolos.ipynb) | `files/fontes_saude_mulher_v2.json` (39 PDFs estruturados) | 5 min |
-| 02 | [`02_gerar_dataset_sft.ipynb`](02_gerar_dataset_sft.ipynb) | `files/sft/sft_train.jsonl` (5134 ex) + val/test | 6-8h em A100 |
-| 03 | [`03_treinar_qlora.ipynb`](03_treinar_qlora.ipynb) | `files/finetune/llama32-3b-saude-mulher_<ts>/adapter_final/` | 2-3h em A100 |
+| 02 | [`02_gerar_dataset_sft.ipynb`](02_gerar_dataset_sft.ipynb) | `files/sft/sft_train.jsonl` (5134 exemplos) + validação/teste | 6–8 h em A100 |
+| 03 | [`03_treinar_qlora.ipynb`](03_treinar_qlora.ipynb) | `files/finetune/llama32-3b-saude-mulher_<ts>/adapter_final/` | 2–3 h em A100 |
 | 04 | [`04_avaliar_modelo.ipynb`](04_avaliar_modelo.ipynb) | `eval_report.json` + `eval_sidebyside.md` | 5 min |
-| 05 | [`05_gerar_dados_mock.ipynb`](05_gerar_dados_mock.ipynb) | `files/hospital.db` (50 pacientes mock) | <1 min |
-| 06 | [`06_indexar_protocolos.ipynb`](06_indexar_protocolos.ipynb) | `files/chroma/` (1392 chunks indexados) | ~5 min |
-| 07 | [`07_testar_tools_alertas.ipynb`](07_testar_tools_alertas.ipynb) | logs no notebook (sanity check) | 2 min |
-| 08 | [`08_app_gradio.ipynb`](08_app_gradio.ipynb) | URL pública Gradio (≈72h) | 3 min |
-| 09 | [`09_demo_workflows.ipynb`](09_demo_workflows.ipynb) | demos dos 4 workflows + diagramas Mermaid | 5 min |
-| 10 | [`10_relatorio_utilizacao.ipynb`](10_relatorio_utilizacao.ipynb) | relatório gerencial: cobertura preventiva, auditoria LGPD, indicadores epidemiológicos | 1 min |
+| 05 | [`05_gerar_dados_mock.ipynb`](05_gerar_dados_mock.ipynb) | `files/hospital.db` (50 pacientes sintéticas) | < 1 min |
+| 06 | [`06_indexar_protocolos.ipynb`](06_indexar_protocolos.ipynb) | `files/chroma/` (1392 trechos indexados) | ~5 min |
+| 07 | [`07_testar_tools_alertas.ipynb`](07_testar_tools_alertas.ipynb) | verificação das tools | 2 min |
+| 08 | [`08_app_gradio.ipynb`](08_app_gradio.ipynb) | link público do Gradio (≈ 72 h) | 3 min |
+| 09 | [`09_demo_workflows.ipynb`](09_demo_workflows.ipynb) | demos dos workflows + diagramas Mermaid | 5 min |
+| 10 | [`10_relatorio_utilizacao.ipynb`](10_relatorio_utilizacao.ipynb) | relatório gerencial: cobertura preventiva, auditoria LGPD, indicadores | 1 min |
 
-**Dependências:** 03 e 04 dependem de 02 (dataset). 05 e 06 são independentes e podem rodar em paralelo. 07/08/09 precisam de 05+06 (e idealmente 03+04 para o adapter).
+03 e 04 dependem de 02. 05 e 06 são independentes entre si. 07, 08 e 09 precisam de 05 e 06 (e, idealmente, de 03 e 04 para o adapter).
 
-Após o passo 08 ou 09, o link público do Gradio (via `share=True`) fica ativo por ~72h.
+### Categorias de protocolos
 
----
-
-## Categorias cobertas
-
-| Categoria | Slug interno | Sensitive | # PDFs | # Chunks |
+| Categoria | Slug interno | Sensível | PDFs | Trechos |
 |---|---|---|---|---|
 | Ginecologia e obstetrícia | `ginecologia_obstetricia` | não | 19 | 257 |
 | Câncer de mama e colo | `cancer_mama_colo` | não | 4 | 242 |
@@ -309,90 +346,35 @@ Após o passo 08 ou 09, o link público do Gradio (via `share=True`) fica ativo 
 | Saúde mental | `saude_mental` | **sim** | 2 | 172 |
 | **Total** | — | — | **39** | **1392** |
 
-Categorias `sensitive: true` recebem prompts diferenciados durante a geração do dataset (foco em encaminhamento SINAN, escuta qualificada, fluxo da rede) e ativam o **fluxo dedicado de violência** no LangGraph.
+Categorias sensíveis recebem prompts diferenciados na geração do dataset (encaminhamento SINAN, escuta qualificada, rede de proteção) e ativam o fluxo dedicado de violência.
 
----
+### Resultados do fine-tuning
 
-## Segurança, ética e LGPD
+Run `llama32-3b-saude-mulher_20260524_0217`, avaliado em 30 exemplos do conjunto de teste.
 
-### Limites de atuação codificados
+Ganhos:
 
-Hard-coded no system prompt do agente e nos workflows:
+- Citação de serviços da rede (SINAN, Ligue 180, CVV, CAPS) em casos sensíveis subiu de cerca de 33 % (modelo base) para cerca de 100 % (fine-tuned).
+- Tom mais alinhado ao público profissional.
 
-- **NUNCA** prescreve medicação sem validação de especialista
-- **NUNCA** diagnostica condições definitivamente
-- **SEMPRE** encaminha casos suspeitos de violência para profissionais qualificados (notificação SINAN compulsória)
-- **SEMPRE** sugere avaliação presencial para sintomas alarmantes
-- **NÃO** se dirige à paciente — é ferramenta de apoio à equipe de saúde
+Regressões:
 
-### Auditoria LGPD
+- ROUGE-L caiu de 0,101 para 0,095 (−5,9 %).
+- Cerca de 60 % das respostas apresentavam loops repetitivos; mitigado com `repetition_penalty=1.2` e `no_repeat_ngram_size=4` em [`lib/llm.py`](lib/llm.py).
+- O modelo passou a citar serviços da rede também em contextos não sensíveis.
+- Respostas 18,6 % mais longas; mitigado com `max_new_tokens=256`.
 
-Toda chamada à `consultar_violencia` e `registrar_violencia` grava em `log_acesso` com:
-- timestamp
-- usuario (identificador do profissional)
-- tabela acessada
-- paciente_id
-- **motivo clínico obrigatório** (mínimo 5 caracteres)
-
-### Dados pessoais
-
-- **Mock 100% sintético** via Faker pt_BR (sem dado real)
-- **CPF hash** SHA-256 (nunca CPF real)
-- Tabela `registros_violencia` em schema separado
-
-### Limites técnicos
-
-- Não há criptografia at-rest (uso acadêmico em mock); para produção, recomenda-se Fernet em `registros_violencia.observacoes`
-- Não há autenticação federada — `usuario` é mock simples; em produção viria de OAuth/SSO
-
----
-
-## Limitações conhecidas
-
-### Resultados do fine-tuning (run `llama32-3b-saude-mulher_20260524_0217`)
-
-**Ganhos confirmados:**
-- ✅ Citação de serviços da rede (SINAN, Ligue 180, CVV, CAPS) em casos sensitive saltou de ~33% (base) para ~100% (FT)
-- ✅ Tom inicial mais alinhado ao público profissional (não inicia com "Lamento ter de abordar...")
-
-**Regressões mensuráveis:**
-- ❌ ROUGE-L caiu de 0.101 para 0.095 (-5.9%) — proxy fraco mas regressão real
-- ❌ ~60% das respostas FT apresentam **loops repetitivos** — mitigado com `repetition_penalty=1.2` + `no_repeat_ngram_size=4` aplicados em [`lib/llm.py`](lib/llm.py)
-- ❌ FT cita serviços da rede inadequadamente em contextos não-sensitive (overfitting do padrão sensitive)
-- ❌ Respostas 18.6% mais longas que o base — mitigado com `max_new_tokens=256`
-
-Análise detalhada no [`RELATORIO_TECNICO_DETALHADO.md`](RELATORIO_TECNICO_DETALHADO.md#43-análise-crítica-honesta-dos-resultados).
-
-### Limitações estruturais
-
-1. **Validação clínica formal pendente** — Q&A SFT e o dataset tabular de risco são sintéticos. Validação por especialistas é necessária antes de qualquer uso real.
-2. **Tool calling do Llama 3.2 3B** pode ter taxa de erro maior que modelos maiores em cenários complexos. Fallback ReAct presente.
-3. **RAG enviesado pela base de protocolos** — coberta MS/FEBRASGO/OMS/INCA brasileiros. Pode ter gaps em protocolos institucionais específicos.
-4. **Sem feedback de profissionais reais** — métricas atuais são heurísticas + ROUGE-L, não satisfação clínica.
-5. **Anonimização** dos dados reais não está implementada como pipeline — apenas demonstrada via mock. Para produção, seria necessário pipeline de PHI removal antes do fine-tuning.
-6. **Tamanho amostral da avaliação pequeno** (n=30 de 640 do test set) — para conclusões estatísticas seria necessário n≥100 com bootstrap.
+A amostra de avaliação é pequena (n = 30); conclusões estatísticas exigiriam n ≥ 100 com bootstrap. Análise completa em [`RELATORIO_TECNICO_DETALHADO.md`](RELATORIO_TECNICO_DETALHADO.md#43-análise-crítica-honesta-dos-resultados).
 
 ---
 
 ## Documentação adicional
 
-- **[`docs/planos/00_INDICE.md`](docs/planos/00_INDICE.md)** — planos PI-S01…S08 e [relatório do ciclo](docs/planos/RELATORIO_CICLO_FINAL.md)
-- **[`docs/ml/METRICAS_E_RESULTADOS.md`](docs/ml/METRICAS_E_RESULTADOS.md)** — números do teste (fonte: `artifacts/metrics/`)
-- **[`docs/deploy/EXECUCAO_DOCKER.md`](docs/deploy/EXECUCAO_DOCKER.md)** / [`EXECUCAO_LOCAL.md`](docs/deploy/EXECUCAO_LOCAL.md)
-- **[`docs/requisitos/CRITERIOS_DE_ACEITE.md`](docs/requisitos/CRITERIOS_DE_ACEITE.md)** — 20 critérios da evolução
-- **[`RELATORIO_TECNICO.md`](RELATORIO_TECNICO.md)** — relatório executivo Fase 5 (Guardiã AI)
-- **[`RELATORIO_TECNICO_DETALHADO.md`](RELATORIO_TECNICO_DETALHADO.md)** — relatório acadêmico estendido Fase 3
-- **[`ARQUITETURA.md`](ARQUITETURA.md)** — decisões técnicas Fase 3
-
----
-
-## Tech Challenge — Critérios de avaliação
-
-| Critério | Onde encontrar |
-|---|---|
-| Precisão médica especializada | Dataset baseado em MS/FEBRASGO/OMS/INCA; RAG cita fonte |
-| Segurança da paciente | Workflow de violência (notificação SINAN, rede de proteção); limites no system prompt |
-| Sensibilidade ética | Prompts diferenciados para `sensitive`; tom técnico (assistente para profissional, não paciente) |
-| Aplicabilidade prática | Mock realista de prontuário/exames/violência; UI Gradio funcional |
-| Impacto social | Apoio a equipe de saúde da mulher (categoria com déficit de protocolos digitalizados no Brasil) |
-| Conformidade regulatória | `log_acesso` (LGPD), CPF hashado, separação de dados sensíveis |
+- [`RELATORIO_TECNICO.md`](RELATORIO_TECNICO.md) — relatório técnico da Fase 5
+- [`docs/ml/METRICAS_E_RESULTADOS.md`](docs/ml/METRICAS_E_RESULTADOS.md) — métricas do conjunto de teste
+- [`docs/rag/ESTRATEGIA_RAG.md`](docs/rag/ESTRATEGIA_RAG.md) e [`docs/rag/POLITICA_DE_CITACAO.md`](docs/rag/POLITICA_DE_CITACAO.md) — RAG e citação de fontes
+- [`docs/llm/POLITICA_ANTI_ALUCINACAO.md`](docs/llm/POLITICA_ANTI_ALUCINACAO.md) — contrato de entrada e saída da LLM
+- [`docs/seguranca/`](docs/seguranca/) — riscos, controles, LGPD e auditoria
+- [`docs/deploy/EXECUCAO_LOCAL.md`](docs/deploy/EXECUCAO_LOCAL.md) e [`docs/deploy/EXECUCAO_DOCKER.md`](docs/deploy/EXECUCAO_DOCKER.md) — execução
+- [`docs/requisitos/CRITERIOS_DE_ACEITE.md`](docs/requisitos/CRITERIOS_DE_ACEITE.md) — critérios de aceite
+- [`docs/planos/00_INDICE.md`](docs/planos/00_INDICE.md) — planos das sprints e relatório do ciclo
