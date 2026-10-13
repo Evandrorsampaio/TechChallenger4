@@ -822,7 +822,7 @@ def build_ui(agent, conn, default_usuario: str = 'sessao_demo',
 
         gr.Markdown(
             '\n_Dados clínicos sintéticos. Acesso a registros de violência auditado '
-            'em `log_acesso` (LGPD). Tech Challenge FIAP — Fase 3._'
+            'em `log_acesso` (LGPD). Tech Challenge FIAP — Fase 5._'
         )
 
     return app
