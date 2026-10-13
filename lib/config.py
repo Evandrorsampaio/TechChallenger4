@@ -16,7 +16,7 @@ try:
 except ImportError:
     pass
 
-# Defaults da Fase 3 (Colab + Drive). Não alterar sem ADR.
+# Defaults do Colab (Drive). Não alterar sem ADR.
 DEFAULT_DB_PATH = '/content/drive/MyDrive/AssistenteHospitalar/files/hospital.db'
 DEFAULT_DRIVE_BASE = '/content/drive/MyDrive/AssistenteHospitalar'
 

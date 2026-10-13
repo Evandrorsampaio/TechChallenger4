@@ -264,7 +264,7 @@ Abra o `RELATORIO_TECNICO.html` gerado no Chrome e use Imprimir → Salvar como 
 4. **Baixa precisão do classificador.** O limiar prioriza o recall; cerca de três em cada quatro alertas de alto risco são falsos positivos.
 5. **Auditoria por hash.** `predicoes_ml` guarda o hash das variáveis de entrada, não os valores.
 6. **Sem criptografia at-rest e sem autenticação federada.** O campo `usuario` é simples; em produção viria de OAuth/SSO.
-7. **Fine-tuning da Fase 3 com regressões.** Ver [resultados do fine-tuning](#resultados-do-fine-tuning).
+7. **Fine-tuning com regressões.** Ver [resultados do fine-tuning](#resultados-do-fine-tuning).
 
 ---
 
@@ -294,7 +294,7 @@ TechChallenger4/
 ├── artifacts/                       ← data, models, metrics, explainability, rag, demo
 ├── tests/                           ← unit, integration, e2e, regression
 │
-├── 01…10_*.ipynb                    ← pipeline LLM + RAG no Colab (Fase 3)
+├── 01…10_*.ipynb                    ← pipeline LLM + RAG no Colab (Fase 5)
 └── COLAB_EXECUTAR.ipynb             ← atalho para subir a aplicação no Colab
 ```
 
@@ -317,7 +317,7 @@ TechChallenger4/
 
 ## Pipeline completo no Colab (Llama + Chroma)
 
-A base de LLM e RAG foi construída na Fase 3 e é reaproveitada aqui: fine-tuning QLoRA do Llama 3.2 3B sobre 6414 pares de perguntas e respostas sintéticos derivados de protocolos do Ministério da Saúde, FEBRASGO, OMS e INCA, e RAG sobre 1392 trechos desses protocolos.
+A base de LLM e RAG desta Fase 5 usa fine-tuning QLoRA do Llama 3.2 3B sobre 6414 pares de perguntas e respostas sintéticos derivados de protocolos do Ministério da Saúde, FEBRASGO, OMS e INCA, e RAG sobre 1392 trechos desses protocolos.
 
 **Atalho:** abra [`COLAB_EXECUTAR.ipynb`](COLAB_EXECUTAR.ipynb) no Colab com GPU e execute tudo. Ele clona o repositório, monta o Drive e sobe o Gradio com link público (`share=True`). Com `HF_TOKEN` e GPU carrega o Llama; sem eles, usa o `FakeChatModel`. Não refaz o treino QLoRA.
 

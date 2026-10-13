@@ -1,4 +1,4 @@
-"""Regressão da Fase 3: tools, grafos, flag ML desligada."""
+"""Regressão dos workflows: tools, grafos, flag ML desligada."""
 from __future__ import annotations
 
 import os

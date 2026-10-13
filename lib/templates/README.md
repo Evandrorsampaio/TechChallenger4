@@ -1,6 +1,6 @@
 # Templates de Documentos Clínicos
 
-Modelos especializados de documentos referenciados no enunciado da Fase 3, requisito:
+Modelos especializados de documentos referenciados no enunciado da Fase 5, requisito:
 > "Modelos especializados de documentos: Laudos de mamografias e ultrassons ginecológicos; Receitas para terapias hormonais e medicações específicas; Procedimentos de colposcopia e biópsias; Relatórios de atendimento a vítimas de violência; Protocolos de pré-natal e puerpério."
 
 Cada template segue o padrão Markdown com **placeholders no formato `{{campo}}`** que podem ser preenchidos programaticamente (`.format()`, Jinja2, ou substituição direta).

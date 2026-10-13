@@ -5,7 +5,7 @@ import re
 import sys
 from pathlib import Path
 
-# Reexporta o validador da Fase 3 (permanece em referencias/).
+# Reexporta o validador (permanece em referencias/).
 _REF = Path(__file__).resolve().parent.parent / 'referencias'
 if str(_REF) not in sys.path:
     sys.path.insert(0, str(_REF))

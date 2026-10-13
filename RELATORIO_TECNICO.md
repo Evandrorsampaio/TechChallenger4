@@ -12,7 +12,7 @@ A **Guardiã AI** apoia a **equipe de saúde** (não a paciente) em dois eixos d
 1. **Triagem de gestante** — estimar risco habitual vs. alto risco a partir de variáveis estruturadas, com regras de alarme **antes** do modelo.
 2. **Relato de segurança** — fluxo de violência (matriz SINAN, auditoria LGPD), sem decisão automática de notificação.
 
-O LLM **não classifica** o risco obstétrico: lê números já calculados (ADR-001 / contrato anti-alucinação). No perfil CPU/Docker usa-se `FakeChatModel`; Llama 3.2 3B + QLoRA permanece no pipeline Colab da Fase 3.
+O LLM **não classifica** o risco obstétrico: lê números já calculados (ADR-001 / contrato anti-alucinação). No perfil CPU/Docker usa-se `FakeChatModel`; Llama 3.2 3B + QLoRA permanece no pipeline Colab da Fase 5.
 
 ---
 
@@ -78,7 +78,7 @@ A ferramenta `buscar_protocolo` e o nó RAG de `risco_ml` usam o mesmo retriever
 ## 6. LLM
 
 - **CPU/Docker:** `FakeChatModel` — declara o modo; não inventa métricas (validador em `lib/ml/llm_contract.py`).
-- **Colab:** Llama 3.2 3B Instruct + adapter QLoRA (Fase 3). Human-in-the-loop: o profissional confirma conduta; o sistema não prescreve.
+- **Colab:** Llama 3.2 3B Instruct + adapter QLoRA (Fase 5). Human-in-the-loop: o profissional confirma conduta; o sistema não prescreve.
 
 ---
 
@@ -87,7 +87,7 @@ A ferramenta `buscar_protocolo` e o nó RAG de `risco_ml` usam o mesmo retriever
 - 10 tools LangChain (inclui `predizer_risco_gestacional`)
 - 5 grafos LangGraph (Triagem, Violência, Obstétrico, Prevenção, `risco_ml`)
 - 6 abas Gradio (título **Guardiã AI**)
-- SQLite: tabelas da Fase 3 + `predicoes_ml` (hash de features, sem payload clínico em claro)
+- SQLite: prontuário, `log_acesso` e `predicoes_ml` (hash de features, sem payload clínico em claro)
 - Docker `demo-cpu`: sklearn + FakeChatModel, sem Llama
 
 ```mermaid

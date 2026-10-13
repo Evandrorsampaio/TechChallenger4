@@ -1,4 +1,4 @@
-"""Regressão das abas Gradio (Fase 3 + 6ª aba)."""
+"""Regressão das abas Gradio."""
 import inspect
 from pathlib import Path
 

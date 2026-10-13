@@ -10,7 +10,7 @@ from pathlib import Path
 
 from lib.config import DEFAULT_DB_PATH, hospital_db_path
 
-# Reexportado para notebooks da Fase 3 que importam lib.db.DEFAULT_DB_PATH.
+# Reexportado para notebooks que importam lib.db.DEFAULT_DB_PATH.
 DEFAULT_DB_PATH = DEFAULT_DB_PATH
 
 

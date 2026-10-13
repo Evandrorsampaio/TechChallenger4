@@ -1,4 +1,4 @@
-"""Validador da Fase 3.
+"""Validador da Fase 5.
 
 Preferir `lib.validacao` na evolução ML. Este módulo permanece para os notebooks
 e para o import reexportado; não apagar.
@@ -176,7 +176,7 @@ class ValidadorLLM:
 
     Latência: 5-10s adicionais por consulta — esta é a razão pela qual
     o validador não foi integrado aos workflows. Implementação literal do
-    que o enunciado da Fase 3 pediu em "Validação da resposta pelo LLM
+    que o enunciado da Fase 5 pediu em "Validação da resposta pelo LLM
     antes do retorno".
     """
 

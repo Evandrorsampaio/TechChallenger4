@@ -1,1 +1,1 @@
-"""Módulos do assistente clínico hospitalar (fase 2 LangChain)."""
+"""Módulos do assistente clínico hospitalar (Fase 5)."""

@@ -571,7 +571,7 @@ def compilar_resposta(state: RiscoMLState) -> dict:
 
 
 def build_risco_ml_workflow(chat_model, conn, retriever):
-    """Mesma assinatura dos quatro workflows da Fase 3."""
+    """Mesma assinatura dos outros workflows."""
     from langgraph.graph import END, START, StateGraph
 
     g = StateGraph(RiscoMLState)

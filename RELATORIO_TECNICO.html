@@ -70,7 +70,7 @@
 <h1>Relatório Técnico — Guardiã AI (Saúde e Segurança da Mulher)</h1>
 <p><strong>Tech Challenge FIAP — Pós Tech em IA para Devs — Fase 5</strong><br />
 <strong>Grupo:</strong> Evandro Rosa Sampaio, Gustavo Brasil Pires Octaviano, Paulo Roberto Goncalves, Wallace Gomes da Silva</p>
-<p><strong>Vídeo (≤ 15 min):</strong> a gravar e publicar no YouTube ou no Vimeo. O link YouTube da Fase 3 (<code>watch?v=4Wgx4tiHWQw</code>) <strong>não</strong> é a apresentação desta entrega.<br />
+<p><strong>Vídeo (≤ 15 min):</strong> a gravar e publicar no YouTube ou no Vimeo.<br />
 <strong>PDF:</strong> gerar HTML com <code>python scripts/export_pdf_html.py</code> e imprimir em PDF (Chrome: Imprimir → Salvar como PDF). <code>RELATORIO_TECNICO.html</code> acompanha este Markdown.</p>
 <blockquote>
 <p>Projeto acadêmico. <strong>Não substitui avaliação clínica.</strong> O classificador de risco gestacional usa <strong>dados 100 % sintéticos</strong>. Sem validação por especialistas.</p>
@@ -82,7 +82,7 @@
 <li><strong>Triagem de gestante</strong> — estimar risco habitual vs. alto risco a partir de variáveis estruturadas, com regras de alarme <strong>antes</strong> do modelo.</li>
 <li><strong>Relato de segurança</strong> — fluxo de violência (matriz SINAN, auditoria LGPD), sem decisão automática de notificação.</li>
 </ol>
-<p>O LLM <strong>não classifica</strong> o risco obstétrico: lê números já calculados (ADR-001 / contrato anti-alucinação). No perfil CPU/Docker usa-se <code>FakeChatModel</code>; Llama 3.2 3B + QLoRA permanece no pipeline Colab da Fase 3.</p>
+<p>O LLM <strong>não classifica</strong> o risco obstétrico: lê números já calculados (ADR-001 / contrato anti-alucinação). No perfil CPU/Docker usa-se <code>FakeChatModel</code>; Llama 3.2 3B + QLoRA permanece no pipeline Colab da Fase 5.</p>
 <hr />
 <h2>2. Fluxo da Fase 5</h2>
 <pre><code class="language-mermaid">flowchart LR
@@ -127,7 +127,7 @@
 <h2>6. LLM</h2>
 <ul>
 <li><strong>CPU/Docker:</strong> <code>FakeChatModel</code> — declara o modo; não inventa métricas (validador em <code>lib/ml/llm_contract.py</code>).</li>
-<li><strong>Colab:</strong> Llama 3.2 3B Instruct + adapter QLoRA (Fase 3). Human-in-the-loop: o profissional confirma conduta; o sistema não prescreve.</li>
+<li><strong>Colab:</strong> Llama 3.2 3B Instruct + adapter QLoRA (Fase 5). Human-in-the-loop: o profissional confirma conduta; o sistema não prescreve.</li>
 </ul>
 <hr />
 <h2>7. Arquitetura (produto nesta branch)</h2>
@@ -135,7 +135,7 @@
 <li>10 tools LangChain (inclui <code>predizer_risco_gestacional</code>)</li>
 <li>5 grafos LangGraph (Triagem, Violência, Obstétrico, Prevenção, <code>risco_ml</code>)</li>
 <li>6 abas Gradio (título <strong>Guardiã AI</strong>)</li>
-<li>SQLite: tabelas da Fase 3 + <code>predicoes_ml</code> (hash de features, sem payload clínico em claro)</li>
+<li>SQLite: prontuário, <code>log_acesso</code> e <code>predicoes_ml</code> (hash de features, sem payload clínico em claro)</li>
 <li>Docker <code>demo-cpu</code>: sklearn + FakeChatModel, sem Llama</li>
 </ul>
 <pre><code class="language-mermaid">flowchart TB

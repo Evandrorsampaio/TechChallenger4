@@ -1,7 +1,7 @@
 """Workflows LangGraph para cenários clínicos do assistente hospitalar.
 
 Cada workflow é um StateGraph compilado, com nodes nomeados que correspondem
-às etapas do enunciado da Tech Challenge Fase 3:
+às etapas do enunciado da Tech Challenge Fase 5:
 
 - triagem.py     → Triagem Ginecológica
 - violencia.py   → Detecção de Violência Doméstica
