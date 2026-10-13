@@ -1,12 +1,7 @@
 # Relatório Técnico — Guardiã AI (Saúde e Segurança da Mulher)
 
 **Tech Challenge FIAP — Pós Tech em IA para Devs — Fase 5**  
-**Grupo:** Evandro Rosa Sampaio, Gustavo Brasil Pires Octaviano, Paulo Roberto Goncalves, Wallace Gomes da Silva
-
-**Vídeo (≤ 15 min):** a gravar — roteiro em [`ROTEIRO_VIDEO.md`](ROTEIRO_VIDEO.md). O link YouTube da Fase 3 (`watch?v=4Wgx4tiHWQw`) **não** é a apresentação desta entrega.  
-**PDF:** gerar HTML com `python scripts/export_pdf_html.py` e imprimir em PDF (Chrome: Imprimir → Salvar como PDF). `RELATORIO_TECNICO.html` acompanha este Markdown.
-
-> Projeto acadêmico. **Não substitui avaliação clínica.** O classificador de risco gestacional usa **dados 100 % sintéticos**. Sem validação por especialistas.
+**Grupo 63:** Evandro Rosa Sampaio, Gustavo Brasil Pires Octaviano, Paulo Roberto Goncalves, Wallace Gomes da Silva
 
 ---
 
