@@ -1,0 +1,704 @@
+{
+  "adapter_dir": "/content/drive/MyDrive/AssistenteHospitalar/files/finetune/llama32-3b-saude-mulher_20260524_0217/adapter_final",
+  "n_examples": 30,
+  "aggregates": {
+    "rouge_l_base": 0.101,
+    "rouge_l_ft": 0.095,
+    "antipadrao_base_pct": 0.0,
+    "antipadrao_ft_pct": 0.0,
+    "len_chars_base": 1239,
+    "len_chars_ft": 1470
+  },
+  "detalhes": [
+    {
+      "idx": 114,
+      "category": "ginecologia_obstetricia",
+      "sensitive": false,
+      "user": "Qual é o princípio da cirurgia de controle de danos?",
+      "gold": "Abreviar a laparotomia antes da depleção das reservas fisiológicas do paciente, para assim tratar a coagulopatia, a hipotermia e corrigir o distúrbio ácido básico na unidade de terapia intensiva.",
+      "base": "O princípio da cirurgia de controle de danos (ou \"princípio de minimização do dano\") é um conceito fundamental na medicina e na ética clínica. Ele se refere ao objetivo de minimizar os danos ou consequências negativas associados a uma intervenção cirúrgica ou a qualquer outra ação médica.\n\nO princípio da cirurgia de controle de danos é baseado no seguinte raciocínio:\n\n1.  **Minimizar o dano**: A ideia é reduzir ao máximo as consequências negativas associadas à intervenção cirúrgica ou à ação médica.\n2.  **Considerar as alternativas**: Antes de realizar uma intervenção cirúrgica, os profissionais de saúde devem considerar todas as alternativas possíveis que possam evitar ou minimizar os danos.\n3.  **Priorizar a saúde do paciente**: O bem-estar e a saúde do paciente devem ser sempre priorizados, e as intervenções cirúrgicas devem ser realizadas apenas quando essencialmente necessárias.\n\nEm resumo, o princípio da cirurgia de controle de danos é um princípio ético que orienta os profissionais de saúde a minimizar os danos associados às intervenções cirúrgicas e a qualquer outra ação médica.",
+      "ft": "O princípio da cirurgia de controle de danos é a prevenção de danos, a minimização dos danos e a reversão dos danos. Isso significa que a cirurgia de controle de danos deve ser realizada de forma a evitar danos adicionais, minimizar os danos existentes e, se possível, reversar os danos. É importante lembrar que a cirurgia de controle de danos é uma ferramenta para prevenir danos, não para causar danos. Portanto, é fundamental realizar a avaliação de riscos e benefícios antes de realizar qualquer procedimento. Além disso, é importante considerar as consequências de cada ato e tomar decisões que promovam a saúde e o bem-estar da pessoa. É fundamental também considerar as opções de tratamento disponíveis e escolher a melhor opção de acordo com as necessidades individuais. É importante lembrar que a cirurgia de controle de danos é uma ferramenta para prevenir danos, não para causar danos. Portanto, é fundamental realizar a avaliação de riscos e benefícios antes de realizar qualquer procedimento. Além disso, é importante considerar as consequências de cada ato e tomar decisões que promovam a saúde e o bem-estar da pessoa. É fundamental também considerar as opções de tratamento disponíveis e escolher a melhor opção de acordo com as necessidades individuais. É importante lembrar que a cirurgia de controle de danos é uma ferramenta para prevenir danos, não para causar danos. Portanto, é fundamental realizar a avaliação de riscos e benefícios antes de realizar qualquer procedimento. Além disso, é importante",
+      "rouge_base": 0.07792207792207792,
+      "rouge_ft": 0.06802721088435373,
+      "heur_base": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1103
+      },
+      "heur_ft": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1523
+      }
+    },
+    {
+      "idx": 25,
+      "category": "violencia_domestica",
+      "sensitive": true,
+      "user": "Como conduzir a escuta qualificada de uma paciente com suspeita de violência doméstica?",
+      "gold": "O profissional deve utilizar o kit padrão de coleta de vestígios e a ficha de atendimento à vítima de violência doméstica para coletar informações relevantes. Em seguida, deve oferecer apoio emocional e orientação à paciente, informando-a sobre os serviços disponíveis, como o Ligue 180 e o CVV 188.",
+      "base": "A escuta qualificada é fundamental em casos de suspeita de violência doméstica, pois visa garantir a segurança da paciente e identificar possíveis ameaças. Aqui estão os passos a seguir:\n\n1. **Preparação**:\n   - Certifique-se de que você está em um ambiente seguro e privado.\n   - Informe a paciente sobre o propósito da conversa e que tudo o que ela compartilhar será mantido em confidência.\n   - Estabeleça um fluxo de comunicação aberto e respeitoso.\n\n2. **Abordagem Inicial**:\n   - Comece com uma abordagem gentil e empática, como: \"Olá, estou aqui para ouvir e ajudar. Você se sente confortável em falar sobre o que está acontecendo?\"\n   - Evite fazer suposições ou julgamentos, e concentre-se em ouvir atentamente.\n\n3. **Perguntas Abertas**:\n   - Faça perguntas abertas que permitam à paciente compartilhar sua experiência sem sentir-se interrogada, como:\n     - \"O que aconteceu?\"\n     - \"Como você se sentiu?\"\n     - \"Quais são seus medos?\"\n   - Evite perguntas fechadas ou que possam ser interpretadas como acusatórias.\n\n4. **Atenção aos Sinais de Alerta**:\n   - Preste atenção a sinais de alerta, como:\n     - Lesões físicas ou emocionais\n     - Mudanças de comportamento ou humor\n     - Evitação de contato visual ou distanciamento\n   - Documente esses sinais, mas faça-o de forma discreta e respeitosa.\n\n5. **Identificação",
+      "ft": "O profissional deve utilizar o Protocolo de Acolhimento à Mulher em Situação de Violência Doméstica, que inclui a escuta qualificada, a identificação dos sinais de alerta e a notificação obrigatória ao SINAN. Além disso, é importante lembrar que a escuta qualificada é um processo que envolve a atenção ao detalhe e a compreensão do contexto em que a paciente se encontra. É fundamental que o profissional esteja atento às necessidades específicas da paciente e forneça apoio adequado. Informe à paciente que pode entrar em contato com a Ligue 180 para obter apoio e orientação. Informe à paciente que pode entrar em contato com a Delegacia da Mulher para obter apoio e orientação. Informe à paciente que pode entrar em contato com o CVV 188 para obter apoio e orientação. Informe à paciente que pode entrar em contato com o CAPS para obter apoio e orientação. Informe à paciente que pode entrar em contato com o SAMU 192 para obter apoio e orientação. Informe à paciente que pode entrar em contato com o serviço de saúde local para obter apoio e orientação. Informe à paciente que pode entrar em contato com o serviço de proteção à criança e ao adolescente para obter apoio e orientação. Informe à paciente que pode entrar em contato com o serviço de proteção à mulher e ao menor para obter apoio e orientação. Informe à paciente que pode entrar em contato com o serviço de proteção à comunidade para obter apoio e orientação. Informe à paciente que pode entrar em contato com o serviço de proteção à população indígena para obter apoio",
+      "rouge_base": 0.1185185185185185,
+      "rouge_ft": 0.13649851632047477,
+      "heur_base": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1334
+      },
+      "heur_ft": {
+        "cita_servico_rede": true,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1537
+      }
+    },
+    {
+      "idx": 281,
+      "category": "ginecologia_obstetricia",
+      "sensitive": false,
+      "user": "Quais são as fases consideradas no segundo período do parto?",
+      "gold": "Fase passiva/transição e Fase ativa.",
+      "base": "Durante o segundo período do parto, as fases consideradas são:\n\n1. **Primeira fase do segundo período**: Após a passagem do útero pela bexiga (úteroúrea), mas antes da passagem do útero pelo ânus (parto vaginal). Nesta fase, o parto é considerado \"iniciado\", mas ainda não concluído.\n\n2. **Segunda fase do segundo período**: Após a passagem do útero pelo ânus (parto vaginal). Nesta fase, o parto é considerado \"concluído\".\n\nÉ importante lembrar que o segundo período do parto é caracterizado por uma série de mudanças fisiológicas e físicas, incluindo a passagem do útero pela bexiga e pelo ânus, além de alterações na pressão arterial e na frequência cardíaca.",
+      "ft": "O segundo período do parto é dividido em três fases: a fase de transição, a fase de descarga e a fase de recuperação. A fase de transição ocorre aproximadamente entre os 30 e 40 minutos após o início do segundo período, enquanto a fase de descarga ocorre aproximadamente entre os 40 e 60 minutos após o início do segundo período. A fase de recuperação ocorre aproximadamente entre os 60 e 90 minutos após o início do segundo período. É importante notar que essas fases podem variar de pessoa para pessoa. Além disso, a fase de transição é caracterizada por uma diminuição da frequência das contrações, enquanto a fase de descarga é caracterizada por uma diminuição da intensidade das contrações. A fase de recuperação é caracterizada por uma diminuição da frequência e da intensidade das contrações, além de uma melhora da circulação e da respiração. É fundamental que a mulher se sinta confortável e segura durante essas fases. Se a mulher se sentir desconfortável ou em dor, é importante que ela seja encaminhada para avaliação e tratamento adequados. É também importante lembrar que a fase de transição é uma fase de transição, e não há necessidade de realizar procedimentos adicionais. A fase de descarga é uma fase de descarga, e não há necessidade de realizar procedimentos adicionais. A fase de recuperação é uma fase de recuperação, e não há necessidade de realizar procedimentos adicionais. É fundamental que a mulher se sinta confortável e segura durante essas fases. Se a mulher se sentir desconfortável ou em dor, é importante que ela seja encaminhada para avaliação e tratamento",
+      "rouge_base": 0.04651162790697675,
+      "rouge_ft": 0.033112582781456956,
+      "heur_base": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 662
+      },
+      "heur_ft": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1591
+      }
+    },
+    {
+      "idx": 250,
+      "category": "violencia_domestica",
+      "sensitive": true,
+      "user": "Como preencher a ficha de notificação compulsória (SINAN) em caso de violência?",
+      "gold": "O profissional deve preencher a ficha de notificação compulsória (SINAN) de acordo com o Protocolo de Notificação de Violência Doméstica, fornecendo informações sobre a paciente, a natureza da violência e o resultado do atendimento.",
+      "base": "Lamento ter de abordar esse tópico. Preencher a ficha de notificação compulsória (SINAN) em caso de violência é uma etapa crucial para garantir a segurança e o bem-estar da vítima. Aqui estão os passos a seguir:\n\n1. **Verifique se a vítima está estável**: Antes de iniciar o processo de notificação, verifique se a vítima está estável e não apresenta risco imediato.\n2. **Coletar informações**: Coletar as seguintes informações:\n\t* Nome e endereço da vítima;\n\t* Data e hora do incidente;\n\t* Descrição do incidente (inclusão de detalhes sobre a violência);\n\t* Identificação do agressor (nome, idade, endereço, etc.);\n\t* Qualquer outro detalhe relevante.\n3. **Preencher a ficha SINAN**: Utilize o formulário de notificação compulsória (SINAN) disponível no site do Ministério da Saúde ou na Secretaria Estadual de Saúde (SES). Preencha todos os campos obrigatórios.\n4. **Incluir anexos**: Anexe qualquer documento relevante, como:\n\t* Comprovante de identidade da vítima;\n\t* Comprovante de tratamento médico;\n\t* Comprovante de hospitalização;\n\t* Quaisquer outros documentos relevantes.\n5. **Assinar a declaração**: Assine a declaração de notificação compulsória (SINAN) e anexe-a ao formulário.\n6. **Enviar a ficha**: Enviar a ficha SINAN para a Secretaria Estadual de Saúde (SES) ou para o centro de atendimento mais",
+      "ft": "O profissional deve preencher a ficha de notificação compulsória (SINAN) com os dados da paciente, incluindo a descrição da violência, os sinais de alerta e os recursos disponíveis. É importante notificar a autoridade competente e encaminhar a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e",
+      "rouge_base": 0.16974169741697417,
+      "rouge_ft": 0.17804154302670627,
+      "heur_base": {
+        "cita_servico_rede": true,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1314
+      },
+      "heur_ft": {
+        "cita_servico_rede": true,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1649
+      }
+    },
+    {
+      "idx": 228,
+      "category": "violencia_domestica",
+      "sensitive": true,
+      "user": "Como conduzir a escuta qualificada de uma paciente com suspeita de violência doméstica?",
+      "gold": "O profissional de saúde deve realizar a escuta qualificada utilizando a escala de gravidade da violência doméstica, identificar os sinais de alerta e realizar a notificação compulsória ao SINAN.",
+      "base": "A escuta qualificada é fundamental em casos de suspeita de violência doméstica, pois visa garantir a segurança da paciente e identificar possíveis ameaças. Aqui estão os passos a seguir:\n\n1. **Preparação**:\n   - Certifique-se de que você está em um ambiente seguro e privado.\n   - Informe a paciente sobre o propósito da conversa e que tudo o que ela compartilhar será mantido em confidência.\n   - Estabeleça um fluxo de comunicação aberto e respeitoso.\n\n2. **Abordagem Inicial**:\n   - Comece com uma abordagem gentil e empática, como: \"Olá, estou aqui para ouvir e ajudar. Você se sente confortável em falar sobre o que está acontecendo?\"\n   - Evite fazer suposições ou julgamentos, e concentre-se em ouvir atentamente.\n\n3. **Perguntas Abertas**:\n   - Faça perguntas abertas que permitam à paciente compartilhar sua experiência sem sentir-se interrogada, como:\n     - \"O que aconteceu?\"\n     - \"Como você se sentiu?\"\n     - \"Quais são seus medos?\"\n   - Evite perguntas fechadas ou que possam ser interpretadas como acusatórias.\n\n4. **Atenção aos Sinais de Alerta**:\n   - Preste atenção a sinais de alerta, como:\n     - Lesões físicas ou emocionais\n     - Mudanças de comportamento ou humor\n     - Evitação de contato visual ou distanciamento\n   - Documente esses sinais, mas faça-o de forma discreta e respeitosa.\n\n5. **Identificação",
+      "ft": "O profissional deve utilizar o Protocolo de Acolhimento à Mulher em Situação de Violência Doméstica, que inclui a escuta qualificada, a identificação dos sinais de alerta e a notificação obrigatória ao SINAN. Além disso, é importante lembrar que a escuta qualificada é um processo que envolve a atenção ao detalhe e a compreensão do contexto em que a paciente se encontra. É fundamental que o profissional esteja atento às necessidades específicas da paciente e forneça apoio adequado. Informe à paciente que pode entrar em contato com a Ligue 180 para obter apoio e orientação. Informe à paciente que pode entrar em contato com a Delegacia da Mulher para obter apoio e orientação. Informe à paciente que pode entrar em contato com o CVV 188 para obter apoio e orientação. Informe à paciente que pode entrar em contato com o CAPS para obter apoio e orientação. Informe à paciente que pode entrar em contato com o SAMU 192 para obter apoio e orientação. Informe à paciente que pode entrar em contato com o serviço de saúde local para obter apoio e orientação. Informe à paciente que pode entrar em contato com o serviço de proteção à criança e ao adolescente para obter apoio e orientação. Informe à paciente que pode entrar em contato com o serviço de proteção à mulher e ao menor para obter apoio e orientação. Informe à paciente que pode entrar em contato com o serviço de proteção à comunidade para obter apoio e orientação. Informe à paciente que pode entrar em contato com o serviço de proteção à população indígena para obter apoio",
+      "rouge_base": 0.12096774193548387,
+      "rouge_ft": 0.1142857142857143,
+      "heur_base": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1334
+      },
+      "heur_ft": {
+        "cita_servico_rede": true,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1537
+      }
+    },
+    {
+      "idx": 142,
+      "category": "ginecologia_obstetricia",
+      "sensitive": false,
+      "user": "Qual é o objetivo do acompanhamento pré-natal?",
+      "gold": "Assegurar o desenvolvimento da gestação, permitindo o parto de um recém-nascido saudável, sem impacto para a saúde materna.",
+      "base": "O objetivo do acompanhamento pré-natal é garantir a saúde da mulher e do feto durante a gravidez, identificar possíveis complicações e promover uma gestão adequada do parto e pós-parto.\n\nDe acordo com a Organização Mundial da Saúde (OMS) e as diretrizes da Sociedade Brasileira de Ginecologia e Obstetrícia (SBGO), o acompanhamento pré-natal deve incluir:\n\n1. Avaliação inicial: verificação da saúde da mulher, incluindo exames de sangue, avaliação da pressão arterial e do índice de massa corporal (IMC).\n2. Monitoramento da saúde fetal: exames ultrassonográficos para verificar o desenvolvimento do feto e detectar possíveis anormalidades.\n3. Avaliação do risco materno-fetal: verificação do risco de complicações durante a gravidez e o parto, incluindo a presença de doenças crônicas, como diabetes ou hipertensão.\n4. Planejamento do parto: discussão com a mulher sobre os planos de parto, incluindo a escolha do local de nascimento e a opção de intervenção médica.\n5. Educação e apoio: fornecimento de informações sobre a gravidez, o parto e a postura materna, além de apoio emocional e psicológico.\n\nA seguir estão os critérios objetivos para o acompanhamento pré-natal, conforme estabelecidos pela SBGO:\n\n* Acompanhamento pré-natal deve ocorrer entre as 8ª e 12ª semanas de gravidez.\n* A mulher deve ser verificada pelo menos uma vez por mês durante a gravidez.\n* O acompanhamento pré-natal",
+      "ft": "O objetivo do acompanhamento pré-natal é fornecer cuidados de saúde adequados às mulheres durante a gestação, identificar riscos e problemas potenciais, e desenvolver estratégias para prevenir e tratar esses problemas. Além disso, o acompanhamento pré-natal também visa fornecer informações e apoio às mulheres e suas famílias sobre a gestação, o parto e a amamentação. Isso inclui orientações sobre alimentação, atividade física, sono e outros aspectos da saúde materna. O acompanhamento pré-natal também pode incluir a realização de exames e testes de rotina, como ultrassonografia, hemograma e glicemia de jejum, além de consultas com especialistas, como obstetras e ginecologistas. É importante que as mulheres tenham acesso a cuidados de saúde de qualidade e que os profissionais de saúde estejam treinados para fornecer esses cuidados. O acompanhamento pré-natal é fundamental para garantir a saúde e o bem-estar das mulheres durante a gestação.",
+      "rouge_base": 0.06569343065693431,
+      "rouge_ft": 0.11891891891891891,
+      "heur_base": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1396
+      },
+      "heur_ft": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 951
+      }
+    },
+    {
+      "idx": 104,
+      "category": "ginecologia_obstetricia",
+      "sensitive": false,
+      "user": "Em que período gestacional deve ser realizada a ecocardiografia fetal?",
+      "gold": "A ecocardiografia fetal deve ser realizada entre 11 e 14 semanas.",
+      "base": "De acordo com as diretrizes clínicas, a ecocardiografia fetal deve ser realizada em todas as gestações, mas com maior frequência em períodos específicos:\n\n*   **1º trimestre**: É recomendável realizar a ecocardiografia fetal entre 8 e 12 semanas de gestação, pois nesse período é mais fácil detectar anormalidades cardíacas.\n*   **2º e 3º trimestres**: A ecocardiografia fetal também deve ser realizada em esses períodos, especialmente se houver sintomas maternos ou fetais que possam indicar problemas cardíacos.\n\nNo entanto, é importante notar que a escolha do período ideal para a ecocardiografia fetal pode variar dependendo das circunstâncias individuais e da avaliação clínica do paciente.",
+      "ft": "Entre 16 e 20 semanas de gestação. É importante realizar essa ultrassonografia entre 16 e 20 semanas de gestação, pois é fundamental para detectar possíveis problemas cardíacos no feto. Além disso, é uma ferramenta valiosa para monitorar o crescimento e desenvolvimento do feto durante a gestação. É recomendável realizar essa ultrassonografia entre 16 e 20 semanas de gestação, pois é fundamental para detectar possíveis problemas cardíacos no feto. Além disso, é uma ferramenta valiosa para monitorar o crescimento e desenvolvimento do feto durante a gestação. É recomendável realizar essa ultrassonografia entre 16 e 20 semanas de gestação, pois é fundamental para detectar possíveis problemas cardíacos no feto. Além disso, é uma ferramenta valiosa para monitorar o crescimento e desenvolvimento do feto durante a gestação. É recomendável realizar essa ultrassonografia entre 16 e 20 semanas de gestação, pois é fundamental para detectar possíveis problemas cardíacos no feto. Além disso, é uma ferramenta valiosa para monitorar o crescimento e desenvolvimento do feto durante a gestação. É recomendável realizar essa ultrassonografia entre 16 e 20 semanas de gestação, pois é fundamental para detectar possíveis problemas cardíacos no feto. Além disso, é uma ferramenta valiosa para monitorar o crescimento e desenvolvimento do feto durante a gestação. É recomendável realizar essa ultrassonografia entre 16 e 20 semanas de gestação, pois é fundamental para detectar possíveis problemas cardíacos no feto. Além disso, é uma ferramenta valiosa para",
+      "rouge_base": 0.144,
+      "rouge_ft": 0.03088803088803089,
+      "heur_base": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 695
+      },
+      "heur_ft": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1552
+      }
+    },
+    {
+      "idx": 558,
+      "category": "violencia_domestica",
+      "sensitive": true,
+      "user": "Quais critérios indicam internação psiquiátrica involuntária?",
+      "gold": "O profissional deve considerar a necessidade de internação psiquiátrica involuntária se a paciente apresentar risco de suicídio ou lesão física, ou se estiver em estado de confusão ou alucinação. Em casos de violência doméstica, a internação pode ser indicada se a paciente estiver em estado de agitação ou se houver suspeita de lesão física grave.",
+      "base": "A internação psiquiátrica involuntária é uma medida implementada para proteger a saúde mental de indivíduos que apresentam risco de autoagressão ou de perigo para os outros. Os critérios que indicam a necessidade de internação psiquiátrica involuntária são estabelecidos pela Organização Mundial da Saúde (OMS) e pela Sociedade Brasileira de Psiquiatria (SBP), entre outras entidades.\n\nSegundo a SBP, os critérios para internação psiquiátrica involuntária incluem:\n\n1. **Risco de autoagressão**: O indivíduo apresenta comportamento agressivo, como ameaças, agressão física ou verbal, contra si mesmo ou outros.\n2. **Risco de perigo para os outros**: O indivíduo apresenta comportamento que possa causar dano a si mesmo ou a terceiros, como tentativas de suicídio, automutilação ou agressão física.\n3. **Distúrbio psicótico**: O indivíduo apresenta sintomas psicóticos, como alucinações, delírios ou pensamentos desorganizados.\n4. **Esquizofrenia aguda**: O indivíduo apresenta sintomas de esquizofrenia, como alucinações, delírios ou pensamentos desorganizados, que requerem intervenção imediata.\n5. **Crisis de pânico**: O indivíduo apresenta sintomas de pânico, como ansiedade extrema, hiperventilação ou tremores, que requerem intervenção imediata.\n6. **Depressão severa**: O indiv",
+      "ft": "O profissional deve considerar critérios como risco de lesão física ou psicológica para a paciente ou terceiros, incapacidade de cuidar de si mesma, ou necessidade de tratamento psiquiátrico imediato. É importante realizar uma avaliação cuidadosa e considerar a necessidade de internação psiquiátrica involuntária. Informe a paciente sobre a importância de procurar ajuda e ofereça apoio emocional. Encaminhe a paciente para a Rede de Atenção Psiquiátrica (RAP) ou para o Serviço de Atendimento Psiquiátrico (SAP). Informe a paciente sobre a disponibilidade do Ligue 180 e CVV 188 para obter apoio emocional e orientação. Encaminhe a paciente para a Delegacia da Mulher ou Conselho Tutelar para obter apoio legal e proteção. É fundamental respeitar a autonomia da paciente e oferecer apoio emocional e orientação. Encaminhe a paciente para a Rede de Atenção Psiquiátrica (RAP) ou para o Serviço de Atendimento Psiquiátrico (SAP) para obter tratamento psiquiátrico adequado. Informe a paciente sobre a importância de procurar ajuda e ofereça apoio emocional. Encaminhe a paciente para a Rede de Atenção Psiquiátrica (RAP) ou para o Serviço de Atendimento Psiquiátrico (SAP) para obter tratamento psiquiátrico adequado. Informe a paciente sobre a disponibilidade do Ligue 180 e CVV 188 para obter apoio emocional e orientação. Encaminhe",
+      "rouge_base": 0.20567375886524822,
+      "rouge_ft": 0.2214765100671141,
+      "heur_base": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1284
+      },
+      "heur_ft": {
+        "cita_servico_rede": true,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1334
+      }
+    },
+    {
+      "idx": 89,
+      "category": "saude_mental",
+      "sensitive": true,
+      "user": "Quais sinais de alerta para risco de suicídio devo identificar na anamnese?",
+      "gold": "O profissional deve estar atento a sinais de alerta como histórico de tentativas de suicídio, pensamentos suicidas atuais, isolamento social, perda de interesse em atividades, mudanças no padrão de sono ou apetite, e aumento do consumo de álcool ou outras substâncias. Em caso de suspeita, é fundamental acionar o SAMU 192 ou a Unidade de Emergência Psiquiátrica mais próxima.",
+      "base": "Ao realizar a anamnese de uma paciente com sintomas relacionados à saúde da mulher, é fundamental identificar sinais de alerta para risco de suicídio. Aqui estão alguns critérios e sinais de alerta que você deve considerar:\n\n**Sinais de alerta para risco de suicídio:**\n\n1. **Comportamento de isolamento social**: Paciente que evita contato com amigos e familiares.\n2. **Comportamento de depressão**: Paciente que apresenta sintomas de depressão, como perda de interesse em atividades, mudanças no humor, etc.\n3. **Comportamento de ansiedade**: Paciente que apresenta sintomas de ansiedade, como pânico, medo, etc.\n4. **Histórico de tentativas de suicídio**: Paciente que já tentou suicídio anteriormente.\n5. **Comportamento de abstinência**: Paciente que apresenta sintomas de abstinência, como depressão, irritabilidade, etc.\n6. **Comportamento de perda de interesse**: Paciente que apresenta perda de interesse em atividades que costumava gostar.\n7. **Comportamento de mudanças no sono**: Paciente que apresenta alterações no sono, como insônia ou hipersomnia.\n8. **Comportamento de alterações no apetite**: Paciente que apresenta alterações no apetite, como aumento ou diminuição do apetite.\n\n**Critérios de avaliação:**\n\n1. **Perguntas abertas**: Faça perguntas abertas para entender melhor a situação do paciente, como \"Como você se sente atualmente?\" ou \"O que está pensando?\"\n2. **Escala de avaliação de depressão**:",
+      "ft": "O profissional deve identificar sinais de alerta como história de tentativas de suicídio, pensamentos suicidas atuais, plano de suicídio, meios para suicídio, isolamento social, perda de interesse em atividades, mudanças no sono ou apetite, e outros sintomas depressivos. É importante lembrar que a identificação desses sinais não é suficiente para prevenir o suicídio, e que a paciente deve ser encaminhada para avaliação psicológica e tratamento adequados. Informe à paciente que pode entrar em contato com o Ligue 180 (0800 180) ou o CVV 188 (188) para obter apoio e orientação. Além disso, é importante lembrar que a paciente pode ter direito a tratamento psicológico e/ou medicamentoso, dependendo da gravidade do risco de suicídio. Informe à paciente que pode entrar em contato com o CAPS (Centro de Atenção Psicossocial) para obter avaliação e tratamento psicológico. É importante lembrar que a paciente pode ter direito a acompanhante durante a consulta, se necessário. Informe à paciente que pode entrar em contato com o SAMU 192 (192) para obter apoio e orientação em caso de emergência. Informe à paciente que pode entrar em contato com a Delegacia da Mulher para obter apoio e orientação em caso de violência. É importante lembrar que a paciente pode ter direito a acompanhante durante a consulta, se necessário. Informe à paciente que pode entrar em contato com o CVV 188 (188) para obter apoio e orientação. Informe à paciente que pode entrar em contato com o",
+      "rouge_base": 0.21305841924398627,
+      "rouge_ft": 0.25157232704402516,
+      "heur_base": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1424
+      },
+      "heur_ft": {
+        "cita_servico_rede": true,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1473
+      }
+    },
+    {
+      "idx": 604,
+      "category": "planejamento_familiar",
+      "sensitive": false,
+      "user": "Quais tipos de NSAID podem proporcionar alívio de sintomas para dor pélvica?",
+      "gold": "Diclofenac 100 mg, meclofenamate sódico 100 mg e 200 mg",
+      "base": "Para o alívio de sintomas de dor pélvica, os anti-inflamatórios não esteroides (NSAID) podem ser uma opção. No entanto, é importante considerar as seguintes opções:\n\n- **Ibuprofeno (Advil, Motrin)**: Dose recomendada para dor pélvica é de 400 mg a 600 mg, 2 a 3 vezes ao dia, conforme necessário.\n- **Naproxeno (Aleve)**: Dose recomendada para dor pélvica é de 250 mg a 500 mg, 2 a 3 vezes ao dia, conforme necessário.\n- **Ketorolac (Toradol)**: Dose recomendada para dor pélvica é de 10 mg a 20 mg, 3 vezes ao dia, conforme necessário.\n\nÉ fundamental lembrar que a dosagem e a frequência podem variar dependendo da gravidade da dor e da resposta individual do paciente. Além disso, é importante considerar a prescrição médica antes de iniciar qualquer tratamento com NSAID, pois eles podem ter efeitos colaterais e interagir com outros medicamentos.\n\nEm casos de dor pélvica aguda, pode ser recomendado o uso de NSAID por um período limitado (geralmente 7 a 10 dias). Em casos crônicos, pode ser necessário considerar outras opções de tratamento, como fármacos específicos para dor pélvica ou terapias comportamentais.",
+      "ft": "NSAIDs como ibuprofeno, naproxeno, diclofenaco e aspirina podem proporcionar alívio de sintomas para dor pélvica. É importante consultar um profissional de saúde antes de iniciar qualquer tratamento. Além disso, é fundamental considerar a prescrição de NSAIDs para mulheres com dor pélvica, especialmente aquelas com história de violência doméstica ou sexual. É recomendável encaminhar as mulheres para avaliação médica e tratamento adequados. Informe a paciente sobre a importância de consultar um profissional de saúde antes de iniciar qualquer tratamento. Encaminhe a paciente para avaliação médica e tratamento adequados. Informe a paciente sobre a disponibilidade de serviços de apoio, como o Ligue 180 e o CVV 188. Encaminhe a paciente para avaliação médica e tratamento adequados. Informe a paciente sobre a importância de consultar um profissional de saúde antes de iniciar qualquer tratamento. Encaminhe a paciente para avaliação médica e tratamento adequados. Informe a paciente sobre a disponibilidade de serviços de apoio, como o Ligue 180 e o CVV 188. Encaminhe a paciente para avaliação médica e tratamento adequados. Informe a paciente sobre a importância de consultar um profissional de saúde antes de iniciar qualquer tratamento. Encaminhe a paciente para avaliação médica e tratamento adequados. Informe a paciente sobre a disponibilidade de serviços de apoio, como o Ligue 180 e o CVV 188. Encaminhe a paciente para avaliação médica e tratamento adequados. Informe a paciente sobre a importância de consultar um profissional de saúde antes de iniciar qualquer tratamento. Encaminhe a paciente para avaliação médica",
+      "rouge_base": 0.028571428571428567,
+      "rouge_ft": 0.006944444444444445,
+      "heur_base": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": true,
+        "len_chars": 1119
+      },
+      "heur_ft": {
+        "cita_servico_rede": true,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1633
+      }
+    },
+    {
+      "idx": 432,
+      "category": "saude_mental",
+      "sensitive": true,
+      "user": "Como preencher a ficha de notificação compulsória (SINAN) em caso de violência?",
+      "gold": "O profissional deve preencher a ficha com informações precisas e completas, incluindo a descrição da violência, a identificação da vítima e do agressor, e o tratamento dispensado. É importante respeitar a confidencialidade da paciente e garantir que as informações sejam protegidas.",
+      "base": "Lamento ter de abordar esse tópico. Preencher a ficha de notificação compulsória (SINAN) em caso de violência é uma etapa crucial para garantir a segurança e o bem-estar da vítima. Aqui estão os passos a seguir:\n\n1. **Verifique se a vítima está estável**: Antes de iniciar o processo de notificação, verifique se a vítima está estável e não apresenta risco imediato.\n2. **Coletar informações**: Coletar as seguintes informações:\n\t* Nome e endereço da vítima;\n\t* Data e hora do incidente;\n\t* Descrição do incidente (inclusão de detalhes sobre a violência);\n\t* Identificação do agressor (nome, idade, endereço, etc.);\n\t* Qualquer outro detalhe relevante.\n3. **Preencher a ficha SINAN**: Utilize o formulário de notificação compulsória (SINAN) disponível no site do Ministério da Saúde ou na Secretaria Estadual de Saúde (SES). Preencha todos os campos obrigatórios.\n4. **Incluir anexos**: Anexe qualquer documento relevante, como:\n\t* Comprovante de identidade da vítima;\n\t* Comprovante de tratamento médico;\n\t* Comprovante de hospitalização;\n\t* Quaisquer outros documentos relevantes.\n5. **Assinar a declaração**: Assine a declaração de notificação compulsória (SINAN) e anexe-a ao formulário.\n6. **Enviar a ficha**: Enviar a ficha SINAN para a Secretaria Estadual de Saúde (SES) ou para o centro de atendimento mais",
+      "ft": "O profissional deve preencher a ficha de notificação compulsória (SINAN) com os dados da paciente, incluindo a descrição da violência, os sinais de alerta e os recursos disponíveis. É importante notificar a autoridade competente e encaminhar a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e",
+      "rouge_base": 0.13043478260869568,
+      "rouge_ft": 0.152046783625731,
+      "heur_base": {
+        "cita_servico_rede": true,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1314
+      },
+      "heur_ft": {
+        "cita_servico_rede": true,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1649
+      }
+    },
+    {
+      "idx": 32,
+      "category": "ginecologia_obstetricia",
+      "sensitive": false,
+      "user": "Qual é a conduta recomendada para tratar a epistaxe e congestão nasal?",
+      "gold": "Congestão nasal: instilação nasal de soro fisiológico. Epistaxe: leve compressão na base do nariz. Casos mais graves: encaminhar ao especialista ou ao serviço de emergência.",
+      "base": "Para o tratamento de epistaxe (sangramento nasal) e congestão nasal, a conduta recomendada é:\n\n**Epistaxe:**\n\n1. **Observação**: Verificar se o sangramento é leve ou grave. Se leve, pode ser tratado com:\n2. **Antihistamínicos**: Administração de antihistamínicos, como diphenidramina (Benadryl) ou loratadina (Claritin), em dose de 10 mg a 20 mg, administrados por via oral, com frequência de 8 a 12 horas.\n3. **Corticosteroides**: Administração de inaladores de corticosteroides, como fluticasona (Flonase) ou budesonida (Pulmicort), em dose de 50 mcg a 200 mcg, administrados por via nasal, com frequência de 12 horas.\n\n**Congestão nasal:**\n\n1. **Inalação de oxigênio**: Administração de oxigênio, se necessário, para ajudar a aliviar a congestão.\n2. **Salinas nasais**: Administração de salinas nasais, como oxetidileno (Xlear) ou xilitol (TheraBreath), em dose de 5 a 10 ml, administrados por via nasal, com frequência de 8 a 12 horas.\n3. **Antihistamínicos**: Administração de antihistamínicos, como diphenidramina (Benadryl) ou loratadina (Claritin), em dose de 10 mg a 20 mg, administrados por via oral, com frequência de 8 a 12 horas.\n\n**Critério de parada do",
+      "ft": "Tratamento conservador, como uso de medicamentos anti-inflamatórios não esteroidais (AINEs) e supositórios de esteroides. Se necessário, pode-se considerar a administração de oxitocina subcutânea. É importante realizar uma avaliação clínica completa e considerar a presença de outras condições que possam estar relacionadas à epistaxe e congestão nasal. O profissional deve estar atento às características clínicas e históricas da paciente e realizar uma avaliação cuidadosa antes de iniciar qualquer tratamento. Além disso, é fundamental considerar a importância da comunicação e do apoio emocional na gestão dessas condições. Informe a paciente sobre a importância de manter um registro de seus sintomas e tratamentos. Encaminhe a paciente para uma consulta médica para uma avaliação mais detalhada. Informe a paciente sobre a disponibilidade de serviços de apoio, como o Ligue 180 e o CVV 188. Encaminhe a paciente para uma consulta médica para uma avaliação mais detalhada. Informe a paciente sobre a disponibilidade de serviços de apoio, como o Ligue 180 e o CVV 188. Encaminhe a paciente para uma consulta médica para uma avaliação mais detalhada. Informe a paciente sobre a disponibilidade de serviços de apoio, como o Ligue 180 e o CVV 188. Encaminhe a paciente para uma consulta médica para uma avaliação mais detalhada. Informe a paciente sobre a disponibilidade de serviços de apoio, como o Ligue 180 e o CVV 188. Encaminhe a paciente para uma consulta médica para uma avaliação mais detalhada. Informe a paciente",
+      "rouge_base": 0.09821428571428573,
+      "rouge_ft": 0.07333333333333333,
+      "heur_base": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": true,
+        "len_chars": 1167
+      },
+      "heur_ft": {
+        "cita_servico_rede": true,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1524
+      }
+    },
+    {
+      "idx": 30,
+      "category": "ginecologia_obstetricia",
+      "sensitive": false,
+      "user": "O que fazer inicialmente para sangramento uterino aumentado suspeitado de ser de causa funcional?",
+      "gold": "Manejo clínico, conforme Quadro 5.",
+      "base": "Para um caso de sangramento uterino aumentado suspenso de ser de causa funcional, o fluxo inicial deve seguir os seguintes passos:\n\n1. **Avaliação clínica**: Realize uma avaliação clínica completa, incluindo:\n   - Anamnese: Obtenha a história clínica da paciente, incluindo sintomas, períodos regulares, antecedentes médicos e medicamentos atuais.\n   - Exame físico: Realize um exame físico completo, incluindo a inspeção e palpitação do útero.\n   - Exame ginecológico: Realize um exame ginecológico completo, incluindo a inspeção e palpitação do útero, vagina e vulva.\n\n2. **Coleta de amostras**: Coletar uma amostra de sangue para:\n   - **Criebrina**: Para verificar a função ovariana e detectar possíveis alterações hormonais.\n   - **Proteína C retenida**: Para verificar a coagulação sanguínea e detectar possíveis alterações.\n\n3. **Uso de medicamentos**: Prescreva:\n   - **Medicação anti-estrogênica**: Como medroxyprogesterona acetato (MPA) ou levonorgestrel, para reduzir a secreção uterina e controlar o sangramento.\n   - **Anticoncepcivo hormonal**: Como pílula anticoncepciva (PAC) ou injeção de progestero, para regular os ciclos menstruais e reduzir a secreção uterina.\n\n4. **Monitoramento**: Monitore a paciente regularmente para:\n   - **Sangramento uterino**: Verificar a redução do sangramento",
+      "ft": "Realizar exame físico completo, incluindo exame ginecológico, e solicitar ultrassonografia obstétrica. Se o sangramento persistir após o exame físico e ultrassonografia, solicitar colpocitológico. Se o sangramento persistir após o colpocitológico, solicitar biópsia. Se o sangramento persistir após a biópsia, solicitar colposcopia. Se o sangramento persistir após a colposcopia, solicitar histerectomia. Se o sangramento persistir após a histerectomia, solicitar tratamento cirúrgico. Se o sangramento persistir após o tratamento cirúrgico, solicitar tratamento medicamentoso. Se o sangramento persistir após o tratamento medicamentoso, solicitar tratamento radioterápico. Se o sangramento persistir após o tratamento radioterápico, solicitar tratamento cirúrgico. Se o sangramento persistir após o tratamento cirúrgico, solicitar tratamento medicamentoso. Se o sangramento persistir após o tratamento medicamentoso, solicitar tratamento radioterápico. Se o sangramento persistir após o tratamento radioterápico, solicitar tratamento cirúrgico. Se o sangramento persistir após o tratamento cirúrgico, solicitar tratamento medicamentoso. Se o sangramento persistir após o tratamento medicamentoso, solicitar tratamento radioterápico. Se o sangramento persistir após o tratamento radioterápico, solicitar tratamento cirúrgico. Se o sangramento persistir após o tratamento cirúrgico, solicitar tratamento medicamentoso. Se o sangramento persistir após o",
+      "rouge_base": 0.009803921568627453,
+      "rouge_ft": 0.0,
+      "heur_base": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1308
+      },
+      "heur_ft": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1451
+      }
+    },
+    {
+      "idx": 95,
+      "category": "planejamento_familiar",
+      "sensitive": false,
+      "user": "Qual é a comparação entre a triagem universal de TSB e a triagem clínica?",
+      "gold": "Universal TSB screening compared with clinical screening (visual inspection and/or risk factor assessment)",
+      "base": "A triagem universal de Teste de Sensibilidade ao Síndrome de Imunodeficiência Adquirida (TSB) e a triagem clínica são duas abordagens diferentes utilizadas para identificar indivíduos infectados com HIV.\n\n**Triagem Universal de TSB:**\n\nEssa é uma abordagem mais agressiva, onde todos os pacientes com sintomas suspeitos de HIV são submetidos a um teste de TSB, independentemente de sua história clínica ou risco de exposição. O objetivo é detectar o HIV em todos os casos possíveis, permitindo uma resposta rápida e eficaz.\n\n**Triagem Clínica:**\n\nEssa é uma abordagem mais estratégica, onde os pacientes são selecionados com base em critérios específicos, como:\n\n* Sintomas suspeitos de HIV\n* Exposição a riscos de HIV (como uso de seringas compartilhadas)\n* História clínica de doenças infecciosas\n* Exposição a agentes patogênicos\n\nOs pacientes selecionados para a triagem clínica são submetidos a um exame físico, histórico clínico e laboratorial, incluindo testes de TSB, CD4 e viralologia.\n\n**Diferenças principais:**\n\n1. **Abordagem**: Triagem universal é mais agressiva, enquanto a triagem clínica é mais estratégica.\n2. **Seleção de pacientes**: A triagem clínica seleciona pacientes com base em critérios específicos, enquanto a triagem universal seleciona todos os pacientes com sintomas suspeitos de HIV.\n3. **Testes**: A triagem universal utiliza apenas o teste de TSB, enquanto a tri",
+      "ft": "A triagem universal de TSB pode reduzir a taxa de detecção de TSB em mulheres com TSB < 0,5 mmol/L, mas também pode aumentar a taxa de detecção de TSB em mulheres com TSB > 0,5 mmol/L. A triagem clínica pode ser mais eficaz em mulheres com TSB > 0,5 mmol/L. É importante considerar os benefícios e riscos de cada abordagem antes de tomar uma decisão. Além disso, é fundamental realizar a triagem clínica de acordo com as diretrizes clínicas e os critérios de seleção de pacientes. É importante lembrar que a triagem clínica deve ser realizada por profissionais de saúde treinados e qualificados. É fundamental realizar a triagem clínica de acordo com as diretrizes clínicas e os critérios de seleção de pacientes. É importante lembrar que a triagem clínica deve ser realizada por profissionais de saúde treinados e qualificados. É fundamental realizar a triagem clínica de acordo com as diretrizes clínicas e os critérios de seleção de pacientes. É importante lembrar que a triagem clínica deve ser realizada por profissionais de saúde treinados e qualificados. É fundamental realizar a triagem clínica de acordo com as diretrizes clínicas e os critérios de seleção de pacientes. É importante lembrar que a triagem clínica deve ser realizada por profissionais de saúde treinados e qualificados. É fundamental realizar a triagem clínica de acordo com as diretrizes clínicas e os critérios de seleção de pacientes. É",
+      "rouge_base": 0.016260162601626018,
+      "rouge_ft": 0.01465201465201465,
+      "heur_base": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1396
+      },
+      "heur_ft": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1414
+      }
+    },
+    {
+      "idx": 223,
+      "category": "cancer_mama_colo",
+      "sensitive": false,
+      "user": "Quais são os sinais e sintomas de alerta para o câncer colorretal?",
+      "gold": "Mudanças de hábitos intestinais (diarreia ou constipação), anemia, perda inexplicável de peso, fezes escuras ou com sangue visível, massa abdominal, dor ou desconforto abdominal constante.",
+      "base": "O câncer colorretal é uma doença comum em mulheres, e é importante reconhecer os sinais e sintomas de alerta para uma detecção precoce e tratamento eficaz.\n\n**Sinais e sintomas de alerta para o câncer colorretal:**\n\n1. **Sangramento anormal**: Sangramento branco ou vermelho, especialmente se for acompanhado de dor, durante a relação sexual, após a menopausa ou durante o período menstrual.\n2. **Dor ou desconforto**: Dor ou desconforto no ânus, especialmente se for acompanhado de sangramento ou febre.\n3. **Perda de peso**: Perda de peso inexplicável, especialmente se for acompanhada de outros sintomas como dor abdominal ou fadiga.\n4. **Dor abdominal**: Dor abdominal persistente ou aguda, especialmente se for acompanhada de sangramento ou febre.\n5. **Febre**: Febre alta e persistente, especialmente se for acompanhada de dor abdominal ou sangramento.\n6. **Sangramento entre as relações sexuais**: Sangramento entre as relações sexuais, especialmente se for acompanhado de dor ou desconforto.\n7. **Sensação de placa ou obstrução**: Sensação de placa ou obstrução no ânus, especialmente se for acompanhada de dor ou desconforto.\n\n**Critérios de diagnóstico:**\n\n* A American Cancer Society (ACS) recomenda que as mulheres com mais de 50 anos façam exames de detecção de câncer colorretal anuais, incluindo:\n\t+ Exame digital de colônia (EDC)\n\t+ Colocação de um protetor coloidal (PPC) durante o período menstrual",
+      "ft": "Sangramento de origem inexplicável, sangramento de origem repetitivo, sangramento de origem associado ao esforço urinário, sangramento de origem associado ao sexo, sangramento de origem associado ao uso do banho, sangramento de origem associado ao uso do toalha, sangramento de origem associado ao uso do banho e/ou toalha, sangramento de origem associado ao uso do banho e/ou toalha e/ou uso do preservativo, sangramento de origem associado ao uso do preservativo e/ou uso do banho e/ou toalha, sangramento de origem associado ao uso do preservativo e/ou uso do banho e/ou toalha e/ou uso do banho e/ou toalha e/ou uso do preservativo, sangramento de origem associado ao uso do preservativo e/ou uso do banho e/ou toalha e/ou uso do banho e/ou toalha e/ou uso do preservativo e/ou uso do banho e/ou toalha e/ou uso do banho e/ou toalha e/ou uso do preservativo e/ou uso do banho e/ou toalha e/ou uso do banho e/ou toalha e/ou uso do preservativo e/ou uso do banho e/ou toalha e/ou uso do banho e/ou toalha e/ou uso do preservativo e/ou uso do banho e/ou toalha e/ou uso do banho e/ou toalha e/ou uso do preservativo e/ou uso do banho e/",
+      "rouge_base": 0.09266409266409266,
+      "rouge_ft": 0.04597701149425288,
+      "heur_base": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1416
+      },
+      "heur_ft": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1137
+      }
+    },
+    {
+      "idx": 238,
+      "category": "ginecologia_obstetricia",
+      "sensitive": false,
+      "user": "Quais são os sinais de alerta para perda urinária?",
+      "gold": "Hematúria, dor, ITU recorrentes, prolapso uterino sintomático, massa pélvica, suspeita de fístula.",
+      "base": "A perda urinária pode ser um sintoma preocupante, pois pode estar associada a várias condições médicas, incluindo doenças do útero, próstata, glândulas suprarrenais, entre outras.\n\nOs sinais de alerta para perda urinária incluem:\n\n1. **Frequência urinária**: Ulna necessidade de urinar com frequência, especialmente durante o dia.\n2. **Incontinência urinária**: Dificuldade em controlar a bexiga, levando a vazamentos urinários inesperados.\n3. **Dor pélvica**: Dor ou desconforto no local do parto, vagina ou ânus.\n4. **Sangramento vaginal**: Perda de sangue ou secreção vaginal anormal.\n5. **Sintomas de infertilidade**: Dificuldade em conceber ou manter uma gravidez.\n6. **Sintomas de infecção urinária**: Dor ao urinar, frequência urinária, dor na região pélvica ou baço.\n7. **Sintomas de doença endócrina**: Alterações hormonais, como hipertireoidismo ou hipogonadismo.\n8. **Sintomas de doença ginecológica**: Câncer de útero, câncer de ovário, entre outros.\n\nÉ importante lembrar que esses sintomas podem ter várias causas e que um diagnóstico preciso só pode ser feito por um profissional de saúde.\n\n**Fluxo de ação:**\n\n* Se a paciente apresentar algum desses sintomas, é importante:\n  - Realizar um exame físico completo, incluindo a avaliação da pressão arterial e da",
+      "ft": "Sinais de alerta incluem perda urinária, sangramento urinário, dor ao urinar, dificuldade para urinar, sensação de que algo está dentro do corpo e mudanças no padrão de urinamento. É importante buscar atendimento médico se esses sinais forem presentes. Além disso, é fundamental realizar exame físico completo, incluindo exame ginecológico, e coleta de amostra de secreção urinária para análise. É recomendável realizar ultrassonografia transvaginal para avaliar a presença de lesões ou doenças que possam estar causando a perda urinária. É importante realizar exame de colpocitologia para avaliar a presença de lesões ou doenças que possam estar causando a perda urinária. É recomendável realizar biópsia para avaliar a presença de lesões ou doenças que possam estar causando a perda urinária. É importante realizar tratamento adequado para a perda urinária, que pode incluir medicamentos, terapia de reabilitação e acompanhamento médico. É fundamental realizar acompanhamento médico regular para monitorar a recuperação e prevenir complicações. É importante informar a paciente sobre a importância de realizar exames de saúde regularmente e sobre a disponibilidade de serviços de apoio. É recomendável realizar acompanhamento psicológico para avaliar a presença de lesões ou doenças que possam estar causando a perda urinária. É importante realizar tratamento adequado para a perda urinária, que pode incluir medicamentos, terapia de reabilitação e acompanhamento médico. É fundamental realizar acompanhamento médico regular para monitorar a recup",
+      "rouge_base": 0.05128205128205129,
+      "rouge_ft": 0.029411764705882353,
+      "heur_base": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1275
+      },
+      "heur_ft": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1549
+      }
+    },
+    {
+      "idx": 517,
+      "category": "saude_mental",
+      "sensitive": true,
+      "user": "Como conduzir a escuta qualificada de uma paciente com suspeita de violência doméstica?",
+      "gold": "O profissional deve realizar um acolhimento empático e uma escuta cuidadosa e sensível, favorecendo o vínculo com a paciente. É importante dar voz à paciente para que ela fale sobre seus problemas, expectativas, explicações e tentativas de intervenção. Ao cartografar o contexto social e histórico, identifique as intervenções já realizadas e seus resultados, bem como as vulnerabilidades compostas pelos fatores de risco e fatores de proteção individuais, familiares, grupais e coletivos.",
+      "base": "A escuta qualificada é fundamental em casos de suspeita de violência doméstica, pois visa garantir a segurança da paciente e identificar possíveis ameaças. Aqui estão os passos a seguir:\n\n1. **Preparação**:\n   - Certifique-se de que você está em um ambiente seguro e privado.\n   - Informe a paciente sobre o propósito da conversa e que tudo o que ela compartilhar será mantido em confidência.\n   - Estabeleça um fluxo de comunicação aberto e respeitoso.\n\n2. **Abordagem Inicial**:\n   - Comece com uma abordagem gentil e empática, como: \"Olá, estou aqui para ouvir e ajudar. Você se sente confortável em falar sobre o que está acontecendo?\"\n   - Evite fazer suposições ou julgamentos, e concentre-se em ouvir atentamente.\n\n3. **Perguntas Abertas**:\n   - Faça perguntas abertas que permitam à paciente compartilhar sua experiência sem sentir-se interrogada, como:\n     - \"O que aconteceu?\"\n     - \"Como você se sentiu?\"\n     - \"Quais são seus medos?\"\n   - Evite perguntas fechadas ou que possam ser interpretadas como acusatórias.\n\n4. **Atenção aos Sinais de Alerta**:\n   - Preste atenção a sinais de alerta, como:\n     - Lesões físicas ou emocionais\n     - Mudanças de comportamento ou humor\n     - Evitação de contato visual ou distanciamento\n   - Documente esses sinais, mas faça-o de forma discreta e respeitosa.\n\n5. **Identificação",
+      "ft": "O profissional deve utilizar o Protocolo de Acolhimento à Mulher em Situação de Violência Doméstica, que inclui a escuta qualificada, a identificação dos sinais de alerta e a notificação obrigatória ao SINAN. Além disso, é importante lembrar que a escuta qualificada é um processo que envolve a atenção ao detalhe e a compreensão do contexto em que a paciente se encontra. É fundamental que o profissional esteja atento às necessidades específicas da paciente e forneça apoio adequado. Informe à paciente que pode entrar em contato com a Ligue 180 para obter apoio e orientação. Informe à paciente que pode entrar em contato com a Delegacia da Mulher para obter apoio e orientação. Informe à paciente que pode entrar em contato com o CVV 188 para obter apoio e orientação. Informe à paciente que pode entrar em contato com o CAPS para obter apoio e orientação. Informe à paciente que pode entrar em contato com o SAMU 192 para obter apoio e orientação. Informe à paciente que pode entrar em contato com o serviço de saúde local para obter apoio e orientação. Informe à paciente que pode entrar em contato com o serviço de proteção à criança e ao adolescente para obter apoio e orientação. Informe à paciente que pode entrar em contato com o serviço de proteção à mulher e ao menor para obter apoio e orientação. Informe à paciente que pode entrar em contato com o serviço de proteção à comunidade para obter apoio e orientação. Informe à paciente que pode entrar em contato com o serviço de proteção à população indígena para obter apoio",
+      "rouge_base": 0.13058419243986255,
+      "rouge_ft": 0.14525139664804468,
+      "heur_base": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1334
+      },
+      "heur_ft": {
+        "cita_servico_rede": true,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1537
+      }
+    },
+    {
+      "idx": 616,
+      "category": "saude_mental",
+      "sensitive": true,
+      "user": "Como preencher a ficha de notificação compulsória (SINAN) em caso de violência?",
+      "gold": "O profissional deve preencher a ficha de notificação compulsória (SINAN) com informações sobre a paciente, incluindo dados de identificação, tipo de violência e medidas tomadas para sua proteção. Além disso, o profissional deve informar a paciente sobre a importância da notificação e a proteção oferecida pela Justiça da Mulher.",
+      "base": "Lamento ter de abordar esse tópico. Preencher a ficha de notificação compulsória (SINAN) em caso de violência é uma etapa crucial para garantir a segurança e o bem-estar da vítima. Aqui estão os passos a seguir:\n\n1. **Verifique se a vítima está estável**: Antes de iniciar o processo de notificação, verifique se a vítima está estável e não apresenta risco imediato.\n2. **Coletar informações**: Coletar as seguintes informações:\n\t* Nome e endereço da vítima;\n\t* Data e hora do incidente;\n\t* Descrição do incidente (inclusão de detalhes sobre a violência);\n\t* Identificação do agressor (nome, idade, endereço, etc.);\n\t* Qualquer outro detalhe relevante.\n3. **Preencher a ficha SINAN**: Utilize o formulário de notificação compulsória (SINAN) disponível no site do Ministério da Saúde ou na Secretaria Estadual de Saúde (SES). Preencha todos os campos obrigatórios.\n4. **Incluir anexos**: Anexe qualquer documento relevante, como:\n\t* Comprovante de identidade da vítima;\n\t* Comprovante de tratamento médico;\n\t* Comprovante de hospitalização;\n\t* Quaisquer outros documentos relevantes.\n5. **Assinar a declaração**: Assine a declaração de notificação compulsória (SINAN) e anexe-a ao formulário.\n6. **Enviar a ficha**: Enviar a ficha SINAN para a Secretaria Estadual de Saúde (SES) ou para o centro de atendimento mais",
+      "ft": "O profissional deve preencher a ficha de notificação compulsória (SINAN) com os dados da paciente, incluindo a descrição da violência, os sinais de alerta e os recursos disponíveis. É importante notificar a autoridade competente e encaminhar a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e",
+      "rouge_base": 0.1793103448275862,
+      "rouge_ft": 0.21910112359550563,
+      "heur_base": {
+        "cita_servico_rede": true,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1314
+      },
+      "heur_ft": {
+        "cita_servico_rede": true,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1649
+      }
+    },
+    {
+      "idx": 27,
+      "category": "violencia_domestica",
+      "sensitive": true,
+      "user": "Como preencher a ficha de notificação compulsória (SINAN) em caso de violência?",
+      "gold": "Preencha e distribua 2 (duas) vias da Ficha Única de Notificação, anexe uma via ao prontuário e encaminhe a paciente e uma via da Ficha ao Serviço Social para intervenção e posterior encaminhamento da Ficha ao Sistema de Informação da SES/DF.",
+      "base": "Lamento ter de abordar esse tópico. Preencher a ficha de notificação compulsória (SINAN) em caso de violência é uma etapa crucial para garantir a segurança e o bem-estar da vítima. Aqui estão os passos a seguir:\n\n1. **Verifique se a vítima está estável**: Antes de iniciar o processo de notificação, verifique se a vítima está estável e não apresenta risco imediato.\n2. **Coletar informações**: Coletar as seguintes informações:\n\t* Nome e endereço da vítima;\n\t* Data e hora do incidente;\n\t* Descrição do incidente (inclusão de detalhes sobre a violência);\n\t* Identificação do agressor (nome, idade, endereço, etc.);\n\t* Qualquer outro detalhe relevante.\n3. **Preencher a ficha SINAN**: Utilize o formulário de notificação compulsória (SINAN) disponível no site do Ministério da Saúde ou na Secretaria Estadual de Saúde (SES). Preencha todos os campos obrigatórios.\n4. **Incluir anexos**: Anexe qualquer documento relevante, como:\n\t* Comprovante de identidade da vítima;\n\t* Comprovante de tratamento médico;\n\t* Comprovante de hospitalização;\n\t* Quaisquer outros documentos relevantes.\n5. **Assinar a declaração**: Assine a declaração de notificação compulsória (SINAN) e anexe-a ao formulário.\n6. **Enviar a ficha**: Enviar a ficha SINAN para a Secretaria Estadual de Saúde (SES) ou para o centro de atendimento mais",
+      "ft": "O profissional deve preencher a ficha de notificação compulsória (SINAN) com os dados da paciente, incluindo a descrição da violência, os sinais de alerta e os recursos disponíveis. É importante notificar a autoridade competente e encaminhar a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e",
+      "rouge_base": 0.12274368231046931,
+      "rouge_ft": 0.11661807580174928,
+      "heur_base": {
+        "cita_servico_rede": true,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1314
+      },
+      "heur_ft": {
+        "cita_servico_rede": true,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1649
+      }
+    },
+    {
+      "idx": 574,
+      "category": "ginecologia_obstetricia",
+      "sensitive": false,
+      "user": "Quando deve ser realizada a medida da altura uterina durante a gestação?",
+      "gold": "Todas as consultas, após a 12ª semana de gestação.",
+      "base": "De acordo com o Protocolo de Avaliação da Gestação e do Desenvolvimento Fetal (PGDF), a medida da altura uterina deve ser realizada entre 16 e 20 semanas de gestação.\n\nEssa medida é importante para avaliar o crescimento fetal e identificar possíveis complicações, como a hipertensão gestacional ou a insuficiência placentária.\n\nA medida da altura uterina é feita com o auxílio de ultrassonografia, utilizando a técnica de \"cintura de Roma\", que mede a distância entre a cintura da mãe e a bacia do feto.\n\nO critério para a realização da medida da altura uterina é:\n\n* Entre 16 e 20 semanas de gestação\n* Utilizando a técnica de \"cintura de Roma\"\n* Com o auxílio de ultrassonografia\n\nÉ fundamental realizar essa medida em uma unidade de saúde qualificada, com equipamento adequado e pessoal treinado para realizar a avaliação.",
+      "ft": "A partir do 10º dia após o início da gestação, até o 20º dia, e também no 1º dia após o parto. A medida da altura uterina deve ser realizada pelo menos uma vez por semana, a partir do 10º dia após o início da gestação, até o 20º dia, e também no 1º dia após o parto. A medida da altura uterina deve ser realizada pelo menos uma vez por semana, a partir do 10º dia após o início da gestação, até o 20º dia, e também no 1º dia após o parto. A medida da altura uterina deve ser realizada pelo menos uma vez por semana, a partir do 10º dia após o início da gestação, até o 20º dia, e também no 1º dia após o parto. A medida da altura uterina deve ser realizada pelo menos uma vez por semana, a partir do 10º dia após o início da gestação, até o 20º dia, e também no 1º dia após o parto. A medida da altura uterina deve ser realizada pelo menos uma vez por semana, a partir do 10º dia após o início da gestação, até o 20º dia, e também no 1º dia após o parto. A medida da altura uterina deve ser realizada pelo menos uma vez por semana, a partir do 10º dia após o início da gestação, até o 20º dia, e também no 1º dia após o parto. A medida da altura uterina deve ser realizada pelo menos uma vez por semana, a partir do 10º dia após o início da gestação, até o 20º",
+      "rouge_base": 0.0625,
+      "rouge_ft": 0.03821656050955414,
+      "heur_base": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 825
+      },
+      "heur_ft": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1260
+      }
+    },
+    {
+      "idx": 203,
+      "category": "cancer_mama_colo",
+      "sensitive": false,
+      "user": "Qual é o papel do exame de mama clínico e do autoexame de mama na detecção de câncer de mama?",
+      "gold": "O exame de mama clínico e o autoexame de mama são recomendados para a detecção de câncer de mama",
+      "base": "O exame de mama clínico e o autoexame de mama desempenham papéis importantes na detecção precoce de câncer de mama.\n\n**Exame de Mama Clínico:**\n\nO exame de mama clínico é realizado por um profissional de saúde qualificado, geralmente uma enfermeira ou uma médica, e é considerado o método mais preciso para detectar câncer de mama. O exame visa avaliar a textura, a consistência e os padrões de crescimento das glândulas mamárias. O profissional pode sentir se há áreas anormais ou alterações na pele da mama e nos seios.\n\n**Critérios para o Exame de Mama Clínico:**\n\n*   A detecção de uma nódulo anormal, que pode ser palpado durante o exame.\n*   A avaliação da textura e da consistência das glândulas mamárias.\n*   A busca por padrões de crescimento anormais.\n\n**Autoexame de Mama:**\n\nO autoexame de mama é uma técnica que permite que a paciente avalie sua própria mama e identifique quaisquer alterações anormais. Embora não seja tão preciso quanto o exame de mama clínico, o autoexame de mama pode ajudar a detectar câncer de mama em estágios iniciais.\n\n**Critérios para o Autoexame de Mama:**\n\n*   A busca por nódulos anormais ou alterações na pele da mama e nos seios.\n*   A avaliação da textura e da consistência das glândulas mamárias.\n*   A identificação de padrões de crescimento anormais.\n\nEm resumo, o exame de mama clín",
+      "ft": "O exame de mama clínico e o autoexame de mama podem ajudar a detectar câncer de mama, mas não são métodos de diagnóstico confiáveis. É importante que as mulheres sejam encaminhadas para uma avaliação médica para um diagnóstico preciso. Além disso, é fundamental que as mulheres sejam informadas sobre os sinais e sintomas de câncer de mama e como identificar esses sinais. O autoexame de mama pode ser uma ferramenta útil para a detecção de câncer de mama, mas é importante que as mulheres sejam treinadas para realizar esse exame corretamente. É recomendável que as mulheres sejam encaminhadas para uma avaliação médica para um diagnóstico preciso e que sejam informadas sobre os sinais e sintomas de câncer de mama. O exame de mama clínico pode ser uma ferramenta útil para a detecção de câncer de mama, mas é importante que as mulheres sejam encaminhadas para uma avaliação médica para um diagnóstico preciso. É recomendável que as mulheres sejam informadas sobre os sinais e sintomas de câncer de mama e como identificar esses sinais. O autoexame de mama pode ser uma ferramenta útil para a detecção de câncer de mama, mas é importante que as mulheres sejam treinadas para realizar esse exame corretamente. É recomendável que as mulheres sejam encaminhadas para uma avaliação médica para um diagnóstico preciso e que sejam informadas sobre os sinais e sintomas de câncer de mama. O exame de mama clínico pode ser uma ferramenta ú",
+      "rouge_base": 0.15,
+      "rouge_ft": 0.1522491349480969,
+      "heur_base": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1332
+      },
+      "heur_ft": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1433
+      }
+    },
+    {
+      "idx": 429,
+      "category": "planejamento_familiar",
+      "sensitive": false,
+      "user": "É incerto se as multicomponentes intervenções têm efeito sobre a iniciativa de amamentação exclusiva dentro da primeira hora após o parto em comparação com a intervenção padrão ou usual",
+      "gold": "Sim, a evidência de estudos não randomizados é incerta.",
+      "base": "De acordo com os protocolos clínicos atualizados, a Organização Mundial da Saúde (OMS) e a Sociedade Brasileira de Ginecologia e Obstetrícia (SBGO) recomendam que as mulheres devem ser encorajadas a iniciar a amamentação exclusiva dentro das primeiras horas após o parto.\n\nNo entanto, não há consenso sobre a eficácia específica das multicomponentes intervenções em comparação com a intervenção padrão ou usual na promoção da amamentação exclusiva.\n\nDe acordo com a SBGO, a intervenção padrão inclui:\n\n* Avisos pré-natais sobre a importância da amamentação exclusiva\n* Educação materna sobre a amamentação\n* Apoio emocional e prático durante a amamentação\n* Monitoramento regular da amamentação\n\nJá as multicomponentes intervenções podem incluir:\n\n* Avisos pré-natais sobre a importância da amamentação exclusiva\n* Educação materna sobre a amamentação\n* Apoio emocional e prático durante a amamentação\n* Monitoramento regular da amamentação\n* Aconselhamento sobre a frequência e duração das amamentações\n* Uso de ferramentas de apoio, como aplicativos móveis ou grupos de apoio online\n\nDe acordo com uma revisão sistemática publicada na revista Cochrane Database of Systematic Reviews, em 2019, as multicomponentes intervenções não mostraram diferenças significativas em relação à intervenção padrão em termos de iniciação da amamentação exclusiva dentro das primeiras horas após o parto.\n\nNo entanto, é importante notar que a revisão sistemática foi limit",
+      "ft": "Revisões sistemáticas ou ensaios clínicos sobre multicomponentes intervenções incluem componentes como educação, apoio, conselhos e orientações sobre amamentação, além de cuidados pós-natais e cuidados com o bebê. A evidência de qualidade baixa sugere que as multicomponentes intervenções podem ter efeito sobre a iniciativa de amamentação exclusiva dentro da primeira hora após o parto em comparação com a intervenção padrão ou usual. A certeza nessa estimativa é de 50% a 100%. É incerto se as multicomponentes intervenções têm efeito sobre a iniciativa de amamentação exclusiva dentro da primeira hora após o parto em comparação com a intervenção padrão ou usual. A evidência de qualidade baixa sugere que as multicomponentes intervenções podem ter efeito sobre a iniciativa de amamentação exclusiva dentro da primeira hora após o parto em comparação com a intervenção padrão ou usual. A certeza nessa estimativa é de 50% a 100%. É incerto se as multicomponentes intervenções têm efeito sobre a iniciativa de amamentação exclusiva dentro da primeira hora após o parto em comparação com a intervenção padrão ou usual. A evidência de qualidade baixa sugere que as multicomponentes intervenções podem ter efeito sobre a iniciativa de amamentação exclusiva dentro da primeira hora após o parto em comparação com a intervenção padrão ou usual. A certeza nessa estimativa é de 50% a 100%. É incerto se as multicomponentes intervenções têm efeito sobre a iniciativa de amamentação exclusiva dentro da primeira hora após o parto",
+      "rouge_base": 0.038167938931297704,
+      "rouge_ft": 0.034722222222222224,
+      "heur_base": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1456
+      },
+      "heur_ft": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1523
+      }
+    },
+    {
+      "idx": 225,
+      "category": "planejamento_familiar",
+      "sensitive": false,
+      "user": "Como as equipes de Atenção Básica devem abordar as pessoas que exercem a prostituição?",
+      "gold": "As equipes de Atenção Básica devem se perceber e ressaltar o importante papel no acolhimento e na atenção integral e de qualidade às pessoas que exercem a prostituição.",
+      "base": "A abordagem das equipes de Atenção Básica (AEB) em relação às pessoas que exercem a prostituição deve ser baseada em princípios humanizados e centrados em saúde, respeitando os direitos e dignidade das indivíduas.\n\n**Princípios a seguir:**\n\n1.  **Respeito e não-judgamento**: As equipes de AEB devem evitar julgamentos e estigmatização, focando em oferecer cuidados e apoio.\n2.  **Abordagem centrada em saúde**: As equipes devem priorizar a saúde física e emocional das pessoas que exercem a prostituição, oferecendo serviços preventivos, diagnósticos e terapêuticos.\n3.  **Confidencialidade e segurança**: As equipes devem garantir a confidencialidade e segurança dos pacientes, evitando a divulgação de informações sensíveis.\n4.  **Dignidade e respeito**: As equipes devem tratar as pessoas que exercem a prostituição com dignidade e respeito, reconhecendo sua autonomia e capacidade de tomar decisões sobre sua própria saúde.\n\n**Fluxo de atendimento:**\n\n1.  **Avaliação inicial**: O profissional de saúde deve realizar uma avaliação inicial, verificando se há necessidade de intervenção médica ou saúde.\n2.  **Acompanhamento e apoio**: O profissional deve oferecer acompanhamento e apoio, ajudando a pessoa a acessar serviços de saúde, habitação, alimentação e outros recursos.\n3.  **Referenciamento**: Se necessário, o profissional deve referenciar a pessoa a serviços especializados, como clínicas de saúde sexual, centros",
+      "ft": "De forma respeitosa e sem julgamentos, evitando a repetição de situações de violência. É importante reconhecer que a prostituição é uma atividade que pode ser exercida por pessoas de diferentes gêneros e idades. As equipes de Atenção Básica devem oferecer apoio e orientação às pessoas que exercem a prostituição, incluindo aconselhamento sobre os riscos e benefícios da atividade, além de informações sobre os recursos disponíveis para prevenir e tratar doenças sexualmente transmissíveis. Além disso, é fundamental respeitar a autonomia das pessoas que exercem a prostituição e não fazer pressão para que elas sejam tratadas de forma diferente. É importante lembrar que a prostituição é uma atividade que pode ser exercida por pessoas de diferentes gêneros e idades, e que as equipes de Atenção Básica devem oferecer apoio e orientação às pessoas que exercem essa atividade. É fundamental respeitar a autonomia das pessoas que exercem a prostituição e não fazer pressão para que elas sejam tratadas de forma diferente. É importante lembrar que a prostituição é uma atividade que pode ser exercida por pessoas de diferentes gêneros e idades, e que as equipes de Atenção Básica devem oferecer apoio e orientação às pessoas que exercem essa atividade. É fundamental respeitar a autonomia das pessoas que exercem a prostituição e não fazer pressão para que elas sejam tratadas de forma diferente. É importante lembrar que a prostituição é uma atividade que pode ser exercida por pessoas de diferentes gêneros e idades, e que as equ",
+      "rouge_base": 0.14022140221402213,
+      "rouge_ft": 0.15282392026578073,
+      "heur_base": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1427
+      },
+      "heur_ft": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1529
+      }
+    },
+    {
+      "idx": 459,
+      "category": "ginecologia_obstetricia",
+      "sensitive": false,
+      "user": "Qual padrão de sangramento deve ser avaliado?",
+      "gold": "Sangramento agudo intenso",
+      "base": "De acordo com o Protocolo Clínico da Sociedade Brasileira de Ginecologia e Obstetrícia (SBGO), o padrão de sangramento deve ser avaliado de acordo com a seguinte classificação:\n\n* **Migração leve**: sangramento normal durante o ciclo menstrual, com duração de 1 a 7 dias.\n* **Migração moderada**: sangramento com duração de 8 a 14 dias, com ou sem dor abdominal.\n* **Migração severa**: sangramento com duração superior a 14 dias, com dor abdominal intensa ou com outros sintomas como febre, dor de cabeça ou náuseas.\n\nAlém disso, é importante avaliar a frequência e a quantidade de sangramento, bem como a presença de outros sintomas como dor abdominal, dor de cabeça, febre ou náuseas.\n\n**Critério de avaliação**:\n\n* Se o sangramento for leve e normal, não há necessidade de intervenção.\n* Se o sangramento for moderado ou severo, é recomendável realizar uma avaliação mais detalhada, incluindo:\n\t+ Exame físico completo.\n\t+ Análise de laboratório de sangue (para verificar a função trombocitopênica, entre outras coisas).\n\t+ Exame de imagem (como ultrassom ou ressonância magnética) para descartar doenças subjacentes.\n\t+ Consulta com um especialista em ginecologia ou obstetrícia.\n\n**Fluxo de ação**:\n\n* Se o sangramento for leve e normal, o paciente pode ser encaminhado para acompanhamento regular.\n* Se o sangramento for moderado ou severo, o paciente deve ser encaminhado para aval",
+      "ft": "Padrão de sangramento, que pode variar de uma mulher para outra. É importante avaliar o padrão de sangramento e identificar possíveis causas. Além disso, é fundamental considerar a idade da mulher, a história clínica e os exames complementares. O padrão de sangramento pode ser classificado como: Padrão 1 - sangramento leve; Padrão 2 - sangramento moderado; Padrão 3 - sangramento grave. É importante avaliar o padrão de sangramento e identificar possíveis causas. Além disso, é fundamental considerar a idade da mulher, a história clínica e os exames complementares. O padrão de sangramento pode ser classificado como: Padrão 1 - sangramento leve; Padrão 2 - sangramento moderado; Padrão 3 - sangramento grave. É importante avaliar o padrão de sangramento e identificar possíveis causas. Além disso, é fundamental considerar a idade da mulher, a história clínica e os exames complementares. O padrão de sangramento pode ser classificado como: Padrão 1 - sangramento leve; Padrão 2 - sangramento moderado; Padrão 3 - sangramento grave. É importante avaliar o padrão de sangramento e identificar possíveis causas. Além disso, é fundamental considerar a idade da mulher, a história clínica e os exames complementares. O padrão de sangramento pode ser classificado como: Padrão 1 - sangramento leve; Padrão 2 - sangramento moderado; Padrão 3 - sangramento grave. É importante avaliar o padrão de sangramento e identificar possíveis causas. Al",
+      "rouge_base": 0.008298755186721992,
+      "rouge_ft": 0.00819672131147541,
+      "heur_base": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1388
+      },
+      "heur_ft": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1440
+      }
+    },
+    {
+      "idx": 603,
+      "category": "planejamento_familiar",
+      "sensitive": false,
+      "user": "O que ocorre se a mulher tiver anemia falciforme?",
+      "gold": "SÃ£o predispostas Ã  oclusÃ£o da circulaÃ§Ã£o microvascular.",
+      "base": "A anemia falciforme é uma condição médica que afeta a produção de glóbulos vermelhos saudáveis. Nesse caso, o profissional de saúde deve seguir os seguintes passos:\n\n1. **Diagnóstico**: O diagnóstico de anemia falciforme é feito por meio de exames de sangue, incluindo a contagem de glóbulos vermelhos, hemoglobina e esferófilos.\n2. **Tratamento**: O tratamento da anemia falciforme envolve a administração de medicamentos que ajudam a aumentar a produção de glóbulos vermelhos saudáveis. Isso pode incluir:\n\t* Foliciano (folic acid): 4 mg/dia, divididos em duas doses diárias.\n\t* Vitamina B12: 1000 mcg/dia, divididos em duas doses diárias.\n\t* Medicamentos que ajudam a reduzir a hemólise, como a sulfisoxazol-piridostona (SSP).\n3. **Monitoramento**: É importante monitorar a paciente regularmente para verificar a resposta ao tratamento e ajustar a dose de medicamentos conforme necessário.\n4. **Prevenção de complicações**: A anemia falciforme pode causar complicações graves, como a trombocitopenia (baixa contagem de plaquetas) e a hipertensão. O profissional de saúde deve monitorar a paciente para prevenir essas complicações.\n\n**Critérios objetivos**:\n\n* A dosagem de foliciano e vitamina B12 deve ser ajustada de acordo com a resposta da paciente ao tratamento.\n* A contagem de glóbulos",
+      "ft": "A mulher pode ter maior risco de infecção pelo HIV. Além disso, a anemia falciforme pode afetar a capacidade do corpo de produzir células sanguíneas saudáveis. Isso pode aumentar o risco de infecção pelo HIV. É importante que a mulher seja avaliada por um médico para determinar o melhor curso de tratamento. Além disso, é importante que a mulher seja informada sobre os riscos associados à anemia falciforme e ao HIV. Ela deve ser encorajada a procurar ajuda médica e a realizar testes de HIV. Se a mulher for infectada pelo HIV, ela deve ser encaminhada para tratamento antirretroviral (ARV) e acompanhada por um médico. Além disso, é importante que a mulher seja informada sobre os recursos disponíveis para apoio e tratamento. Ela pode entrar em contato com a Ligue 180 ou o CVV 188 para obter ajuda e orientação. É fundamental que a mulher seja informada sobre os riscos associados à anemia falciforme e ao HIV e que ela seja encorajada a procurar ajuda médica. Além disso, é importante que a mulher seja informada sobre os recursos disponíveis para apoio e tratamento. Ela pode entrar em contato com a Delegacia da Mulher para obter ajuda e orientação. É fundamental que a mulher seja informada sobre os riscos associados à anemia falciforme e ao HIV e que ela seja encorajada a procurar ajuda médica. Além disso, é importante que a mulher seja informada sobre os recursos disponíveis para apoio e tratamento.",
+      "rouge_base": 0.03636363636363637,
+      "rouge_ft": 0.030769230769230767,
+      "heur_base": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": true,
+        "len_chars": 1295
+      },
+      "heur_ft": {
+        "cita_servico_rede": true,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1415
+      }
+    },
+    {
+      "idx": 284,
+      "category": "cancer_mama_colo",
+      "sensitive": false,
+      "user": "Qual é a conduta inicial para mulheres até 24 anos com diagnóstico citopatológico de ASC-H?",
+      "gold": "Encaminhamento para colposcopia",
+      "base": "Para mulheres até 24 anos com diagnóstico citopatológico de Ativo do Cervix Humano (ASC-H), a conduta inicial é:\n\n**Observação**: A observação é a abordagem inicial para mulheres com ASC-H, pois muitas vezes o diagnóstico é precário e pode ser alterado após a realização de procedimentos adicionais.\n\n**Parâmetros**:\n\n* A Women's Health Initiative (WHI) recomenda que as mulheres com ASC-H sejam observadas por um período de 1 a 2 anos, com exames de colposcopia e biópsia de concha cervical a cada 6 meses.\n* A Sociedade Internacional de Colposcopia (ASC) sugere que as mulheres com ASC-H sejam observadas por um período de 1 a 2 anos, com exames de colposcopia a cada 6 meses, e que sejam consideradas para a biópsia se houver mudanças no sinal ou se o resultado das biópsias for anormal.\n\n**Critérios**:\n\n* A biópsia de concha cervical deve ser realizada se houver mudanças no sinal ou se o resultado das biópsias for anormal.\n* A colposcopia deve ser realizada a cada 6 meses para monitorar as mudanças no sinal e identificar novas áreas anormais.\n\n**Importante**:\n\n* É fundamental que as mulheres com ASC-H sejam avaliadas por um profissional de saúde qualificado, que possa avaliar a necessidade de procedimentos adicionais e fornecer orientações sobre a conduta inicial.",
+      "ft": "Encaminhar para colposcopia. Mulheres com diagnóstico citopatológico de ASC-H e com idade maior ou igual a 24 anos podem ser encaminhadas para tratamento excisional. Mulheres com diagnóstico citopatológico de ASC-H e com idade menor ou igual a 24 anos podem ser encaminhadas para tratamento excisional após colposcopia. Mulheres com diagnóstico citopatológico de ASC-H e com história de doença cervical prévia podem ser encaminhadas para tratamento excisional. Mulheres com diagnóstico citopatológico de ASC-H e com história de doença cervical prévia e com idade maior ou igual a 24 anos podem ser encaminhadas para tratamento excisional. Mulheres com diagnóstico citopatológico de ASC-H e com história de doença cervical prévia e com idade menor ou igual a 24 anos podem ser encaminhadas para tratamento excisional após colposcopia. Mulheres com diagnóstico citopatológico de ASC-H e com história de doença cervical prévia e com idade maior ou igual a 24 anos podem ser encaminhadas para tratamento excisional. Mulheres com diagnóstico citopatológico de ASC-H e com história de doença cervical prévia e com idade menor ou igual a 24 anos podem ser encaminhadas para tratamento excisional após colposcopia. Mulheres com diagnóstico citopatológico de ASC-H e com história de doença cervical prévia e com idade maior ou igual a 24 anos podem ser encaminhadas para tratamento excisional. Mulheres com diagnóstico citopatológico",
+      "rouge_base": 0.017316017316017316,
+      "rouge_ft": 0.015151515151515152,
+      "heur_base": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1277
+      },
+      "heur_ft": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1424
+      }
+    },
+    {
+      "idx": 6,
+      "category": "planejamento_familiar",
+      "sensitive": false,
+      "user": "Qual é o efeito da aplicação rotineira de clorhexidina na mortalidade neonatal em ambientes com taxas de mortalidade neonatal < 30%?",
+      "gold": "A aplicação rotineira de clorhexidina na corda umbilical tem pouco ou nenhum efeito na mortalidade neonatal em comparação com o cuidado com corda seca ou cuidado usual (evidência de alta certeza).",
+      "base": "Não há evidências científicas robustas que apoiem a aplicação rotineira de clorhexidina na redução da mortalidade neonatal em ambientes com taxas de mortalidade neonatal abaixo de 30%.\n\nDe acordo com a Organização Mundial da Saúde (OMS), a clorhexidina é um agente desinfetante eficaz contra muitos patógenos, incluindo bactérias, vírus e fungos. No entanto, sua eficácia na redução da mortalidade neonatal não foi comprovada por estudos de grande escala.\n\nUm estudo publicado na revista Cochrane em 2017 analisou a eficácia da clorhexidina na redução da mortalidade neonatal em hospitais de baixo custo em países em desenvolvimento. Os autores concluíram que a clorhexidina não reduziu significativamente a mortalidade neonatal em hospitais com taxas de mortalidade neonatal abaixo de 30%.\n\nAlém disso, a Sociedade Brasileira de Pediatria (SBP) e a Sociedade Brasileira de Ginecologia e Obstetrícia (SBGO) não recomendam a aplicação rotineira de clorhexidina na prevenção da infecção em pacientes neonatosos, exceto em casos específicos, como infecções bacterianas.\n\nEm resumo, embora a clorhexidina seja um agente desinfetante eficaz, não há evidências científicas que apoiem a aplicação rotineira de clorhexidina na redução da mortalidade neonatal em ambientes com taxas de mortalidade neonatal abaixo de 30%.",
+      "ft": "Evidência de baixa certeza sugere que a aplicação rotineira de clorhexidina pode reduzir a mortalidade neonatal em ambientes com taxas de mortalidade neonatal < 30%. A evidência de baixa certeza é baseada em estudos de variável qualidade, incluindo estudos de intervenção clínica e estudos observacionais. É importante notar que a aplicação rotineira de clorhexidina pode ter efeitos adversos, como irritação da pele e mucosas, e pode não ser eficaz em ambientes com taxas de mortalidade neonatal > 30%. Portanto, a decisão de aplicar clorhexidina deve ser tomada com base nas necessidades individuais e nas condições locais. É fundamental consultar as diretrizes nacionais ou internacionais relevantes para obter orientações mais precisas. O profissional deve considerar os possíveis benefícios e danos da intervenção e tomar uma decisão informada com base nas informações disponíveis. Além disso, é importante lembrar que a aplicação rotineira de clorhexidina não deve ser feita sem a presença de um profissional de saúde qualificado e treinado. É fundamental que o profissional siga as instruções e os protocolos estabelecidos para garantir a segurança e a eficácia da intervenção. Em caso de dúvida, é recomendável consultar um especialista em saúde materna ou um profissional de saúde qualificado. O profissional deve estar atento às possíveis contraindicações e efeitos adversos da intervenção e tomar medidas para minimizar os riscos. É fundamental que o profissional siga as instruções",
+      "rouge_base": 0.13333333333333336,
+      "rouge_ft": 0.10563380281690139,
+      "heur_base": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1312
+      },
+      "heur_ft": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1493
+      }
+    },
+    {
+      "idx": 163,
+      "category": "planejamento_familiar",
+      "sensitive": false,
+      "user": "Quais sÃ£o as necessidades de treinamento prÃ©vio e atualizaÃ§Ã£o de currÃ­culos de treinamento?",
+      "gold": "A atualizaÃ§Ã£o dos currÃ­culos de treinamento para o cuidado pÃ³s-parto com base no modelo do WHO.",
+      "base": "Para atender às necessidades de saúde da mulher, é fundamental que os profissionais de saúde tenham conhecimentos e habilidades atualizados em áreas específicas. Aqui estão algumas recomendações de treinamento prévio e atualização de currículos de treinamento:\n\n**Treinamento prévio:**\n\n1. **Conhecimento básico de saúde da mulher**: Profissionais devem ter uma compreensão básica das necessidades de saúde da mulher, incluindo aspectos físicos, emocionais e sociais.\n2. **Saúde reprodutiva**: Treinamento em saúde reprodutiva, incluindo contracepção, aborto, gravidez e parto.\n3. **Saúde sexual**: Conhecimento sobre saúde sexual, incluindo doenças sexualmente transmissíveis (DSTs) e saúde sexual em geral.\n4. **Saúde mental**: Treinamento em saúde mental, incluindo depressão, ansiedade e transtornos alimentares.\n\n**Atualização de currículos de treinamento:**\n\n1. **Cursos de atualização em saúde da mulher**: Profissionais devem participar de cursos de atualização em saúde da mulher, que abordem temas como:\n\t* Saúde reprodutiva e sexual\n\t* Saúde mental e emocional\n\t* Doenças crônicas em mulheres (diabetes, hipertensão, etc.)\n\t* Câncer de mama e útero-uterino\n2. **Simulações práticas**: Simulações práticas em áreas como:\n\t* Parto e pós-parto\n\t* Aborto e contracepção\n\t* Saúde sexual e DSTs\n3. **Acompanhamento de casos**: Acompanhamento de casos reais de saúde",
+      "ft": "Treinamento prÃ©vio e atualizaÃ§Ã£o de currÃ­culos de treinamento para profissionais de saÃºde que trabalham com mulheres e recÃ©m-nascidos. Treinamento prÃ©vio e atualizaÃ§Ã£o de currÃ­culos de treinamento para profissionais de saÃºde que trabalham com mulheres e recÃ©m-nascidos. Treinamento prÃ©vio e atualizaÃ§Ã£o de currÃ­culos de treinamento para profissionais de saÃºde que trabalham com mulheres e recÃ©m-nascidos. Treinamento prÃ©vio e atualizaÃ§Ã£o de currÃ­culos de treinamento para profissionais de saÃºde que trabalham com mulheres e recÃ©m-nascidos. Treinamento prÃ©vio e atualizaÃ§Ã£o de currÃ­culos de treinamento para profissionais de saÃºde que trabalham com mulheres e recÃ©m-nascidos. Treinamento prÃ©vio e atualizaÃ§Ã£o de currÃ­culos de treinamento para profissionais de saÃºde que trabalham com mulheres e recÃ©m-nascidos. Treinamento prÃ©vio e atualizaÃ§Ã£o de currÃ­culos de treinamento para profissionais de saÃºde que trabalham com mulheres e recÃ©m-nascidos. Treinamento prÃ©vio e atualizaÃ§Ã£o de currÃ­culos de treinamento para profissionais de saÃºde que trabalham com mulheres e recÃ©m-nascidos. Treinamento prÃ©vio e atualizaÃ§Ã£o de currÃ­culos de treinamento para prof",
+      "rouge_base": 0.08032128514056225,
+      "rouge_ft": 0.08,
+      "heur_base": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1370
+      },
+      "heur_ft": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1203
+      }
+    },
+    {
+      "idx": 348,
+      "category": "planejamento_familiar",
+      "sensitive": false,
+      "user": "Quais são as vantagens de inserir o DIU durante a menstruação?",
+      "gold": "A possibilidade de gravidez fica descartada, a inserção é mais fácil pela dilatação do canal cervical, qualquer sangramento causado pela inserção não incomoda tanto a mulher e a inserção pode causar menos dor.",
+      "base": "Não é recomendado inserir o dispositivo intrauterino (DIU) durante a menstruação. A inserção de um DIU durante a menstruação pode aumentar o risco de complicações, como:\n\n*   Dor pélvica aguda\n*   Infecção ou inflamação do endométrio\n*   Risco de perforação do útero\n\nA inserção de um DIU é mais segura e eficaz quando feita durante o ciclo menstrual, geralmente entre os dias 5 e 7 do ciclo, após a menstruação. Isso permite que o profissional de saúde avalie a anatomia uterina e identifique quaisquer anormalidades que possam dificultar a inserção do dispositivo.\n\nSe você tiver alguma dúvida sobre a inserção de um DIU, recomendo consultar um profissional de saúde qualificado em saúde da mulher.",
+      "ft": "Menor sangramento e menor dor durante o procedimento. Além disso, o sangramento pode ser mais leve e menos doloroso. É importante lembrar que o sangramento pode variar de pessoa para pessoa. O sangramento pode ser mais leve e menos doloroso se o DIU for inserido durante a menstruação. No entanto, é fundamental lembrar que o sangramento pode variar de pessoa para pessoa. É recomendável que a mulher tenha um banho antes do procedimento. Isso ajuda a reduzir a sensação de desconforto e a facilita a inserção do DIU. Além disso, é recomendável que a mulher tenha um copo de banho após o procedimento. Isso ajuda a reduzir a sensação de desconforto e a facilita a inserção do DIU. É importante lembrar que o sangramento pode variar de pessoa para pessoa. É recomendável que a mulher tenha um banho antes do procedimento. Isso ajuda a reduzir a sensação de desconforto e a facilita a inserção do DIU. Além disso, é recomendável que a mulher tenha um copo de banho após o procedimento. Isso ajuda a reduzir a sensação de desconforto e a facilita a inserção do DIU. É fundamental lembrar que o sangramento pode variar de pessoa para pessoa. É recomendável que a mulher tenha um banho antes do procedimento. Isso ajuda a reduzir a sensação de desconforto e a facilita a inserção do DIU. Além disso, é recomendável que a mulher tenha um copo de banho após o procedimento. Isso ajuda a reduzir a sens",
+      "rouge_base": 0.18072289156626506,
+      "rouge_ft": 0.11447811447811447,
+      "heur_base": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 700
+      },
+      "heur_ft": {
+        "cita_servico_rede": false,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1394
+      }
+    },
+    {
+      "idx": 159,
+      "category": "violencia_domestica",
+      "sensitive": true,
+      "user": "Como preencher a ficha de notificação compulsória (SINAN) em caso de violência?",
+      "gold": "O profissional deve preencher a ficha de notificação compulsória (SINAN) de acordo com as diretrizes do protocolo, informando à paciente sobre a importância da notificação e a proteção das vítimas.",
+      "base": "Lamento ter de abordar esse tópico. Preencher a ficha de notificação compulsória (SINAN) em caso de violência é uma etapa crucial para garantir a segurança e o bem-estar da vítima. Aqui estão os passos a seguir:\n\n1. **Verifique se a vítima está estável**: Antes de iniciar o processo de notificação, verifique se a vítima está estável e não apresenta risco imediato.\n2. **Coletar informações**: Coletar as seguintes informações:\n\t* Nome e endereço da vítima;\n\t* Data e hora do incidente;\n\t* Descrição do incidente (inclusão de detalhes sobre a violência);\n\t* Identificação do agressor (nome, idade, endereço, etc.);\n\t* Qualquer outro detalhe relevante.\n3. **Preencher a ficha SINAN**: Utilize o formulário de notificação compulsória (SINAN) disponível no site do Ministério da Saúde ou na Secretaria Estadual de Saúde (SES). Preencha todos os campos obrigatórios.\n4. **Incluir anexos**: Anexe qualquer documento relevante, como:\n\t* Comprovante de identidade da vítima;\n\t* Comprovante de tratamento médico;\n\t* Comprovante de hospitalização;\n\t* Quaisquer outros documentos relevantes.\n5. **Assinar a declaração**: Assine a declaração de notificação compulsória (SINAN) e anexe-a ao formulário.\n6. **Enviar a ficha**: Enviar a ficha SINAN para a Secretaria Estadual de Saúde (SES) ou para o centro de atendimento mais",
+      "ft": "O profissional deve preencher a ficha de notificação compulsória (SINAN) com os dados da paciente, incluindo a descrição da violência, os sinais de alerta e os recursos disponíveis. É importante notificar a autoridade competente e encaminhar a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e a disponibilidade de recursos. Encaminhe a paciente para o serviço de atendimento à vítima de violência. Informe a paciente sobre a importância da notificação e",
+      "rouge_base": 0.15849056603773584,
+      "rouge_ft": 0.1570996978851964,
+      "heur_base": {
+        "cita_servico_rede": true,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1314
+      },
+      "heur_ft": {
+        "cita_servico_rede": true,
+        "antipadrao_paciente": false,
+        "tem_dose_numerica": false,
+        "len_chars": 1649
+      }
+    }
+  ]
+}

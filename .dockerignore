@@ -6,7 +6,6 @@ __pycache__
 *.pyc
 .pytest_cache
 *.ipynb
-files
 .env
 adapters
 checkpoints

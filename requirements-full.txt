@@ -1,0 +1,9 @@
+# Pacotes do notebook 08 que o requirements-llm.txt não pina.
+# torch NÃO entra aqui: a imagem Dockerfile.full já traz o wheel CUDA do PyTorch.
+transformers==4.51.3
+peft==0.15.2
+accelerate==1.6.0
+bitsandbytes==0.45.5
+huggingface_hub==0.30.2
+langchain-community==0.3.24
+langchain-huggingface==0.1.2

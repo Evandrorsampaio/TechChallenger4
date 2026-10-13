@@ -28,8 +28,7 @@ htmlcov/
 **/Copy*.ipynb
 
 # ===== Outputs locais (datasets, modelos, checkpoints) =====
-# Ficam no Drive ou Git LFS, não no repo principal
-files/
+# A pasta files/ é exceção: índice, adapter, protocolos e SFT entram no repositório.
 *.pdf
 !RELATORIO_TECNICO.pdf
 !RELATORIO_TECNICO.html
@@ -87,3 +86,15 @@ logs/
 
 # ===== Memória persistente do Claude (estado interno do agente) =====
 .claude/
+
+# files/ precisa vencer as regras de *.pdf, *.bin, *.safetensors, *.jsonl, *.db,
+# *.sqlite3, adapter_final, finetune e chroma. Cada diretório ignorado tem de
+# ser reaberto antes do conteúdo.
+!files/
+!files/**
+!files/chroma/
+!files/chroma/**
+!files/finetune/
+!files/finetune/**
+!files/finetune/**/adapter_final/
+!files/finetune/**/adapter_final/**

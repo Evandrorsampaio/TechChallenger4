@@ -1,0 +1,6 @@
+# Acrescente este arquivo quando o Docker enxergar a GPU NVIDIA.
+services:
+  app:
+    gpus: all
+    environment:
+      NVIDIA_VISIBLE_DEVICES: all

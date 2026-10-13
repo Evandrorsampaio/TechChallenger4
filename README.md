@@ -1,9 +1,13 @@
 # Guardiã AI — Inteligência Artificial para Saúde e Segurança da Mulher
 
-**Tech Challenge FIAP — Pós Tech em IA para Devs — Fase 5.**
-**Grupo:** Evandro Rosa Sampaio, Gustavo Brasil Pires Octaviano, Paulo Roberto Goncalves, Wallace Gomes da Silva.
+**Tech Challenge Fase 5**
+**Curso: Pós Tech em IA para Devs - FIAP**
 
-> Projeto acadêmico. **Não substitui avaliação clínica.** O classificador de risco gestacional usa **dados 100 % sintéticos** e não passou por validação clínica. A IA é um sistema de **apoio ao profissional**: a decisão final é sempre de uma pessoa responsável pelo atendimento.
+**Grupo 63:** 
+Evandro Rosa Sampaio, 
+Gustavo Brasil Pires Octaviano, 
+Paulo Roberto Goncalves, 
+Wallace Gomes da Silva.
 
 ---
 
@@ -86,7 +90,7 @@ O workflow `risco_ml` ([`lib/workflows/risco_ml.py`](lib/workflows/risco_ml.py))
 | `incompleto` | Campos obrigatórios ausentes | Não imputa; pede complemento ao profissional (human-in-the-loop) |
 | `degradado` | Modelo indisponível | Classifica por regra clínica determinística e avisa |
 
-Diagramas e decisões: [`docs/arquitetura/DIAGRAMA_LANGGRAPH.md`](docs/arquitetura/DIAGRAMA_LANGGRAPH.md), [`docs/arquitetura/DECISOES_ARQUITETURAIS.md`](docs/arquitetura/DECISOES_ARQUITETURAIS.md) e [`ARQUITETURA.md`](ARQUITETURA.md) (base da Fase 3).
+O grafo do fluxo de risco está em [`lib/workflows/risco_ml.py`](lib/workflows/risco_ml.py).
 
 ---
 
@@ -109,7 +113,7 @@ Por que essas métricas e não a acurácia:
 - Um **falso negativo** (gestante de alto risco classificada como habitual) pode atrasar o encaminhamento e é o erro mais grave. O limiar operacional (0,278, calibrado na validação, não 0,5) prioriza o recall: no teste, só 11 de 247 casos de alto risco passaram despercebidos.
 - O custo dessa escolha é a baixa precisão: muitos falsos positivos, que geram avaliações extras feitas pelo profissional. É um custo aceitável para uma ferramenta de triagem que não decide sozinha.
 
-**Explicabilidade:** cada predição mostra as variáveis que mais contribuíram, por coeficientes da regressão logística ou importância das variáveis do random forest. SHAP é usado quando a biblioteca está instalada (é opcional). Detalhes em [`docs/ml/EXPLICABILIDADE.md`](docs/ml/EXPLICABILIDADE.md) e [`docs/ml/METRICAS_E_RESULTADOS.md`](docs/ml/METRICAS_E_RESULTADOS.md).
+**Explicabilidade:** cada predição mostra as variáveis que mais contribuíram, por coeficientes da regressão logística ou importância das variáveis do random forest. SHAP é usado quando a biblioteca está instalada (é opcional). A implementação está em [`lib/ml/explain.py`](lib/ml/explain.py).
 
 ---
 
@@ -160,20 +164,37 @@ Abra http://localhost:7860. Escolha uma paciente na barra lateral (nomes gerados
 
 ### 5. Docker
 
-Demo de linha de comando:
+O `docker compose up` da raiz continua no perfil de CPU, com `FakeChatModel` e o RAG lexical. O mesmo fluxo do Colab (Llama 3.2 3B + índice Chroma) é outro compose.
+
+**CPU, chat de demonstração**
 
 ```text
 docker build -t techchallenger4-demo:cpu .
 docker run --rm techchallenger4-demo:cpu
-```
-
-Interface no navegador (porta 7860):
-
-```text
 docker compose up --build
 ```
 
-A imagem não inclui o Llama. Detalhes em [`docs/deploy/EXECUCAO_DOCKER.md`](docs/deploy/EXECUCAO_DOCKER.md).
+A imagem `demo-cpu` não inclui o Llama.
+
+**Colab no Docker (Llama + Chroma)**
+
+1. Aceite a licença de `meta-llama/Llama-3.2-3B-Instruct` na conta Hugging Face e grave o token em `.env` (`HF_TOKEN=`).
+2. A imagem copia `files/` (Chroma, adapter em `files/finetune` e `files/hospital.db`). Sem `adapter_final` o contêiner sobe o modelo base.
+3. Suba com GPU NVIDIA visível no Docker Desktop (WSL2):
+
+```text
+docker compose -f docker-compose.full.yml -f docker-compose.gpu.yml up --build
+```
+
+Abra http://localhost:7860. A primeira subida baixa o Llama e o modelo de embedding; o cache fica no volume `hf-cache`.
+
+Sem GPU, o mesmo arquivo sobe o Llama em CPU (lento, sem 4-bit):
+
+```text
+docker compose -f docker-compose.full.yml up --build
+```
+
+Na máquina, sem Docker, `python scripts/app_full.py` lê a mesma pasta `files/`: índice em `files/chroma`, adapter em `files/finetune` e prontuário em `files/hospital.db`. No contêiner esses caminhos são `/app/files/...`.
 
 ### 6. Relatório técnico em PDF
 
@@ -195,7 +216,7 @@ Abra o `RELATORIO_TECNICO.html` gerado no Chrome e use Imprimir → Salvar como 
 | Interface | Gradio, `python scripts/app.py` | Pronto |
 | Dockerfile | [`Dockerfile`](Dockerfile), [`docker-compose.yml`](docker-compose.yml) | Pronto |
 | Relatório técnico | [`RELATORIO_TECNICO.md`](RELATORIO_TECNICO.md) e `.html` | Falta exportar o PDF |
-| Vídeo de até 15 minutos | Roteiro em [`ROTEIRO_VIDEO.md`](ROTEIRO_VIDEO.md) | Falta gravar e publicar o link aqui |
+| Vídeo de até 15 minutos | YouTube ou Vimeo, público ou não listado | Falta gravar e publicar o link aqui |
 
 ---
 
@@ -203,9 +224,9 @@ Abra o `RELATORIO_TECNICO.html` gerado no Chrome e use Imprimir → Salvar como 
 
 | Requisito | Onde encontrar |
 |---|---|
-| Dataset relacionado ao problema | [`artifacts/data/`](artifacts/data/), [`docs/dados/`](docs/dados/) |
-| Exploração e preparação dos dados | [`lib/ml/dataset.py`](lib/ml/dataset.py), [`lib/ml/features.py`](lib/ml/features.py), [`docs/dados/QUALIDADE_DOS_DADOS.md`](docs/dados/QUALIDADE_DOS_DADOS.md) |
-| Pelo menos dois modelos comparados | [`lib/ml/train.py`](lib/ml/train.py), [`artifacts/metrics/comparacao.json`](artifacts/metrics/comparacao.json), [`docs/ml/COMPARACAO_MODELOS.md`](docs/ml/COMPARACAO_MODELOS.md) |
+| Dataset relacionado ao problema | [`artifacts/data/`](artifacts/data/) |
+| Exploração e preparação dos dados | [`lib/ml/dataset.py`](lib/ml/dataset.py), [`lib/ml/features.py`](lib/ml/features.py) |
+| Pelo menos dois modelos comparados | [`lib/ml/train.py`](lib/ml/train.py), [`artifacts/metrics/comparacao.json`](artifacts/metrics/comparacao.json) |
 | Justificativa das métricas e impacto dos erros | [Principais resultados](#principais-resultados), [`artifacts/metrics/analise_erros.json`](artifacts/metrics/analise_erros.json) |
 | Interpretação do modelo | [`lib/ml/explain.py`](lib/ml/explain.py), [`artifacts/explainability/`](artifacts/explainability/) |
 | Integração com LLM | [`lib/llm.py`](lib/llm.py), [`lib/ml/llm_contract.py`](lib/ml/llm_contract.py), nó `sintetizar_com_llm` |
@@ -238,7 +259,7 @@ Abra o `RELATORIO_TECNICO.html` gerado no Chrome e use Imprimir → Salvar como 
 ## Limitações
 
 1. **Sem validação clínica.** O dataset tabular e os pares de perguntas e respostas do fine-tuning são sintéticos. As métricas não representam desempenho em pacientes reais.
-2. **LLM no perfil CPU/Docker.** A execução local e a imagem Docker usam o `FakeChatModel`, um dublê determinístico com respostas fixas por padrão de texto. O Llama 3.2 3B com QLoRA só roda no Colab com GPU.
+2. **LLM no perfil CPU/Docker padrão.** `docker compose up` usa o `FakeChatModel`, um dublê determinístico com respostas fixas por padrão de texto. O Llama 3.2 3B com QLoRA sobe no compose `docker-compose.full.yml` (GPU NVIDIA) ou no Colab.
 3. **RAG no perfil CPU/Docker.** Usa busca lexical sobre um recorte pequeno dos protocolos ([`artifacts/rag/protocolos_subset.json`](artifacts/rag/protocolos_subset.json)). O índice Chroma completo (1392 trechos de 39 PDFs) fica no Google Drive, fora do Git.
 4. **Baixa precisão do classificador.** O limiar prioriza o recall; cerca de três em cada quatro alertas de alto risco são falsos positivos.
 5. **Auditoria por hash.** `predicoes_ml` guarda o hash das variáveis de entrada, não os valores.
@@ -253,9 +274,6 @@ Abra o `RELATORIO_TECNICO.html` gerado no Chrome e use Imprimir → Salvar como 
 TechChallenger4/
 ├── README.md                        ← você está aqui
 ├── RELATORIO_TECNICO.md / .html     ← relatório técnico da Fase 5
-├── RELATORIO_TECNICO_DETALHADO.md   ← relatório acadêmico estendido (Fase 3)
-├── ARQUITETURA.md                   ← decisões técnicas, schema, contratos (Fase 3)
-├── ROTEIRO_VIDEO.md                 ← roteiro do vídeo de apresentação
 ├── Dockerfile / docker-compose.yml  ← perfil demo-cpu
 ├── requirements*.txt                ← dependências (base, ML, LLM)
 │
@@ -275,7 +293,6 @@ TechChallenger4/
 ├── scripts/                         ← train, evaluate, predict, run_demo, app, export_pdf_html
 ├── artifacts/                       ← data, models, metrics, explainability, rag, demo
 ├── tests/                           ← unit, integration, e2e, regression
-├── docs/                            ← arquitetura, dados, ML, RAG, LLM, segurança, deploy, testes
 │
 ├── 01…10_*.ipynb                    ← pipeline LLM + RAG no Colab (Fase 3)
 └── COLAB_EXECUTAR.ipynb             ← atalho para subir a aplicação no Colab
@@ -364,17 +381,10 @@ Regressões:
 - O modelo passou a citar serviços da rede também em contextos não sensíveis.
 - Respostas 18,6 % mais longas; mitigado com `max_new_tokens=256`.
 
-A amostra de avaliação é pequena (n = 30); conclusões estatísticas exigiriam n ≥ 100 com bootstrap. Análise completa em [`RELATORIO_TECNICO_DETALHADO.md`](RELATORIO_TECNICO_DETALHADO.md#43-análise-crítica-honesta-dos-resultados).
+A amostra de avaliação é pequena (n = 30); conclusões estatísticas exigiriam n ≥ 100 com bootstrap.
 
 ---
 
 ## Documentação adicional
 
 - [`RELATORIO_TECNICO.md`](RELATORIO_TECNICO.md) — relatório técnico da Fase 5
-- [`docs/ml/METRICAS_E_RESULTADOS.md`](docs/ml/METRICAS_E_RESULTADOS.md) — métricas do conjunto de teste
-- [`docs/rag/ESTRATEGIA_RAG.md`](docs/rag/ESTRATEGIA_RAG.md) e [`docs/rag/POLITICA_DE_CITACAO.md`](docs/rag/POLITICA_DE_CITACAO.md) — RAG e citação de fontes
-- [`docs/llm/POLITICA_ANTI_ALUCINACAO.md`](docs/llm/POLITICA_ANTI_ALUCINACAO.md) — contrato de entrada e saída da LLM
-- [`docs/seguranca/`](docs/seguranca/) — riscos, controles, LGPD e auditoria
-- [`docs/deploy/EXECUCAO_LOCAL.md`](docs/deploy/EXECUCAO_LOCAL.md) e [`docs/deploy/EXECUCAO_DOCKER.md`](docs/deploy/EXECUCAO_DOCKER.md) — execução
-- [`docs/requisitos/CRITERIOS_DE_ACEITE.md`](docs/requisitos/CRITERIOS_DE_ACEITE.md) — critérios de aceite
-- [`docs/planos/00_INDICE.md`](docs/planos/00_INDICE.md) — planos das sprints e relatório do ciclo
